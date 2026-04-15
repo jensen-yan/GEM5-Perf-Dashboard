@@ -361,7 +361,7 @@ function renderChart(dataset, benchmark) {
   }
 
   const width = 960;
-  const height = 420;
+  const height = 760;
   const margin = { top: 26, right: 34, bottom: 58, left: 76 };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
