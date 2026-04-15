@@ -3,6 +3,7 @@ import {
   AVG_LABEL,
   buildBenchmarkOptions,
   chartFullscreenButtonLabel,
+  filterSeriesByVisibility,
   latestSummary,
   resolveSeries,
 } from "./chart-helpers.mjs";
@@ -29,6 +30,7 @@ const state = {
   datasets: new Map(),
   currentDatasetId: null,
   currentBenchmark: AVG_LABEL,
+  visibleSeriesNames: null,
 };
 
 const datasetSelect = document.getElementById("dataset-select");
@@ -224,22 +226,78 @@ function renderDatasetOptions() {
   datasetSelect.value = state.currentDatasetId;
 }
 
-function renderLegend(seriesList) {
+function resetSeriesVisibility() {
+  state.visibleSeriesNames = null;
+}
+
+function ensureVisibleSeries(seriesList, benchmark) {
+  if (benchmark !== ALL_SPECINT_OPTION) {
+    return null;
+  }
+  if (state.visibleSeriesNames === null) {
+    state.visibleSeriesNames = new Set(seriesList.map((series) => series.name));
+  }
+  return state.visibleSeriesNames;
+}
+
+function renderLegend(allSeries, visibleSeriesNames, benchmark) {
   legendRoot.replaceChildren();
-  if (seriesList.length <= 1) {
+  if (benchmark !== ALL_SPECINT_OPTION) {
     const chip = document.createElement("div");
     chip.className = "legend-chip";
-    chip.innerHTML = `<span class="legend-swatch" style="background:${seriesList[0]?.color || palette[0]}"></span>${seriesList[0]?.name || AVG_LABEL}`;
+    chip.innerHTML = `<span class="legend-swatch" style="background:${allSeries[0]?.color || palette[0]}"></span>${allSeries[0]?.name || AVG_LABEL}`;
     legendRoot.appendChild(chip);
     return;
   }
 
-  for (const series of seriesList) {
-    const chip = document.createElement("div");
+  const controls = document.createElement("div");
+  controls.className = "legend-controls";
+
+  const showAllButton = document.createElement("button");
+  showAllButton.type = "button";
+  showAllButton.className = "legend-action";
+  showAllButton.textContent = "Show all";
+  showAllButton.addEventListener("click", () => {
+    state.visibleSeriesNames = new Set(allSeries.map((series) => series.name));
+    render();
+  });
+  controls.appendChild(showAllButton);
+
+  const hideAllButton = document.createElement("button");
+  hideAllButton.type = "button";
+  hideAllButton.className = "legend-action";
+  hideAllButton.textContent = "Hide all";
+  hideAllButton.addEventListener("click", () => {
+    state.visibleSeriesNames = new Set();
+    render();
+  });
+  controls.appendChild(hideAllButton);
+  legendRoot.appendChild(controls);
+
+  const chips = document.createElement("div");
+  chips.className = "legend-chip-list";
+
+  for (const series of allSeries) {
+    const chip = document.createElement("button");
+    chip.type = "button";
     chip.className = "legend-chip";
+    if (!visibleSeriesNames.has(series.name)) {
+      chip.classList.add("legend-chip-hidden");
+    }
     chip.innerHTML = `<span class="legend-swatch" style="background:${series.color}"></span>${series.name}`;
-    legendRoot.appendChild(chip);
+    chip.addEventListener("click", () => {
+      const nextVisible = new Set(visibleSeriesNames);
+      if (nextVisible.has(series.name)) {
+        nextVisible.delete(series.name);
+      } else {
+        nextVisible.add(series.name);
+      }
+      state.visibleSeriesNames = nextVisible;
+      render();
+    });
+    chips.appendChild(chip);
   }
+  legendRoot.appendChild(chips);
 }
 
 function svgNode(name, attrs = {}) {
@@ -257,31 +315,50 @@ function seriesColor(index) {
 function renderChart(dataset, benchmark) {
   chart.replaceChildren();
   const points = dataset.points;
-  const seriesList = resolveSeries(dataset, benchmark).map((series, index) => ({
+  const allSeries = resolveSeries(dataset, benchmark).map((series, index) => ({
     ...series,
     color: seriesColor(index),
   }));
+  const visibleSeriesNames = ensureVisibleSeries(allSeries, benchmark);
+  const seriesList = filterSeriesByVisibility(
+    allSeries,
+    visibleSeriesNames ?? new Set(),
+    benchmark,
+  );
   chartTitle.textContent = `${dataset.dataset.label} - ${benchmark === ALL_SPECINT_OPTION ? "All SPECint subscores" : benchmark}`;
   chartNote.textContent =
     benchmark === ALL_SPECINT_OPTION
-      ? "Overlay all SPECint sub-scores to spot the noisiest moving benchmark."
+      ? "Overlay SPECint sub-scores, and use the legend to hide or restore specific lines."
       : "Hover a point to inspect the exact score, commit, and workflow.";
   pointCount.textContent = String(points.length);
   latestValue.textContent = latestSummary(dataset, benchmark);
   modeLabel.textContent =
     benchmark === ALL_SPECINT_OPTION ? "Multi-line comparison" : "Single selected line";
 
-  if (!points.length || !seriesList.length) {
+  if (!points.length || !allSeries.length) {
     chart.classList.add("hidden");
     chartEmpty.classList.remove("hidden");
     pointDetail.innerHTML = "<h3>Point Detail</h3><p>No data available for this dataset.</p>";
-    renderLegend([]);
+    renderLegend(allSeries, visibleSeriesNames ?? new Set(), benchmark);
     return;
   }
 
   chart.classList.remove("hidden");
   chartEmpty.classList.add("hidden");
-  renderLegend(seriesList);
+  chartEmpty.textContent = "No data available for this dataset.";
+  renderLegend(
+    allSeries,
+    visibleSeriesNames ?? new Set(allSeries.map((series) => series.name)),
+    benchmark,
+  );
+
+  if (!seriesList.length) {
+    chart.classList.add("hidden");
+    chartEmpty.classList.remove("hidden");
+    chartEmpty.textContent = "All subscore lines are hidden. Use Show all or click a legend item to restore lines.";
+    pointDetail.innerHTML = "<h3>Point Detail</h3><p>All subscore lines are hidden.</p>";
+    return;
+  }
 
   const width = 960;
   const height = 420;
@@ -552,11 +629,13 @@ async function main() {
 
 datasetSelect.addEventListener("change", (event) => {
   state.currentDatasetId = event.target.value;
+  resetSeriesVisibility();
   render();
 });
 
 benchmarkSelect.addEventListener("change", (event) => {
   state.currentBenchmark = event.target.value;
+  resetSeriesVisibility();
   render();
 });
 

@@ -4,6 +4,7 @@ import {
   ALL_SPECINT_OPTION,
   buildBenchmarkOptions,
   chartFullscreenButtonLabel,
+  filterSeriesByVisibility,
   resolveSeries,
 } from "../site/chart-helpers.mjs";
 
@@ -51,6 +52,30 @@ assert.deepEqual(
   allSeries.map((series) => series.name),
   ["astar", "gcc", "mcf"],
 );
+
+const filteredSeries = filterSeriesByVisibility(
+  allSeries,
+  new Set(["astar", "mcf"]),
+  ALL_SPECINT_OPTION,
+);
+assert.deepEqual(
+  filteredSeries.map((series) => series.name),
+  ["astar", "mcf"],
+);
+
+const hiddenAllSeries = filterSeriesByVisibility(
+  allSeries,
+  new Set(),
+  ALL_SPECINT_OPTION,
+);
+assert.equal(hiddenAllSeries.length, 0);
+
+const unchangedSingleSeries = filterSeriesByVisibility(
+  singleSeries,
+  new Set(["gcc"]),
+  "gcc",
+);
+assert.deepEqual(unchangedSingleSeries, singleSeries);
 
 assert.equal(chartFullscreenButtonLabel(false), "Fullscreen Chart");
 assert.equal(chartFullscreenButtonLabel(true), "Exit Fullscreen");

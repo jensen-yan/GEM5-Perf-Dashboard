@@ -191,6 +191,7 @@ select:focus {
   display: flex;
   gap: 12px;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .toolbar-copy strong {
@@ -200,6 +201,15 @@ select:focus {
 }
 
 .chart-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.legend-controls,
+.legend-chip-list {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
@@ -309,6 +319,29 @@ select:focus {
   color: var(--ink);
   font-size: 12px;
   font-family: "IBM Plex Mono", "Menlo", monospace;
+  cursor: pointer;
+}
+
+button.legend-chip,
+.legend-action {
+  appearance: none;
+}
+
+.legend-chip-hidden {
+  opacity: 0.45;
+  background: rgba(246, 238, 226, 0.72);
+}
+
+.legend-action {
+  border: 1px solid rgba(173, 146, 111, 0.5);
+  background: var(--panel-solid);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "IBM Plex Mono", "Menlo", monospace;
+  cursor: pointer;
 }
 
 .legend-swatch {
@@ -521,6 +554,12 @@ code {
   }
 
   .chart-legend {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .legend-controls,
+  .legend-chip-list {
     justify-content: flex-start;
   }
 

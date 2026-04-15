@@ -51,6 +51,13 @@ export function latestSummary(dataset, selectedBenchmark) {
   return typeof value === "number" ? value.toFixed(3) : "-";
 }
 
+export function filterSeriesByVisibility(seriesList, visibleSeriesNames, selectedBenchmark) {
+  if (selectedBenchmark !== ALL_SPECINT_OPTION) {
+    return seriesList;
+  }
+  return seriesList.filter((series) => visibleSeriesNames.has(series.name));
+}
+
 export function chartFullscreenButtonLabel(isFullscreen) {
   return isFullscreen ? "Exit Fullscreen" : "Fullscreen Chart";
 }
