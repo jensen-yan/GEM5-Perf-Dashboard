@@ -11,16 +11,30 @@ import sys
 from typing import Any
 import zipfile
 
-from dashboard_data import (
-    DATASETS,
-    benchmark_metrics,
-    classify_run,
-    make_commit_url,
-    parse_score_text,
-)
+try:
+    from .dashboard_data import (
+        DATASETS,
+        DatasetConfig,
+        benchmark_metrics,
+        classify_run,
+        make_commit_url,
+        parse_score_text,
+        run_matches_dataset,
+    )
+except ImportError:
+    from dashboard_data import (
+        DATASETS,
+        DatasetConfig,
+        benchmark_metrics,
+        classify_run,
+        make_commit_url,
+        parse_score_text,
+        run_matches_dataset,
+    )
 
 OWNER = "OpenXiangShan"
 REPO = "GEM5"
+DEFAULT_BRANCH = "xs-dev"
 DEFAULT_OUT_DIR = Path(__file__).resolve().parent.parent / "site" / "data"
 
 
@@ -58,13 +72,57 @@ def list_recent_runs(max_pages: int, per_page: int) -> list[dict[str, Any]]:
     return runs
 
 
-def find_score_artifact(run_id: int) -> dict[str, Any] | None:
+def list_branch_commits(branch: str, max_pages: int, per_page: int) -> list[str]:
+    commits: list[str] = []
+    for page in range(1, max_pages + 1):
+        payload = gh_api_json(
+            f"repos/{OWNER}/{REPO}/commits?sha={branch}&per_page={per_page}&page={page}"
+        )
+        if not payload:
+            break
+        commits.extend(item["sha"] for item in payload)
+    return commits
+
+
+def list_runs_for_commit(sha: str, branch: str, per_page: int = 100) -> list[dict[str, Any]]:
+    payload = gh_api_json(
+        f"repos/{OWNER}/{REPO}/actions/runs?head_sha={sha}&branch={branch}&event=push&per_page={per_page}"
+    )
+    return payload.get("workflow_runs", [])
+
+
+def list_run_artifacts(run_id: int) -> list[dict[str, Any]]:
     payload = gh_api_json(f"repos/{OWNER}/{REPO}/actions/runs/{run_id}/artifacts")
-    for artifact in payload.get("artifacts", []):
+    return payload.get("artifacts", [])
+
+
+def select_run_for_dataset(
+    runs: list[dict[str, Any]], dataset: DatasetConfig
+) -> dict[str, Any] | None:
+    candidates = [
+        run
+        for run in runs
+        if run.get("conclusion") == "success" and run_matches_dataset(run, dataset)
+    ]
+    if not candidates:
+        return None
+    return max(
+        candidates,
+        key=lambda run: (
+            run.get("run_started_at", ""),
+            run.get("created_at", ""),
+            run.get("run_number", 0),
+        ),
+    )
+
+
+def find_dataset_artifact(
+    artifacts: list[dict[str, Any]], dataset: DatasetConfig
+) -> dict[str, Any] | None:
+    for artifact in artifacts:
         if artifact.get("expired"):
             continue
-        name = artifact.get("name", "")
-        if name.startswith("performance-score-"):
+        if artifact.get("name") == dataset.artifact_name:
             return artifact
     return None
 
@@ -133,10 +191,67 @@ def write_outputs(points_by_dataset: dict[str, list[dict[str, Any]]], out_dir: P
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
 
+def include_run(
+    run: dict[str, Any],
+    dataset: DatasetConfig,
+    artifact: dict[str, Any],
+    points_by_dataset: dict[str, list[dict[str, Any]]],
+) -> bool:
+    score_text = download_score_text(artifact["id"])
+    try:
+        parsed = parse_score_text(score_text)
+    except ValueError as err:
+        print(f"skipped {dataset.id}: run {run['id']} ({err})", file=sys.stderr)
+        return False
+    title = fetch_commit_subject(run["head_sha"])
+    points_by_dataset[dataset.id].append(build_point(run, parsed, title))
+    print(f"included {dataset.id}: run {run['id']}", file=sys.stderr)
+    return True
+
+
+def collect_from_commits(
+    branch: str,
+    max_pages: int,
+    per_page: int,
+    points_by_dataset: dict[str, list[dict[str, Any]]],
+) -> None:
+    for sha in list_branch_commits(branch, max_pages, per_page):
+        runs = list_runs_for_commit(sha, branch)
+        for dataset in DATASETS:
+            run = select_run_for_dataset(runs, dataset)
+            if not run:
+                continue
+            artifact = find_dataset_artifact(list_run_artifacts(run["id"]), dataset)
+            if not artifact:
+                continue
+            include_run(run, dataset, artifact, points_by_dataset)
+
+
+def collect_from_runs(
+    max_pages: int,
+    per_page: int,
+    points_by_dataset: dict[str, list[dict[str, Any]]],
+) -> None:
+    for run in list_recent_runs(max_pages, per_page):
+        if run.get("conclusion") != "success":
+            continue
+        artifacts = list_run_artifacts(run["id"])
+        for dataset in DATASETS:
+            artifact = find_dataset_artifact(artifacts, dataset)
+            if not artifact:
+                continue
+            if classify_run(run, artifact["name"]) is None:
+                continue
+            include_run(run, dataset, artifact, points_by_dataset)
+            break
+
+
 def main(argv: list[str]) -> int:
     import argparse
 
     parser = argparse.ArgumentParser(description="Build dashboard data from GitHub Actions artifacts")
+    parser.add_argument("--source", choices=("commits", "runs"), default="commits")
+    parser.add_argument("--branch", default=DEFAULT_BRANCH)
     parser.add_argument("--max-pages", type=int, default=5)
     parser.add_argument("--per-page", type=int, default=100)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
@@ -144,25 +259,10 @@ def main(argv: list[str]) -> int:
 
     points_by_dataset: dict[str, list[dict[str, Any]]] = defaultdict(list)
 
-    for run in list_recent_runs(args.max_pages, args.per_page):
-        if run.get("conclusion") != "success":
-            continue
-        artifact = find_score_artifact(run["id"])
-        if not artifact:
-            continue
-        dataset = classify_run(run, artifact["name"])
-        if dataset is None:
-            continue
-
-        score_text = download_score_text(artifact["id"])
-        try:
-            parsed = parse_score_text(score_text)
-        except ValueError as err:
-            print(f"skipped {dataset.id}: run {run['id']} ({err})", file=sys.stderr)
-            continue
-        title = fetch_commit_subject(run["head_sha"])
-        points_by_dataset[dataset.id].append(build_point(run, parsed, title))
-        print(f"included {dataset.id}: run {run['id']}", file=sys.stderr)
+    if args.source == "commits":
+        collect_from_commits(args.branch, args.max_pages, args.per_page, points_by_dataset)
+    else:
+        collect_from_runs(args.max_pages, args.per_page, points_by_dataset)
 
     write_outputs(points_by_dataset, args.out_dir)
     return 0

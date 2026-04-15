@@ -43,6 +43,8 @@ python3 scripts/seed_from_local_archives.py   --archive-root /nfs/home/share/gem
 ```
 
 The command writes JSON into `site/data/`.
+It now validates each archived run against its originating GitHub Actions workflow, so
+`idealkmhv3` data does not accidentally absorb the regular `gem5-perf.yml` `0.8c` runs.
 
 ### 2. Open the dashboard locally
 
@@ -58,8 +60,12 @@ Then open `http://localhost:8000`.
 This follows the same high-level idea as the XiangShan dashboard: fetch recent workflow runs, download `score.txt` artifacts, and rebuild static JSON.
 
 ```bash
-python3 scripts/update_data.py --max-pages 5 --per-page 100
+python3 scripts/update_data.py --source commits --branch xs-dev --max-pages 5 --per-page 100
 ```
+
+The default refresh mode is now commit-driven: it walks recent `xs-dev` commits, finds the
+matching performance workflow runs for each dataset, and downloads the exact `score.txt`
+artifact for that workflow.
 
 Requirements:
 

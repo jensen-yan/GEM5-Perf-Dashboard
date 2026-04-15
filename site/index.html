@@ -62,11 +62,38 @@
           <div id="chart-empty" class="empty hidden">No data available for this dataset.</div>
         </section>
 
+        <section class="panel table-panel">
+          <div class="table-toolbar">
+            <div class="toolbar-copy">
+              <span class="eyebrow">Data Table</span>
+              <strong id="table-title">Loading...</strong>
+            </div>
+            <button id="table-fullscreen-button" class="table-button" type="button">Fullscreen</button>
+          </div>
+          <div class="table-scroll" id="table-frame"></div>
+        </section>
+
         <section class="panel detail-panel" id="point-detail">
           <h3>Point Detail</h3>
           <p>Select a point on the chart.</p>
         </section>
       </main>
+    </div>
+
+    <div class="table-modal hidden" id="table-modal" aria-hidden="true">
+      <div class="table-modal-backdrop" id="table-modal-backdrop"></div>
+      <section class="table-modal-sheet">
+        <div class="table-toolbar table-toolbar-modal">
+          <div class="toolbar-copy">
+            <span class="eyebrow">Fullscreen Table</span>
+            <strong id="table-modal-title">Loading...</strong>
+          </div>
+          <button id="table-close-button" class="table-button table-button-secondary" type="button">
+            Close
+          </button>
+        </div>
+        <div class="table-scroll table-scroll-modal" id="table-frame-modal"></div>
+      </section>
     </div>
 
     <script src="app.js" type="module"></script>

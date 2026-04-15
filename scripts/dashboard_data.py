@@ -16,8 +16,12 @@ class DatasetConfig:
     toolchain: str
     coverage: str
     workflow_name: str
+    workflow_path: str
     artifact_name: str
     archive_subdir: str
+
+
+MAINLINE_BRANCH = "xs-dev"
 
 
 DATASETS = [
@@ -28,6 +32,7 @@ DATASETS = [
         toolchain="gcc12",
         coverage="0.3c",
         workflow_name="gem5 Align BTB Performance Test(0.3c)",
+        workflow_path=".github/workflows/gem5-ideal-btb-0.3c.yml",
         artifact_name="performance-score-gcc12-spec06-0.3c",
         archive_subdir="gcc12-spec06-0.3c",
     ),
@@ -38,6 +43,7 @@ DATASETS = [
         toolchain="gcc15",
         coverage="0.3c",
         workflow_name="gem5 Align BTB Performance Test(0.3c)",
+        workflow_path=".github/workflows/gem5-ideal-btb-0.3c.yml",
         artifact_name="performance-score-gcc15-spec06-0.3c",
         archive_subdir="gcc15-spec06-0.3c",
     ),
@@ -48,6 +54,7 @@ DATASETS = [
         toolchain="gcc12",
         coverage="0.8c",
         workflow_name="gem5 Ideal BTB Performance Test",
+        workflow_path=".github/workflows/gem5-ideal-btb-perf.yml",
         artifact_name="performance-score-gcc12-spec06-0.8c",
         archive_subdir="gcc12-spec06-0.8c",
     ),
@@ -58,6 +65,7 @@ DATASETS = [
         toolchain="gcc15",
         coverage="0.8c",
         workflow_name="gem5 Ideal BTB Performance Test",
+        workflow_path=".github/workflows/gem5-ideal-btb-perf.yml",
         artifact_name="performance-score-gcc15-spec06-0.8c",
         archive_subdir="gcc15-spec06-0.8c",
     ),
@@ -127,17 +135,23 @@ def make_commit_url(sha: str) -> str:
     return f"https://github.com/OpenXiangShan/GEM5/commit/{sha}"
 
 
+def run_matches_dataset(run: dict[str, Any], dataset: DatasetConfig) -> bool:
+    """Return True when a workflow run matches the exact dashboard dataset source."""
+    workflow_path = str(run.get("path", "")).split("@", 1)[0]
+    return (
+        run.get("event") == "push"
+        and run.get("head_branch") == MAINLINE_BRANCH
+        and run.get("name") == dataset.workflow_name
+        and workflow_path == dataset.workflow_path
+    )
+
+
 def classify_run(run: dict[str, Any], artifact_name: str) -> DatasetConfig | None:
     """Map a GitHub Actions run plus artifact to one dashboard dataset."""
-    if run.get("event") != "push":
-        return None
-    if run.get("head_branch") != "xs-dev":
-        return None
-
     dataset = DATASET_BY_ARTIFACT.get(artifact_name)
     if not dataset:
         return None
-    if run.get("name") != dataset.workflow_name:
+    if not run_matches_dataset(run, dataset):
         return None
     return dataset
 

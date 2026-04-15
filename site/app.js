@@ -5,6 +5,7 @@ import {
   latestSummary,
   resolveSeries,
 } from "./chart-helpers.mjs";
+import { buildTableModel } from "./table-helpers.mjs";
 
 const manifestPath = "./data/manifest.json";
 const palette = [
@@ -41,6 +42,14 @@ const legendRoot = document.getElementById("chart-legend");
 const chart = document.getElementById("chart");
 const chartEmpty = document.getElementById("chart-empty");
 const pointDetail = document.getElementById("point-detail");
+const tableTitle = document.getElementById("table-title");
+const tableFrame = document.getElementById("table-frame");
+const tableModal = document.getElementById("table-modal");
+const tableModalTitle = document.getElementById("table-modal-title");
+const tableFrameModal = document.getElementById("table-frame-modal");
+const tableFullscreenButton = document.getElementById("table-fullscreen-button");
+const tableCloseButton = document.getElementById("table-close-button");
+const tableModalBackdrop = document.getElementById("table-modal-backdrop");
 
 async function loadJson(path) {
   const response = await fetch(path);
@@ -116,6 +125,70 @@ function renderMeta(dataset) {
       <dt>Points</dt><dd>${dataset.points.length}</dd>
     </dl>
   `;
+}
+
+function tableHeading(benchmark) {
+  return benchmark === ALL_SPECINT_OPTION ? "All metric history per point" : `${benchmark} history`;
+}
+
+function resolveTableCell(row, column) {
+  if (column.key.startsWith("metric:")) {
+    return row.metrics?.[column.key.slice("metric:".length)] ?? "-";
+  }
+  return row[column.key] ?? "-";
+}
+
+function buildTableElement(model) {
+  if (!model.rows.length) {
+    const empty = document.createElement("div");
+    empty.className = "table-empty";
+    empty.textContent = "No rows available for this selection.";
+    return empty;
+  }
+
+  const table = document.createElement("table");
+  table.className = "data-table";
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+  model.columns.forEach((column) => {
+    const th = document.createElement("th");
+    th.textContent = column.label;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  model.rows.forEach((row) => {
+    const tr = document.createElement("tr");
+    model.columns.forEach((column) => {
+      const td = document.createElement("td");
+      const value = resolveTableCell(row, column);
+      td.textContent = String(value);
+      if (column.key === "title") {
+        td.className = "table-title-cell";
+      }
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  return table;
+}
+
+function setTableModalOpen(isOpen) {
+  tableModal.classList.toggle("hidden", !isOpen);
+  tableModal.setAttribute("aria-hidden", String(!isOpen));
+  document.body.classList.toggle("modal-open", isOpen);
+}
+
+function renderTable(dataset, benchmark) {
+  const heading = tableHeading(benchmark);
+  const model = buildTableModel(dataset, benchmark);
+  tableTitle.textContent = heading;
+  tableModalTitle.textContent = `${dataset.dataset.label} - ${heading}`;
+  tableFrame.replaceChildren(buildTableElement(model));
+  tableFrameModal.replaceChildren(buildTableElement(model));
 }
 
 function renderBenchmarks(dataset) {
@@ -456,6 +529,7 @@ function render() {
   renderMeta(dataset);
   renderBenchmarks(dataset);
   renderChart(dataset, state.currentBenchmark);
+  renderTable(dataset, state.currentBenchmark);
 }
 
 async function main() {
@@ -479,10 +553,26 @@ benchmarkSelect.addEventListener("change", (event) => {
   render();
 });
 
+tableFullscreenButton.addEventListener("click", () => setTableModalOpen(true));
+tableCloseButton.addEventListener("click", () => setTableModalOpen(false));
+tableModalBackdrop.addEventListener("click", () => setTableModalOpen(false));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    setTableModalOpen(false);
+  }
+});
+
 main().catch((error) => {
   chartTitle.textContent = "Failed to load dashboard data";
   chartNote.textContent = "Check generated JSON and local server path.";
   chartEmpty.classList.remove("hidden");
   chart.classList.add("hidden");
   chartEmpty.textContent = error.message;
+  tableTitle.textContent = "Failed to load table data";
+  tableModalTitle.textContent = "Failed to load table data";
+  const message = document.createElement("div");
+  message.className = "table-empty";
+  message.textContent = error.message;
+  tableFrame.replaceChildren(message);
+  tableFrameModal.replaceChildren(message.cloneNode(true));
 });

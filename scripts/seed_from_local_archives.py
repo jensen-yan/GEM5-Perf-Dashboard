@@ -9,11 +9,28 @@ import subprocess
 import sys
 from typing import Any
 
-from dashboard_data import DATASETS, benchmark_metrics, make_commit_url, parse_score_text
+try:
+    from .dashboard_data import (
+        DATASETS,
+        benchmark_metrics,
+        make_commit_url,
+        parse_score_text,
+        run_matches_dataset,
+    )
+except ImportError:
+    from dashboard_data import (
+        DATASETS,
+        benchmark_metrics,
+        make_commit_url,
+        parse_score_text,
+        run_matches_dataset,
+    )
 
 DEFAULT_ARCHIVE_ROOT = Path('/nfs/home/share/gem5_ci/performance_data')
 DEFAULT_GEM5_REPO = Path('/nfs/home/yanyue/workspace/GEM5_4')
 DEFAULT_OUT_DIR = Path(__file__).resolve().parent.parent / 'site' / 'data'
+OWNER = 'OpenXiangShan'
+REPO = 'GEM5'
 
 
 def read_metadata(path: Path) -> dict[str, str]:
@@ -36,6 +53,31 @@ def commit_subject(gem5_repo: Path, sha: str) -> str:
     )
     title = result.stdout.strip()
     return title or sha[:10]
+
+
+def gh_api_json(path: str) -> Any:
+    result = subprocess.run(
+        ['gh', 'api', path],
+        check=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    return json.loads(result.stdout)
+
+
+def fetch_run_details(run_id: int, cache: dict[int, dict[str, Any] | None]) -> dict[str, Any] | None:
+    if run_id in cache:
+        return cache[run_id]
+
+    try:
+        run = gh_api_json(f'repos/{OWNER}/{REPO}/actions/runs/{run_id}')
+    except subprocess.CalledProcessError:
+        cache[run_id] = None
+        return None
+
+    cache[run_id] = run
+    return run
 
 
 def write_outputs(points_by_dataset: dict[str, list[dict[str, Any]]], out_dir: Path) -> None:
@@ -76,13 +118,14 @@ def main(argv: list[str]) -> int:
     args = parser.parse_args(argv)
 
     points_by_dataset: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    run_cache: dict[int, dict[str, Any] | None] = {}
 
     for dataset in DATASETS:
         root = args.archive_root / dataset.archive_subdir
         if not root.exists():
             continue
         candidates = []
-        for run_dir in sorted(root.iterdir()):
+        for run_dir in sorted(root.iterdir(), reverse=True):
             metadata_path = run_dir / 'metadata.txt'
             score_path = run_dir / 'score.txt'
             if not metadata_path.exists() or not score_path.exists():
@@ -90,9 +133,17 @@ def main(argv: list[str]) -> int:
             metadata = read_metadata(metadata_path)
             if metadata.get('branch') != 'xs-dev':
                 continue
+            run_id = int(metadata.get('workflow_run_id', '0'))
+            if run_id <= 0:
+                continue
+            run = fetch_run_details(run_id, run_cache)
+            if run is None or not run_matches_dataset(run, dataset):
+                continue
             candidates.append((run_dir, metadata))
+            if len(candidates) >= args.limit_per_dataset:
+                break
 
-        for run_dir, metadata in candidates[-args.limit_per_dataset:]:
+        for run_dir, metadata in reversed(candidates):
             try:
                 parsed = parse_score_text((run_dir / 'score.txt').read_text(encoding='utf-8', errors='ignore'))
             except ValueError as err:
