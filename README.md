@@ -1,6 +1,7 @@
 # GEM5 Perf Dashboard
 
 A lightweight static dashboard for recent GEM5 `score.txt` trends.
+The published site consumes generated JSON directly; it does not require a CSV export step.
 
 ## What it shows
 
@@ -85,3 +86,9 @@ The MVP focuses on recent mainline-style datasets:
 
 A sample Pages workflow is included at `.github/workflows/deploy-pages.yml`.
 Once this repo is pushed to GitHub and Pages is enabled, the workflow publishes the `site/` directory.
+
+## Automating Data Refresh
+
+`.github/workflows/update-data.yml` can refresh `site/data` automatically from GitHub Actions
+artifacts every day at `01:00 UTC`, which is `09:00` China Standard Time, and it also supports
+manual dispatch.

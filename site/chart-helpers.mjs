@@ -50,3 +50,7 @@ export function latestSummary(dataset, selectedBenchmark) {
   const value = latest.metrics?.[selectedBenchmark];
   return typeof value === "number" ? value.toFixed(3) : "-";
 }
+
+export function chartFullscreenButtonLabel(isFullscreen) {
+  return isFullscreen ? "Exit Fullscreen" : "Fullscreen Chart";
+}

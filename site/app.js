@@ -2,6 +2,7 @@ import {
   ALL_SPECINT_OPTION,
   AVG_LABEL,
   buildBenchmarkOptions,
+  chartFullscreenButtonLabel,
   latestSummary,
   resolveSeries,
 } from "./chart-helpers.mjs";
@@ -42,6 +43,8 @@ const legendRoot = document.getElementById("chart-legend");
 const chart = document.getElementById("chart");
 const chartEmpty = document.getElementById("chart-empty");
 const pointDetail = document.getElementById("point-detail");
+const chartPanel = document.querySelector(".chart-panel");
+const chartFullscreenButton = document.getElementById("chart-fullscreen-button");
 const tableTitle = document.getElementById("table-title");
 const tableFrame = document.getElementById("table-frame");
 const tableModal = document.getElementById("table-modal");
@@ -189,6 +192,10 @@ function renderTable(dataset, benchmark) {
   tableModalTitle.textContent = `${dataset.dataset.label} - ${heading}`;
   tableFrame.replaceChildren(buildTableElement(model));
   tableFrameModal.replaceChildren(buildTableElement(model));
+}
+
+function updateChartFullscreenButton() {
+  chartFullscreenButton.textContent = chartFullscreenButtonLabel(Boolean(document.fullscreenElement));
 }
 
 function renderBenchmarks(dataset) {
@@ -561,6 +568,17 @@ document.addEventListener("keydown", (event) => {
     setTableModalOpen(false);
   }
 });
+
+chartFullscreenButton.addEventListener("click", async () => {
+  if (document.fullscreenElement) {
+    await document.exitFullscreen();
+    return;
+  }
+  await chartPanel.requestFullscreen();
+});
+
+document.addEventListener("fullscreenchange", updateChartFullscreenButton);
+updateChartFullscreenButton();
 
 main().catch((error) => {
   chartTitle.textContent = "Failed to load dashboard data";

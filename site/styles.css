@@ -187,6 +187,12 @@ select:focus {
   margin-bottom: 12px;
 }
 
+.chart-toolbar-actions {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
 .toolbar-copy strong {
   display: block;
   margin-top: 4px;
@@ -319,6 +325,19 @@ select:focus {
     linear-gradient(180deg, rgba(255, 254, 251, 0.96) 0, rgba(249, 242, 231, 0.82) 100%);
   border: 1px solid rgba(181, 159, 126, 0.3);
   overflow: hidden;
+}
+
+.chart-panel:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 22px;
+  border-radius: 0;
+  background: rgba(255, 252, 246, 0.98);
+}
+
+.chart-panel:fullscreen .chart-frame {
+  height: calc(100vh - 140px);
 }
 
 #chart {
@@ -503,6 +522,11 @@ code {
 
   .chart-legend {
     justify-content: flex-start;
+  }
+
+  .chart-toolbar-actions {
+    width: 100%;
+    flex-direction: column;
   }
 
   .table-toolbar {

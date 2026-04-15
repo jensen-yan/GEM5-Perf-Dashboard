@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   ALL_SPECINT_OPTION,
   buildBenchmarkOptions,
+  chartFullscreenButtonLabel,
   resolveSeries,
 } from "../site/chart-helpers.mjs";
 
@@ -50,5 +51,8 @@ assert.deepEqual(
   allSeries.map((series) => series.name),
   ["astar", "gcc", "mcf"],
 );
+
+assert.equal(chartFullscreenButtonLabel(false), "Fullscreen Chart");
+assert.equal(chartFullscreenButtonLabel(true), "Exit Fullscreen");
 
 console.log("chart helpers ok");

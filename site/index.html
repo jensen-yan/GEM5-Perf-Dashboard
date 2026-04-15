@@ -54,12 +54,22 @@
               <span class="eyebrow">Chart Mode</span>
               <strong id="mode-label">Single line</strong>
             </div>
-            <div class="chart-legend" id="chart-legend"></div>
+            <div class="chart-toolbar-actions">
+              <div class="chart-legend" id="chart-legend"></div>
+              <button id="chart-fullscreen-button" class="table-button" type="button">
+                Fullscreen Chart
+              </button>
+            </div>
           </div>
           <div class="chart-frame">
             <svg id="chart" viewBox="0 0 960 420" preserveAspectRatio="none"></svg>
           </div>
           <div id="chart-empty" class="empty hidden">No data available for this dataset.</div>
+        </section>
+
+        <section class="panel detail-panel" id="point-detail">
+          <h3>Point Detail</h3>
+          <p>Select a point on the chart.</p>
         </section>
 
         <section class="panel table-panel">
@@ -71,11 +81,6 @@
             <button id="table-fullscreen-button" class="table-button" type="button">Fullscreen</button>
           </div>
           <div class="table-scroll" id="table-frame"></div>
-        </section>
-
-        <section class="panel detail-panel" id="point-detail">
-          <h3>Point Detail</h3>
-          <p>Select a point on the chart.</p>
         </section>
       </main>
     </div>
