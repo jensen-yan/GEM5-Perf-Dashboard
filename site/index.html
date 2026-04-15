@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GEM5 Perf Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">GEM5 Performance</p>
+          <h1>Perf Dashboard</h1>
+          <p class="intro">
+            Recent mainline score trends for `kmhv3` and `idealkmhv3`.
+            The chart stays intentionally simple: one selected line at a time.
+          </p>
+        </div>
+
+        <section class="panel controls">
+          <label for="dataset-select">Dataset</label>
+          <select id="dataset-select"></select>
+
+          <label for="benchmark-select">Line</label>
+          <select id="benchmark-select"></select>
+        </section>
+
+        <section class="panel meta" id="dataset-meta"></section>
+      </aside>
+
+      <main class="content">
+        <section class="hero panel">
+          <div>
+            <p class="eyebrow">Trend</p>
+            <h2 id="chart-title">Loading...</h2>
+            <p class="hero-note" id="chart-note">Recent mainline performance history.</p>
+          </div>
+          <div class="hero-stats">
+            <div>
+              <span class="stat-label">Points</span>
+              <strong id="point-count">-</strong>
+            </div>
+            <div>
+              <span class="stat-label">Latest</span>
+              <strong id="latest-value">-</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel chart-panel">
+          <div class="chart-toolbar">
+            <div class="toolbar-copy">
+              <span class="eyebrow">Chart Mode</span>
+              <strong id="mode-label">Single line</strong>
+            </div>
+            <div class="chart-legend" id="chart-legend"></div>
+          </div>
+          <div class="chart-frame">
+            <svg id="chart" viewBox="0 0 960 420" preserveAspectRatio="none"></svg>
+          </div>
+          <div id="chart-empty" class="empty hidden">No data available for this dataset.</div>
+        </section>
+
+        <section class="panel detail-panel" id="point-detail">
+          <h3>Point Detail</h3>
+          <p>Select a point on the chart.</p>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

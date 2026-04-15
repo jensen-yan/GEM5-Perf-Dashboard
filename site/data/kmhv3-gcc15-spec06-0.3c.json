@@ -1,0 +1,422 @@
+{
+  "dataset": {
+    "id": "kmhv3-gcc15-spec06-0.3c",
+    "label": "kmhv3 / gcc15 / SPEC06 0.3c",
+    "config": "kmhv3",
+    "toolchain": "gcc15",
+    "coverage": "0.3c"
+  },
+  "benchmarks": [
+    "SPECint avg",
+    "astar",
+    "bzip2",
+    "gcc",
+    "gobmk",
+    "h264ref",
+    "hmmer",
+    "libquantum",
+    "mcf",
+    "omnetpp",
+    "perlbench",
+    "sjeng",
+    "xalancbmk"
+  ],
+  "points": [
+    {
+      "run_id": 24332606004,
+      "run_number": 474,
+      "created_at": "20260413_181611",
+      "commit": "eb6a3fb2ebef15389936617716a07aa639eedc99",
+      "short_commit": "eb6a3fb2eb",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/eb6a3fb2ebef15389936617716a07aa639eedc99",
+      "title": "[codex] Update CI perf defaults and checkout action (#825)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24332606004",
+      "metrics": {
+        "SPECint avg": 18.733949212058057,
+        "perlbench": 17.548,
+        "bzip2": 11.089,
+        "gcc": 19.064,
+        "mcf": 17.112,
+        "gobmk": 14.527,
+        "hmmer": 18.636,
+        "sjeng": 13.206,
+        "libquantum": 45.435,
+        "h264ref": 24.125,
+        "omnetpp": 14.841,
+        "astar": 19.086,
+        "xalancbmk": 26.519
+      },
+      "details": {
+        "perlbench": {
+          "time": 185.586,
+          "ref_time": 9770.0,
+          "score": 17.548,
+          "coverage": 0.454
+        },
+        "bzip2": {
+          "time": 290.087,
+          "ref_time": 9650.0,
+          "score": 11.089,
+          "coverage": 0.349
+        },
+        "gcc": {
+          "time": 140.752,
+          "ref_time": 8050.0,
+          "score": 19.064,
+          "coverage": 0.367
+        },
+        "mcf": {
+          "time": 177.652,
+          "ref_time": 9120.0,
+          "score": 17.112,
+          "coverage": 0.341
+        },
+        "gobmk": {
+          "time": 240.698,
+          "ref_time": 10490.0,
+          "score": 14.527,
+          "coverage": 0.346
+        },
+        "hmmer": {
+          "time": 166.877,
+          "ref_time": 9330.0,
+          "score": 18.636,
+          "coverage": 0.379
+        },
+        "sjeng": {
+          "time": 305.412,
+          "ref_time": 12100.0,
+          "score": 13.206,
+          "coverage": 0.33
+        },
+        "libquantum": {
+          "time": 152.013,
+          "ref_time": 20720.0,
+          "score": 45.435,
+          "coverage": 0.33
+        },
+        "h264ref": {
+          "time": 305.768,
+          "ref_time": 22130.0,
+          "score": 24.125,
+          "coverage": 0.34
+        },
+        "omnetpp": {
+          "time": 140.377,
+          "ref_time": 6250.0,
+          "score": 14.841,
+          "coverage": 0.377
+        },
+        "astar": {
+          "time": 122.602,
+          "ref_time": 7020.0,
+          "score": 19.086,
+          "coverage": 0.355
+        },
+        "xalancbmk": {
+          "time": 86.73,
+          "ref_time": 6900.0,
+          "score": 26.519,
+          "coverage": 0.309
+        }
+      }
+    },
+    {
+      "run_id": 24384145448,
+      "run_number": 482,
+      "created_at": "20260414_153328",
+      "commit": "2cf3e3895f015372314a9d6f5bfe3a9c75774ec2",
+      "short_commit": "2cf3e38",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/2cf3e3895f015372314a9d6f5bfe3a9c75774ec2",
+      "title": "cpu: Align BTB TAGE useful and allocation semantics (#828)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24384145448",
+      "metrics": {
+        "SPECint avg": 18.6984175018564,
+        "perlbench": 17.54,
+        "bzip2": 11.088,
+        "gcc": 19.043,
+        "mcf": 17.004,
+        "gobmk": 14.291,
+        "hmmer": 18.647,
+        "sjeng": 13.146,
+        "libquantum": 45.439,
+        "h264ref": 24.117,
+        "omnetpp": 14.895,
+        "astar": 19.129,
+        "xalancbmk": 26.517
+      },
+      "details": {
+        "perlbench": {
+          "time": 185.667,
+          "ref_time": 9770.0,
+          "score": 17.54,
+          "coverage": 0.454
+        },
+        "bzip2": {
+          "time": 290.099,
+          "ref_time": 9650.0,
+          "score": 11.088,
+          "coverage": 0.349
+        },
+        "gcc": {
+          "time": 140.91,
+          "ref_time": 8050.0,
+          "score": 19.043,
+          "coverage": 0.367
+        },
+        "mcf": {
+          "time": 178.777,
+          "ref_time": 9120.0,
+          "score": 17.004,
+          "coverage": 0.341
+        },
+        "gobmk": {
+          "time": 244.678,
+          "ref_time": 10490.0,
+          "score": 14.291,
+          "coverage": 0.346
+        },
+        "hmmer": {
+          "time": 166.781,
+          "ref_time": 9330.0,
+          "score": 18.647,
+          "coverage": 0.379
+        },
+        "sjeng": {
+          "time": 306.815,
+          "ref_time": 12100.0,
+          "score": 13.146,
+          "coverage": 0.33
+        },
+        "libquantum": {
+          "time": 151.998,
+          "ref_time": 20720.0,
+          "score": 45.439,
+          "coverage": 0.33
+        },
+        "h264ref": {
+          "time": 305.874,
+          "ref_time": 22130.0,
+          "score": 24.117,
+          "coverage": 0.34
+        },
+        "omnetpp": {
+          "time": 139.868,
+          "ref_time": 6250.0,
+          "score": 14.895,
+          "coverage": 0.377
+        },
+        "astar": {
+          "time": 122.326,
+          "ref_time": 7020.0,
+          "score": 19.129,
+          "coverage": 0.355
+        },
+        "xalancbmk": {
+          "time": 86.738,
+          "ref_time": 6900.0,
+          "score": 26.517,
+          "coverage": 0.309
+        }
+      }
+    },
+    {
+      "run_id": 24384266897,
+      "run_number": 483,
+      "created_at": "20260414_192008",
+      "commit": "f146dd144db2ed497809b3261921dd1ad5a85e6a",
+      "short_commit": "f146dd144d",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/f146dd144db2ed497809b3261921dd1ad5a85e6a",
+      "title": "mem: Stream large zstd GCPT restores (#829)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24384266897",
+      "metrics": {
+        "SPECint avg": 18.70734519763188,
+        "perlbench": 17.535,
+        "bzip2": 11.089,
+        "gcc": 19.041,
+        "mcf": 17.004,
+        "gobmk": 14.291,
+        "hmmer": 18.647,
+        "sjeng": 13.146,
+        "libquantum": 45.439,
+        "h264ref": 24.117,
+        "omnetpp": 14.985,
+        "astar": 19.129,
+        "xalancbmk": 26.518
+      },
+      "details": {
+        "perlbench": {
+          "time": 185.719,
+          "ref_time": 9770.0,
+          "score": 17.535,
+          "coverage": 0.454
+        },
+        "bzip2": {
+          "time": 290.082,
+          "ref_time": 9650.0,
+          "score": 11.089,
+          "coverage": 0.349
+        },
+        "gcc": {
+          "time": 140.927,
+          "ref_time": 8050.0,
+          "score": 19.041,
+          "coverage": 0.367
+        },
+        "mcf": {
+          "time": 178.777,
+          "ref_time": 9120.0,
+          "score": 17.004,
+          "coverage": 0.341
+        },
+        "gobmk": {
+          "time": 244.681,
+          "ref_time": 10490.0,
+          "score": 14.291,
+          "coverage": 0.346
+        },
+        "hmmer": {
+          "time": 166.781,
+          "ref_time": 9330.0,
+          "score": 18.647,
+          "coverage": 0.379
+        },
+        "sjeng": {
+          "time": 306.815,
+          "ref_time": 12100.0,
+          "score": 13.146,
+          "coverage": 0.33
+        },
+        "libquantum": {
+          "time": 151.998,
+          "ref_time": 20720.0,
+          "score": 45.439,
+          "coverage": 0.33
+        },
+        "h264ref": {
+          "time": 305.874,
+          "ref_time": 22130.0,
+          "score": 24.117,
+          "coverage": 0.34
+        },
+        "omnetpp": {
+          "time": 139.028,
+          "ref_time": 6250.0,
+          "score": 14.985,
+          "coverage": 0.377
+        },
+        "astar": {
+          "time": 122.326,
+          "ref_time": 7020.0,
+          "score": 19.129,
+          "coverage": 0.355
+        },
+        "xalancbmk": {
+          "time": 86.733,
+          "ref_time": 6900.0,
+          "score": 26.518,
+          "coverage": 0.309
+        }
+      }
+    },
+    {
+      "run_id": 24394540767,
+      "run_number": 486,
+      "created_at": "20260414_194139",
+      "commit": "cac9b46979ba13bbcbdf05ca8edc33f9567bc100",
+      "short_commit": "cac9b46",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/cac9b46979ba13bbcbdf05ca8edc33f9567bc100",
+      "title": "arch-riscv,configs: Add SE matrix smoke support (#819)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24394540767",
+      "metrics": {
+        "SPECint avg": 18.705636233446388,
+        "perlbench": 17.538,
+        "bzip2": 11.086,
+        "gcc": 19.047,
+        "mcf": 17.004,
+        "gobmk": 14.292,
+        "hmmer": 18.649,
+        "sjeng": 13.146,
+        "libquantum": 45.439,
+        "h264ref": 24.126,
+        "omnetpp": 14.951,
+        "astar": 19.137,
+        "xalancbmk": 26.517
+      },
+      "details": {
+        "perlbench": {
+          "time": 185.697,
+          "ref_time": 9770.0,
+          "score": 17.538,
+          "coverage": 0.454
+        },
+        "bzip2": {
+          "time": 290.144,
+          "ref_time": 9650.0,
+          "score": 11.086,
+          "coverage": 0.349
+        },
+        "gcc": {
+          "time": 140.88,
+          "ref_time": 8050.0,
+          "score": 19.047,
+          "coverage": 0.367
+        },
+        "mcf": {
+          "time": 178.777,
+          "ref_time": 9120.0,
+          "score": 17.004,
+          "coverage": 0.341
+        },
+        "gobmk": {
+          "time": 244.663,
+          "ref_time": 10490.0,
+          "score": 14.292,
+          "coverage": 0.346
+        },
+        "hmmer": {
+          "time": 166.766,
+          "ref_time": 9330.0,
+          "score": 18.649,
+          "coverage": 0.379
+        },
+        "sjeng": {
+          "time": 306.815,
+          "ref_time": 12100.0,
+          "score": 13.146,
+          "coverage": 0.33
+        },
+        "libquantum": {
+          "time": 151.998,
+          "ref_time": 20720.0,
+          "score": 45.439,
+          "coverage": 0.33
+        },
+        "h264ref": {
+          "time": 305.755,
+          "ref_time": 22130.0,
+          "score": 24.126,
+          "coverage": 0.34
+        },
+        "omnetpp": {
+          "time": 139.342,
+          "ref_time": 6250.0,
+          "score": 14.951,
+          "coverage": 0.377
+        },
+        "astar": {
+          "time": 122.274,
+          "ref_time": 7020.0,
+          "score": 19.137,
+          "coverage": 0.355
+        },
+        "xalancbmk": {
+          "time": 86.738,
+          "ref_time": 6900.0,
+          "score": 26.517,
+          "coverage": 0.309
+        }
+      }
+    }
+  ]
+}
