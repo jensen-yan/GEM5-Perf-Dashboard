@@ -176,7 +176,7 @@ select:focus {
 
 .chart-panel {
   padding: 18px;
-  min-height: 860px;
+  min-height: 760px;
 }
 
 .chart-toolbar {
@@ -352,7 +352,7 @@ button.legend-chip,
 
 .chart-frame {
   width: 100%;
-  height: 760px;
+  height: 720px;
   border-radius: 20px;
   background:
     linear-gradient(180deg, rgba(255, 254, 251, 0.96) 0, rgba(249, 242, 231, 0.82) 100%);
