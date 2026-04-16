@@ -25,7 +25,7 @@
     {
       "run_id": 24332606004,
       "run_number": 474,
-      "created_at": "20260413_181611",
+      "created_at": "2026-04-13T08:06:05Z",
       "commit": "eb6a3fb2ebef15389936617716a07aa639eedc99",
       "short_commit": "eb6a3fb2eb",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/eb6a3fb2ebef15389936617716a07aa639eedc99",
@@ -124,9 +124,9 @@
     {
       "run_id": 24384145448,
       "run_number": 482,
-      "created_at": "20260414_153328",
+      "created_at": "2026-04-14T06:18:46Z",
       "commit": "2cf3e3895f015372314a9d6f5bfe3a9c75774ec2",
-      "short_commit": "2cf3e38",
+      "short_commit": "2cf3e3895f",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/2cf3e3895f015372314a9d6f5bfe3a9c75774ec2",
       "title": "cpu: Align BTB TAGE useful and allocation semantics (#828)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24384145448",
@@ -223,7 +223,7 @@
     {
       "run_id": 24384266897,
       "run_number": 483,
-      "created_at": "20260414_192008",
+      "created_at": "2026-04-14T06:22:34Z",
       "commit": "f146dd144db2ed497809b3261921dd1ad5a85e6a",
       "short_commit": "f146dd144d",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/f146dd144db2ed497809b3261921dd1ad5a85e6a",
@@ -322,9 +322,9 @@
     {
       "run_id": 24394540767,
       "run_number": 486,
-      "created_at": "20260414_194139",
+      "created_at": "2026-04-14T10:40:51Z",
       "commit": "cac9b46979ba13bbcbdf05ca8edc33f9567bc100",
-      "short_commit": "cac9b46",
+      "short_commit": "cac9b46979",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/cac9b46979ba13bbcbdf05ca8edc33f9567bc100",
       "title": "arch-riscv,configs: Add SE matrix smoke support (#819)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24394540767",

@@ -23,407 +23,11 @@
   ],
   "points": [
     {
-      "run_id": 23039279200,
-      "run_number": 1332,
-      "created_at": "20260313_160915",
-      "commit": "404edac7a374be3a92f6449375b7b1ca7d08244c",
-      "short_commit": "404edac7a",
-      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/404edac7a374be3a92f6449375b7b1ca7d08244c",
-      "title": "cpu-o3: multi thread shared storebuffer (#780)",
-      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/23039279200",
-      "metrics": {
-        "SPECint avg": 20.691253179375035,
-        "perlbench": 16.931,
-        "bzip2": 11.265,
-        "gcc": 21.158,
-        "mcf": 34.642,
-        "gobmk": 15.613,
-        "hmmer": 17.065,
-        "sjeng": 13.148,
-        "libquantum": 46.858,
-        "h264ref": 25.231,
-        "omnetpp": 21.869,
-        "astar": 14.334,
-        "xalancbmk": 33.93
-      },
-      "details": {
-        "perlbench": {
-          "time": 192.355,
-          "ref_time": 9770.0,
-          "score": 16.931,
-          "coverage": 0.842
-        },
-        "bzip2": {
-          "time": 285.541,
-          "ref_time": 9650.0,
-          "score": 11.265,
-          "coverage": 0.813
-        },
-        "gcc": {
-          "time": 126.825,
-          "ref_time": 8050.0,
-          "score": 21.158,
-          "coverage": 0.82
-        },
-        "mcf": {
-          "time": 87.754,
-          "ref_time": 9120.0,
-          "score": 34.642,
-          "coverage": 0.841
-        },
-        "gobmk": {
-          "time": 223.953,
-          "ref_time": 10490.0,
-          "score": 15.613,
-          "coverage": 0.819
-        },
-        "hmmer": {
-          "time": 182.243,
-          "ref_time": 9330.0,
-          "score": 17.065,
-          "coverage": 0.809
-        },
-        "sjeng": {
-          "time": 306.752,
-          "ref_time": 12100.0,
-          "score": 13.148,
-          "coverage": 0.831
-        },
-        "libquantum": {
-          "time": 147.396,
-          "ref_time": 20720.0,
-          "score": 46.858,
-          "coverage": 0.808
-        },
-        "h264ref": {
-          "time": 292.365,
-          "ref_time": 22130.0,
-          "score": 25.231,
-          "coverage": 0.826
-        },
-        "omnetpp": {
-          "time": 95.266,
-          "ref_time": 6250.0,
-          "score": 21.869,
-          "coverage": 0.809
-        },
-        "astar": {
-          "time": 163.254,
-          "ref_time": 7020.0,
-          "score": 14.334,
-          "coverage": 0.808
-        },
-        "xalancbmk": {
-          "time": 67.787,
-          "ref_time": 6900.0,
-          "score": 33.93,
-          "coverage": 0.806
-        }
-      }
-    },
-    {
-      "run_id": 23047627155,
-      "run_number": 1335,
-      "created_at": "20260313_231015",
-      "commit": "f815a13a99660220d44ad347fc3a33846655e461",
-      "short_commit": "f815a13",
-      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/f815a13a99660220d44ad347fc3a33846655e461",
-      "title": "cpu-o3: change intel fewops from 4 to 8 (#758)",
-      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/23047627155",
-      "metrics": {
-        "SPECint avg": 20.686461039474736,
-        "perlbench": 16.919,
-        "bzip2": 11.264,
-        "gcc": 21.155,
-        "mcf": 34.653,
-        "gobmk": 15.615,
-        "hmmer": 17.065,
-        "sjeng": 13.148,
-        "libquantum": 46.858,
-        "h264ref": 25.232,
-        "omnetpp": 21.826,
-        "astar": 14.334,
-        "xalancbmk": 33.916
-      },
-      "details": {
-        "perlbench": {
-          "time": 192.483,
-          "ref_time": 9770.0,
-          "score": 16.919,
-          "coverage": 0.842
-        },
-        "bzip2": {
-          "time": 285.558,
-          "ref_time": 9650.0,
-          "score": 11.264,
-          "coverage": 0.813
-        },
-        "gcc": {
-          "time": 126.839,
-          "ref_time": 8050.0,
-          "score": 21.155,
-          "coverage": 0.82
-        },
-        "mcf": {
-          "time": 87.727,
-          "ref_time": 9120.0,
-          "score": 34.653,
-          "coverage": 0.841
-        },
-        "gobmk": {
-          "time": 223.935,
-          "ref_time": 10490.0,
-          "score": 15.615,
-          "coverage": 0.819
-        },
-        "hmmer": {
-          "time": 182.243,
-          "ref_time": 9330.0,
-          "score": 17.065,
-          "coverage": 0.809
-        },
-        "sjeng": {
-          "time": 306.752,
-          "ref_time": 12100.0,
-          "score": 13.148,
-          "coverage": 0.831
-        },
-        "libquantum": {
-          "time": 147.396,
-          "ref_time": 20720.0,
-          "score": 46.858,
-          "coverage": 0.808
-        },
-        "h264ref": {
-          "time": 292.357,
-          "ref_time": 22130.0,
-          "score": 25.232,
-          "coverage": 0.826
-        },
-        "omnetpp": {
-          "time": 95.454,
-          "ref_time": 6250.0,
-          "score": 21.826,
-          "coverage": 0.809
-        },
-        "astar": {
-          "time": 163.249,
-          "ref_time": 7020.0,
-          "score": 14.334,
-          "coverage": 0.808
-        },
-        "xalancbmk": {
-          "time": 67.814,
-          "ref_time": 6900.0,
-          "score": 33.916,
-          "coverage": 0.806
-        }
-      }
-    },
-    {
-      "run_id": 23126321575,
-      "run_number": 1336,
-      "created_at": "20260316_123057",
-      "commit": "dbc37824563cc1c6ff796406d7fda046d1050934",
-      "short_commit": "dbc3782",
-      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/dbc37824563cc1c6ff796406d7fda046d1050934",
-      "title": "Add macOS build and runtime compatibility fixes (#785)",
-      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/23126321575",
-      "metrics": {
-        "SPECint avg": 20.683282474003832,
-        "perlbench": 16.916,
-        "bzip2": 11.264,
-        "gcc": 21.158,
-        "mcf": 34.647,
-        "gobmk": 15.615,
-        "hmmer": 17.065,
-        "sjeng": 13.148,
-        "libquantum": 46.858,
-        "h264ref": 25.232,
-        "omnetpp": 21.781,
-        "astar": 14.334,
-        "xalancbmk": 33.931
-      },
-      "details": {
-        "perlbench": {
-          "time": 192.515,
-          "ref_time": 9770.0,
-          "score": 16.916,
-          "coverage": 0.842
-        },
-        "bzip2": {
-          "time": 285.58,
-          "ref_time": 9650.0,
-          "score": 11.264,
-          "coverage": 0.813
-        },
-        "gcc": {
-          "time": 126.826,
-          "ref_time": 8050.0,
-          "score": 21.158,
-          "coverage": 0.82
-        },
-        "mcf": {
-          "time": 87.741,
-          "ref_time": 9120.0,
-          "score": 34.647,
-          "coverage": 0.841
-        },
-        "gobmk": {
-          "time": 223.927,
-          "ref_time": 10490.0,
-          "score": 15.615,
-          "coverage": 0.819
-        },
-        "hmmer": {
-          "time": 182.243,
-          "ref_time": 9330.0,
-          "score": 17.065,
-          "coverage": 0.809
-        },
-        "sjeng": {
-          "time": 306.752,
-          "ref_time": 12100.0,
-          "score": 13.148,
-          "coverage": 0.831
-        },
-        "libquantum": {
-          "time": 147.396,
-          "ref_time": 20720.0,
-          "score": 46.858,
-          "coverage": 0.808
-        },
-        "h264ref": {
-          "time": 292.357,
-          "ref_time": 22130.0,
-          "score": 25.232,
-          "coverage": 0.826
-        },
-        "omnetpp": {
-          "time": 95.648,
-          "ref_time": 6250.0,
-          "score": 21.781,
-          "coverage": 0.809
-        },
-        "astar": {
-          "time": 163.249,
-          "ref_time": 7020.0,
-          "score": 14.334,
-          "coverage": 0.808
-        },
-        "xalancbmk": {
-          "time": 67.784,
-          "ref_time": 6900.0,
-          "score": 33.931,
-          "coverage": 0.806
-        }
-      }
-    },
-    {
-      "run_id": 23132961765,
-      "run_number": 1340,
-      "created_at": "20260316_164556",
-      "commit": "6cc70c4683b7a7a3a96ff3ac74cc84a4391ea1e3",
-      "short_commit": "6cc70c4",
-      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/6cc70c4683b7a7a3a96ff3ac74cc84a4391ea1e3",
-      "title": "bpu,configs: Add optional BTBTAGE upper-bound mode for kmhv3 (#770)",
-      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/23132961765",
-      "metrics": {
-        "SPECint avg": 20.687268549581997,
-        "perlbench": 16.931,
-        "bzip2": 11.265,
-        "gcc": 21.157,
-        "mcf": 34.653,
-        "gobmk": 15.615,
-        "hmmer": 17.065,
-        "sjeng": 13.148,
-        "libquantum": 46.858,
-        "h264ref": 25.235,
-        "omnetpp": 21.817,
-        "astar": 14.333,
-        "xalancbmk": 33.915
-      },
-      "details": {
-        "perlbench": {
-          "time": 192.354,
-          "ref_time": 9770.0,
-          "score": 16.931,
-          "coverage": 0.842
-        },
-        "bzip2": {
-          "time": 285.547,
-          "ref_time": 9650.0,
-          "score": 11.265,
-          "coverage": 0.813
-        },
-        "gcc": {
-          "time": 126.832,
-          "ref_time": 8050.0,
-          "score": 21.157,
-          "coverage": 0.82
-        },
-        "mcf": {
-          "time": 87.727,
-          "ref_time": 9120.0,
-          "score": 34.653,
-          "coverage": 0.841
-        },
-        "gobmk": {
-          "time": 223.93,
-          "ref_time": 10490.0,
-          "score": 15.615,
-          "coverage": 0.819
-        },
-        "hmmer": {
-          "time": 182.243,
-          "ref_time": 9330.0,
-          "score": 17.065,
-          "coverage": 0.809
-        },
-        "sjeng": {
-          "time": 306.752,
-          "ref_time": 12100.0,
-          "score": 13.148,
-          "coverage": 0.831
-        },
-        "libquantum": {
-          "time": 147.396,
-          "ref_time": 20720.0,
-          "score": 46.858,
-          "coverage": 0.808
-        },
-        "h264ref": {
-          "time": 292.323,
-          "ref_time": 22130.0,
-          "score": 25.235,
-          "coverage": 0.826
-        },
-        "omnetpp": {
-          "time": 95.49,
-          "ref_time": 6250.0,
-          "score": 21.817,
-          "coverage": 0.809
-        },
-        "astar": {
-          "time": 163.257,
-          "ref_time": 7020.0,
-          "score": 14.333,
-          "coverage": 0.808
-        },
-        "xalancbmk": {
-          "time": 67.816,
-          "ref_time": 6900.0,
-          "score": 33.915,
-          "coverage": 0.806
-        }
-      }
-    },
-    {
       "run_id": 23184618864,
       "run_number": 1346,
-      "created_at": "20260317_173959",
+      "created_at": "2026-03-17T08:11:53Z",
       "commit": "6b87b99f113a006e908d71a619c72b1779f6ab43",
-      "short_commit": "6b87b99",
+      "short_commit": "6b87b99f11",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/6b87b99f113a006e908d71a619c72b1779f6ab43",
       "title": "Revert \"cpu-o3: Refactor numWays to support per-table configuration (#793)\" (#795)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/23184618864",
@@ -520,9 +124,9 @@
     {
       "run_id": 23237405983,
       "run_number": 1348,
-      "created_at": "20260318_185048",
+      "created_at": "2026-03-18T09:14:44Z",
       "commit": "fc642271651f9460719b12a5fa7573cfa696587f",
-      "short_commit": "fc6422716",
+      "short_commit": "fc64227165",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/fc642271651f9460719b12a5fa7573cfa696587f",
       "title": "Restore/per table numways (#798)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/23237405983",
@@ -619,9 +223,9 @@
     {
       "run_id": 23901144456,
       "run_number": 1378,
-      "created_at": "20260402_234808",
+      "created_at": "2026-04-02T12:48:16Z",
       "commit": "4b6b1dc20d4f3a64ce76609de8f9c2e0520f5eaa",
-      "short_commit": "4b6b1dc",
+      "short_commit": "4b6b1dc20d",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/4b6b1dc20d4f3a64ce76609de8f9c2e0520f5eaa",
       "title": "Spec vp flush1 (#808)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/23901144456",
@@ -718,9 +322,9 @@
     {
       "run_id": 24170690821,
       "run_number": 1399,
-      "created_at": "20260409_123000",
+      "created_at": "2026-04-09T03:24:32Z",
       "commit": "86825b380fb1d020150e94de658f831c96bbdb98",
-      "short_commit": "86825b3",
+      "short_commit": "86825b380f",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/86825b380fb1d020150e94de658f831c96bbdb98",
       "title": "cpu-o3: Add move elimination toggle for SE (#815)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24170690821",
@@ -817,9 +421,9 @@
     {
       "run_id": 24171441954,
       "run_number": 1400,
-      "created_at": "20260409_133345",
+      "created_at": "2026-04-09T03:53:03Z",
       "commit": "a5cbb48c21e3f217cb382df0c36311f030456a40",
-      "short_commit": "a5cbb48",
+      "short_commit": "a5cbb48c21",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/a5cbb48c21e3f217cb382df0c36311f030456a40",
       "title": "Tage tunning and L3 Cache size change (#812)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24171441954",
@@ -916,7 +520,7 @@
     {
       "run_id": 24173173222,
       "run_number": 1401,
-      "created_at": "20260409_150901",
+      "created_at": "2026-04-09T04:56:08Z",
       "commit": "a90c6bdf1fe8b7d565878490bb6100eb94175cf7",
       "short_commit": "a90c6bdf1f",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/a90c6bdf1fe8b7d565878490bb6100eb94175cf7",
@@ -1015,9 +619,9 @@
     {
       "run_id": 24176364070,
       "run_number": 1402,
-      "created_at": "20260409_154144",
+      "created_at": "2026-04-09T06:40:27Z",
       "commit": "abf85ffcee61f3a9f0caeda18c6dc5ec130e7c11",
-      "short_commit": "abf85ffce",
+      "short_commit": "abf85ffcee",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/abf85ffcee61f3a9f0caeda18c6dc5ec130e7c11",
       "title": "cpu-o3: fix path target resolution and add regression tests (#814)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24176364070",
@@ -1114,9 +718,9 @@
     {
       "run_id": 24321387740,
       "run_number": 1404,
-      "created_at": "20260413_102443",
+      "created_at": "2026-04-13T01:23:23Z",
       "commit": "54de78cf99cda362b571d8a23e8603b5057a4af3",
-      "short_commit": "54de78c",
+      "short_commit": "54de78cf99",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/54de78cf99cda362b571d8a23e8603b5057a4af3",
       "title": "align prefetch ,add counter for Prefetch system (#794)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24321387740",
