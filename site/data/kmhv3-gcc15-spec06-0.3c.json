@@ -516,6 +516,105 @@
           "coverage": 0.309
         }
       }
+    },
+    {
+      "run_id": 24880979661,
+      "run_number": 531,
+      "created_at": "2026-04-24T08:52:04Z",
+      "commit": "6c1981170556bc6c5d644b61fdf007552fd3cd11",
+      "short_commit": "6c19811705",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/6c1981170556bc6c5d644b61fdf007552fd3cd11",
+      "title": "Merge pull request #841 from OpenXiangShan/disable-dispatch-stage",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24880979661",
+      "metrics": {
+        "SPECint avg": 18.712158546061126,
+        "perlbench": 17.538,
+        "bzip2": 11.085,
+        "gcc": 19.045,
+        "mcf": 17.004,
+        "gobmk": 14.291,
+        "hmmer": 18.649,
+        "sjeng": 13.146,
+        "libquantum": 45.439,
+        "h264ref": 24.126,
+        "omnetpp": 15.016,
+        "astar": 19.137,
+        "xalancbmk": 26.518
+      },
+      "details": {
+        "perlbench": {
+          "time": 185.695,
+          "ref_time": 9770.0,
+          "score": 17.538,
+          "coverage": 0.454
+        },
+        "bzip2": {
+          "time": 290.172,
+          "ref_time": 9650.0,
+          "score": 11.085,
+          "coverage": 0.349
+        },
+        "gcc": {
+          "time": 140.891,
+          "ref_time": 8050.0,
+          "score": 19.045,
+          "coverage": 0.367
+        },
+        "mcf": {
+          "time": 178.777,
+          "ref_time": 9120.0,
+          "score": 17.004,
+          "coverage": 0.341
+        },
+        "gobmk": {
+          "time": 244.678,
+          "ref_time": 10490.0,
+          "score": 14.291,
+          "coverage": 0.346
+        },
+        "hmmer": {
+          "time": 166.766,
+          "ref_time": 9330.0,
+          "score": 18.649,
+          "coverage": 0.379
+        },
+        "sjeng": {
+          "time": 306.815,
+          "ref_time": 12100.0,
+          "score": 13.146,
+          "coverage": 0.33
+        },
+        "libquantum": {
+          "time": 151.998,
+          "ref_time": 20720.0,
+          "score": 45.439,
+          "coverage": 0.33
+        },
+        "h264ref": {
+          "time": 305.755,
+          "ref_time": 22130.0,
+          "score": 24.126,
+          "coverage": 0.34
+        },
+        "omnetpp": {
+          "time": 138.737,
+          "ref_time": 6250.0,
+          "score": 15.016,
+          "coverage": 0.377
+        },
+        "astar": {
+          "time": 122.274,
+          "ref_time": 7020.0,
+          "score": 19.137,
+          "coverage": 0.355
+        },
+        "xalancbmk": {
+          "time": 86.733,
+          "ref_time": 6900.0,
+          "score": 26.518,
+          "coverage": 0.309
+        }
+      }
     }
   ]
 }
