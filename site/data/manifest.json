@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-27T04:30:35.190894+00:00",
+  "generated_at": "2026-04-28T04:34:01.264861+00:00",
   "datasets": [
     {
       "id": "kmhv3-gcc12-spec06-0.3c",
@@ -11,7 +11,7 @@
       "id": "kmhv3-gcc15-spec06-0.3c",
       "label": "kmhv3 / gcc15 / SPEC06 0.3c",
       "file": "kmhv3-gcc15-spec06-0.3c.json",
-      "point_count": 7
+      "point_count": 8
     },
     {
       "id": "idealkmhv3-gcc12-spec06-0.8c",
@@ -23,7 +23,7 @@
       "id": "idealkmhv3-gcc15-spec06-0.8c",
       "label": "idealkmhv3 / gcc15 / SPEC06 0.8c",
       "file": "idealkmhv3-gcc15-spec06-0.8c.json",
-      "point_count": 6
+      "point_count": 8
     }
   ]
 }

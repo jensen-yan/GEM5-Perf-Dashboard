@@ -714,6 +714,105 @@
           "coverage": 0.309
         }
       }
+    },
+    {
+      "run_id": 24987219976,
+      "run_number": 538,
+      "created_at": "2026-04-27T09:28:08Z",
+      "commit": "b813b5770a5357ad9309e4d8cb8552e572a37049",
+      "short_commit": "b813b5770a",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/b813b5770a5357ad9309e4d8cb8552e572a37049",
+      "title": "cpu-pred: Align BTBTAGE and MGSC behavior with RTL (#839)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/24987219976",
+      "metrics": {
+        "SPECint avg": 18.721760623872797,
+        "perlbench": 17.537,
+        "bzip2": 11.164,
+        "gcc": 19.031,
+        "mcf": 16.534,
+        "gobmk": 14.43,
+        "hmmer": 18.648,
+        "sjeng": 13.315,
+        "libquantum": 45.516,
+        "h264ref": 24.167,
+        "omnetpp": 14.975,
+        "astar": 19.187,
+        "xalancbmk": 26.579
+      },
+      "details": {
+        "perlbench": {
+          "time": 185.704,
+          "ref_time": 9770.0,
+          "score": 17.537,
+          "coverage": 0.454
+        },
+        "bzip2": {
+          "time": 288.122,
+          "ref_time": 9650.0,
+          "score": 11.164,
+          "coverage": 0.349
+        },
+        "gcc": {
+          "time": 141.0,
+          "ref_time": 8050.0,
+          "score": 19.031,
+          "coverage": 0.367
+        },
+        "mcf": {
+          "time": 183.864,
+          "ref_time": 9120.0,
+          "score": 16.534,
+          "coverage": 0.341
+        },
+        "gobmk": {
+          "time": 242.314,
+          "ref_time": 10490.0,
+          "score": 14.43,
+          "coverage": 0.346
+        },
+        "hmmer": {
+          "time": 166.774,
+          "ref_time": 9330.0,
+          "score": 18.648,
+          "coverage": 0.379
+        },
+        "sjeng": {
+          "time": 302.915,
+          "ref_time": 12100.0,
+          "score": 13.315,
+          "coverage": 0.33
+        },
+        "libquantum": {
+          "time": 151.74,
+          "ref_time": 20720.0,
+          "score": 45.516,
+          "coverage": 0.33
+        },
+        "h264ref": {
+          "time": 305.242,
+          "ref_time": 22130.0,
+          "score": 24.167,
+          "coverage": 0.34
+        },
+        "omnetpp": {
+          "time": 139.119,
+          "ref_time": 6250.0,
+          "score": 14.975,
+          "coverage": 0.377
+        },
+        "astar": {
+          "time": 121.959,
+          "ref_time": 7020.0,
+          "score": 19.187,
+          "coverage": 0.355
+        },
+        "xalancbmk": {
+          "time": 86.535,
+          "ref_time": 6900.0,
+          "score": 26.579,
+          "coverage": 0.309
+        }
+      }
     }
   ]
 }
