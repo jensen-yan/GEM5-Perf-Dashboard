@@ -813,6 +813,204 @@
           "coverage": 0.803
         }
       }
+    },
+    {
+      "run_id": 25145043814,
+      "run_number": 1413,
+      "created_at": "2026-04-30T02:59:53Z",
+      "commit": "28b625211eb57b29c1b28065389bbba67154234a",
+      "short_commit": "28b625211e",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/28b625211eb57b29c1b28065389bbba67154234a",
+      "title": "arch-riscv: Calibrate xs-rvv (#833)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/25145043814",
+      "metrics": {
+        "SPECint avg": 21.54175859343667,
+        "perlbench": 19.181,
+        "bzip2": 11.289,
+        "gcc": 22.013,
+        "mcf": 34.58,
+        "gobmk": 15.735,
+        "hmmer": 19.266,
+        "sjeng": 13.921,
+        "libquantum": 58.981,
+        "h264ref": 25.338,
+        "omnetpp": 21.804,
+        "astar": 13.709,
+        "xalancbmk": 32.139
+      },
+      "details": {
+        "perlbench": {
+          "time": 169.783,
+          "ref_time": 9770.0,
+          "score": 19.181,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 284.95,
+          "ref_time": 9650.0,
+          "score": 11.289,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 121.899,
+          "ref_time": 8050.0,
+          "score": 22.013,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 87.913,
+          "ref_time": 9120.0,
+          "score": 34.58,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 222.228,
+          "ref_time": 10490.0,
+          "score": 15.735,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.425,
+          "ref_time": 9330.0,
+          "score": 19.266,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 289.738,
+          "ref_time": 12100.0,
+          "score": 13.921,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.101,
+          "ref_time": 20720.0,
+          "score": 58.981,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 291.129,
+          "ref_time": 22130.0,
+          "score": 25.338,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 95.548,
+          "ref_time": 6250.0,
+          "score": 21.804,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 170.693,
+          "ref_time": 7020.0,
+          "score": 13.709,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 71.564,
+          "ref_time": 6900.0,
+          "score": 32.139,
+          "coverage": 0.803
+        }
+      }
+    },
+    {
+      "run_id": 25155640236,
+      "run_number": 1414,
+      "created_at": "2026-04-30T08:32:54Z",
+      "commit": "c345ad8b71f84452180646b17ec5597d07d8060d",
+      "short_commit": "c345ad8b71",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/c345ad8b71f84452180646b17ec5597d07d8060d",
+      "title": "arch-riscv,cpu,mem-cache: Align memblock PMU with RTL (#831)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/25155640236",
+      "metrics": {
+        "SPECint avg": 21.541686312927123,
+        "perlbench": 19.16,
+        "bzip2": 11.288,
+        "gcc": 22.005,
+        "mcf": 34.627,
+        "gobmk": 15.74,
+        "hmmer": 19.267,
+        "sjeng": 13.914,
+        "libquantum": 58.981,
+        "h264ref": 25.33,
+        "omnetpp": 21.829,
+        "astar": 13.7,
+        "xalancbmk": 32.141
+      },
+      "details": {
+        "perlbench": {
+          "time": 169.97,
+          "ref_time": 9770.0,
+          "score": 19.16,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 284.969,
+          "ref_time": 9650.0,
+          "score": 11.288,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 121.94,
+          "ref_time": 8050.0,
+          "score": 22.005,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 87.793,
+          "ref_time": 9120.0,
+          "score": 34.627,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 222.151,
+          "ref_time": 10490.0,
+          "score": 15.74,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.418,
+          "ref_time": 9330.0,
+          "score": 19.267,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 289.877,
+          "ref_time": 12100.0,
+          "score": 13.914,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.101,
+          "ref_time": 20720.0,
+          "score": 58.981,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 291.223,
+          "ref_time": 22130.0,
+          "score": 25.33,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 95.44,
+          "ref_time": 6250.0,
+          "score": 21.829,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 170.806,
+          "ref_time": 7020.0,
+          "score": 13.7,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 71.56,
+          "ref_time": 6900.0,
+          "score": 32.141,
+          "coverage": 0.803
+        }
+      }
     }
   ]
 }
