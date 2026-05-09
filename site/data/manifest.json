@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-08T04:16:59.617873+00:00",
+  "generated_at": "2026-05-09T04:24:12.589605+00:00",
   "datasets": [
     {
       "id": "kmhv3-gcc12-spec06-0.3c",
       "label": "kmhv3 / gcc12 / SPEC06 0.3c",
       "file": "kmhv3-gcc12-spec06-0.3c.json",
-      "point_count": 5
+      "point_count": 4
     },
     {
       "id": "kmhv3-gcc15-spec06-0.3c",
