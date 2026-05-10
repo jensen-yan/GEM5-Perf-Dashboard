@@ -1011,6 +1011,105 @@
           "coverage": 0.803
         }
       }
+    },
+    {
+      "run_id": 25594539498,
+      "run_number": 1415,
+      "created_at": "2026-05-09T06:48:36Z",
+      "commit": "e6172e6a550b1767c8ca4dbb6851e6efdb674c00",
+      "short_commit": "e6172e6a55",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/e6172e6a550b1767c8ca4dbb6851e6efdb674c00",
+      "title": "[codex] util: Write perf runs directly to archive (#853)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/25594539498",
+      "metrics": {
+        "SPECint avg": 21.53607632186823,
+        "perlbench": 19.162,
+        "bzip2": 11.288,
+        "gcc": 22.01,
+        "mcf": 34.627,
+        "gobmk": 15.74,
+        "hmmer": 19.267,
+        "sjeng": 13.918,
+        "libquantum": 58.981,
+        "h264ref": 25.33,
+        "omnetpp": 21.755,
+        "astar": 13.701,
+        "xalancbmk": 32.129
+      },
+      "details": {
+        "perlbench": {
+          "time": 169.957,
+          "ref_time": 9770.0,
+          "score": 19.162,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 284.966,
+          "ref_time": 9650.0,
+          "score": 11.288,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 121.917,
+          "ref_time": 8050.0,
+          "score": 22.01,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 87.793,
+          "ref_time": 9120.0,
+          "score": 34.627,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 222.153,
+          "ref_time": 10490.0,
+          "score": 15.74,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.418,
+          "ref_time": 9330.0,
+          "score": 19.267,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 289.798,
+          "ref_time": 12100.0,
+          "score": 13.918,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.101,
+          "ref_time": 20720.0,
+          "score": 58.981,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 291.224,
+          "ref_time": 22130.0,
+          "score": 25.33,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 95.762,
+          "ref_time": 6250.0,
+          "score": 21.755,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 170.794,
+          "ref_time": 7020.0,
+          "score": 13.701,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 71.586,
+          "ref_time": 6900.0,
+          "score": 32.129,
+          "coverage": 0.803
+        }
+      }
     }
   ]
 }
