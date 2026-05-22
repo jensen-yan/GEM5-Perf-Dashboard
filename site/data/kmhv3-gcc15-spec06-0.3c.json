@@ -714,6 +714,204 @@
           "coverage": 0.309
         }
       }
+    },
+    {
+      "run_id": 26210014683,
+      "run_number": 574,
+      "created_at": "2026-05-21T06:42:30Z",
+      "commit": "03244f9f08bd48f9bbc6425d301ab72575df1e70",
+      "short_commit": "03244f9f08",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/03244f9f08bd48f9bbc6425d301ab72575df1e70",
+      "title": "misc: Fix Python runtime detection (#857)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/26210014683",
+      "metrics": {
+        "SPECint avg": 18.717676284577166,
+        "perlbench": 17.539,
+        "bzip2": 11.157,
+        "gcc": 19.034,
+        "mcf": 16.623,
+        "gobmk": 14.442,
+        "hmmer": 18.639,
+        "sjeng": 13.317,
+        "libquantum": 45.455,
+        "h264ref": 24.166,
+        "omnetpp": 14.936,
+        "astar": 19.146,
+        "xalancbmk": 26.527
+      },
+      "details": {
+        "perlbench": {
+          "time": 185.685,
+          "ref_time": 9770.0,
+          "score": 17.539,
+          "coverage": 0.454
+        },
+        "bzip2": {
+          "time": 288.304,
+          "ref_time": 9650.0,
+          "score": 11.157,
+          "coverage": 0.349
+        },
+        "gcc": {
+          "time": 140.977,
+          "ref_time": 8050.0,
+          "score": 19.034,
+          "coverage": 0.367
+        },
+        "mcf": {
+          "time": 182.876,
+          "ref_time": 9120.0,
+          "score": 16.623,
+          "coverage": 0.341
+        },
+        "gobmk": {
+          "time": 242.114,
+          "ref_time": 10490.0,
+          "score": 14.442,
+          "coverage": 0.346
+        },
+        "hmmer": {
+          "time": 166.856,
+          "ref_time": 9330.0,
+          "score": 18.639,
+          "coverage": 0.379
+        },
+        "sjeng": {
+          "time": 302.882,
+          "ref_time": 12100.0,
+          "score": 13.317,
+          "coverage": 0.33
+        },
+        "libquantum": {
+          "time": 151.945,
+          "ref_time": 20720.0,
+          "score": 45.455,
+          "coverage": 0.33
+        },
+        "h264ref": {
+          "time": 305.252,
+          "ref_time": 22130.0,
+          "score": 24.166,
+          "coverage": 0.34
+        },
+        "omnetpp": {
+          "time": 139.484,
+          "ref_time": 6250.0,
+          "score": 14.936,
+          "coverage": 0.377
+        },
+        "astar": {
+          "time": 122.219,
+          "ref_time": 7020.0,
+          "score": 19.146,
+          "coverage": 0.355
+        },
+        "xalancbmk": {
+          "time": 86.704,
+          "ref_time": 6900.0,
+          "score": 26.527,
+          "coverage": 0.309
+        }
+      }
+    },
+    {
+      "run_id": 26215396238,
+      "run_number": 575,
+      "created_at": "2026-05-21T08:42:57Z",
+      "commit": "587fe8eb3edd41f675cede304b69a675a537dbb0",
+      "short_commit": "587fe8eb3e",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/587fe8eb3edd41f675cede304b69a675a537dbb0",
+      "title": "configs: Align ideal kmhv3 timing with RTL (#859)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/26215396238",
+      "metrics": {
+        "SPECint avg": 18.716845395992852,
+        "perlbench": 17.539,
+        "bzip2": 11.154,
+        "gcc": 19.034,
+        "mcf": 16.615,
+        "gobmk": 14.442,
+        "hmmer": 18.639,
+        "sjeng": 13.317,
+        "libquantum": 45.455,
+        "h264ref": 24.166,
+        "omnetpp": 14.938,
+        "astar": 19.147,
+        "xalancbmk": 26.527
+      },
+      "details": {
+        "perlbench": {
+          "time": 185.677,
+          "ref_time": 9770.0,
+          "score": 17.539,
+          "coverage": 0.454
+        },
+        "bzip2": {
+          "time": 288.39,
+          "ref_time": 9650.0,
+          "score": 11.154,
+          "coverage": 0.349
+        },
+        "gcc": {
+          "time": 140.973,
+          "ref_time": 8050.0,
+          "score": 19.034,
+          "coverage": 0.367
+        },
+        "mcf": {
+          "time": 182.969,
+          "ref_time": 9120.0,
+          "score": 16.615,
+          "coverage": 0.341
+        },
+        "gobmk": {
+          "time": 242.114,
+          "ref_time": 10490.0,
+          "score": 14.442,
+          "coverage": 0.346
+        },
+        "hmmer": {
+          "time": 166.856,
+          "ref_time": 9330.0,
+          "score": 18.639,
+          "coverage": 0.379
+        },
+        "sjeng": {
+          "time": 302.882,
+          "ref_time": 12100.0,
+          "score": 13.317,
+          "coverage": 0.33
+        },
+        "libquantum": {
+          "time": 151.945,
+          "ref_time": 20720.0,
+          "score": 45.455,
+          "coverage": 0.33
+        },
+        "h264ref": {
+          "time": 305.252,
+          "ref_time": 22130.0,
+          "score": 24.166,
+          "coverage": 0.34
+        },
+        "omnetpp": {
+          "time": 139.462,
+          "ref_time": 6250.0,
+          "score": 14.938,
+          "coverage": 0.377
+        },
+        "astar": {
+          "time": 122.214,
+          "ref_time": 7020.0,
+          "score": 19.147,
+          "coverage": 0.355
+        },
+        "xalancbmk": {
+          "time": 86.704,
+          "ref_time": 6900.0,
+          "score": 26.527,
+          "coverage": 0.309
+        }
+      }
     }
   ]
 }
