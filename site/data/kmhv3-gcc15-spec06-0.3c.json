@@ -1506,6 +1506,105 @@
           "coverage": 0.309
         }
       }
+    },
+    {
+      "run_id": 26750107010,
+      "run_number": 599,
+      "created_at": "2026-06-01T10:44:26Z",
+      "commit": "e7dda21257ca0a325d81cb3ac3fdab24b3385a79",
+      "short_commit": "e7dda21257",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/e7dda21257ca0a325d81cb3ac3fdab24b3385a79",
+      "title": "cpu: Refactor BTB history replay interfaces (#877)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/26750107010",
+      "metrics": {
+        "SPECint avg": 18.902024293313108,
+        "perlbench": 18.837,
+        "bzip2": 11.135,
+        "gcc": 19.165,
+        "mcf": 16.735,
+        "gobmk": 14.647,
+        "hmmer": 18.677,
+        "sjeng": 13.6,
+        "libquantum": 45.427,
+        "h264ref": 23.954,
+        "omnetpp": 14.972,
+        "astar": 19.289,
+        "xalancbmk": 26.452
+      },
+      "details": {
+        "perlbench": {
+          "time": 172.891,
+          "ref_time": 9770.0,
+          "score": 18.837,
+          "coverage": 0.454
+        },
+        "bzip2": {
+          "time": 288.887,
+          "ref_time": 9650.0,
+          "score": 11.135,
+          "coverage": 0.349
+        },
+        "gcc": {
+          "time": 140.014,
+          "ref_time": 8050.0,
+          "score": 19.165,
+          "coverage": 0.367
+        },
+        "mcf": {
+          "time": 181.653,
+          "ref_time": 9120.0,
+          "score": 16.735,
+          "coverage": 0.341
+        },
+        "gobmk": {
+          "time": 238.734,
+          "ref_time": 10490.0,
+          "score": 14.647,
+          "coverage": 0.346
+        },
+        "hmmer": {
+          "time": 166.519,
+          "ref_time": 9330.0,
+          "score": 18.677,
+          "coverage": 0.379
+        },
+        "sjeng": {
+          "time": 296.575,
+          "ref_time": 12100.0,
+          "score": 13.6,
+          "coverage": 0.33
+        },
+        "libquantum": {
+          "time": 152.038,
+          "ref_time": 20720.0,
+          "score": 45.427,
+          "coverage": 0.33
+        },
+        "h264ref": {
+          "time": 307.954,
+          "ref_time": 22130.0,
+          "score": 23.954,
+          "coverage": 0.34
+        },
+        "omnetpp": {
+          "time": 139.153,
+          "ref_time": 6250.0,
+          "score": 14.972,
+          "coverage": 0.377
+        },
+        "astar": {
+          "time": 121.314,
+          "ref_time": 7020.0,
+          "score": 19.289,
+          "coverage": 0.355
+        },
+        "xalancbmk": {
+          "time": 86.95,
+          "ref_time": 6900.0,
+          "score": 26.452,
+          "coverage": 0.309
+        }
+      }
     }
   ]
 }
