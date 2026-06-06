@@ -2001,6 +2001,105 @@
           "coverage": 0.803
         }
       }
+    },
+    {
+      "run_id": 27001405334,
+      "run_number": 1453,
+      "created_at": "2026-06-05T07:21:23Z",
+      "commit": "b984080a4bce84de90323c2fa50035cbb1dc0120",
+      "short_commit": "b984080a4b",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/b984080a4bce84de90323c2fa50035cbb1dc0120",
+      "title": "cpu-o3: Limit decode FIFO backpressure to SMT (#880)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/27001405334",
+      "metrics": {
+        "SPECint avg": 21.245847176807203,
+        "perlbench": 18.922,
+        "bzip2": 11.154,
+        "gcc": 22.204,
+        "mcf": 30.111,
+        "gobmk": 15.91,
+        "hmmer": 19.304,
+        "sjeng": 14.292,
+        "libquantum": 58.999,
+        "h264ref": 25.233,
+        "omnetpp": 21.376,
+        "astar": 13.47,
+        "xalancbmk": 31.861
+      },
+      "details": {
+        "perlbench": {
+          "time": 172.11,
+          "ref_time": 9770.0,
+          "score": 18.922,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 288.393,
+          "ref_time": 9650.0,
+          "score": 11.154,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 120.849,
+          "ref_time": 8050.0,
+          "score": 22.204,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 100.96,
+          "ref_time": 9120.0,
+          "score": 30.111,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 219.784,
+          "ref_time": 10490.0,
+          "score": 15.91,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.109,
+          "ref_time": 9330.0,
+          "score": 19.304,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 282.214,
+          "ref_time": 12100.0,
+          "score": 14.292,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.064,
+          "ref_time": 20720.0,
+          "score": 58.999,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 292.348,
+          "ref_time": 22130.0,
+          "score": 25.233,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 97.462,
+          "ref_time": 6250.0,
+          "score": 21.376,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 173.719,
+          "ref_time": 7020.0,
+          "score": 13.47,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 72.188,
+          "ref_time": 6900.0,
+          "score": 31.861,
+          "coverage": 0.803
+        }
+      }
     }
   ]
 }
