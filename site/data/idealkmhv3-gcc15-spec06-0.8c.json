@@ -2001,6 +2001,204 @@
           "coverage": 0.803
         }
       }
+    },
+    {
+      "run_id": 27194415850,
+      "run_number": 1459,
+      "created_at": "2026-06-09T08:41:01Z",
+      "commit": "d56bd30948202296794d5e746e210993f3e3a5a0",
+      "short_commit": "d56bd30948",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/d56bd30948202296794d5e746e210993f3e3a5a0",
+      "title": "cpu: Fix decode backpressure and split load replay (#900)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/27194415850",
+      "metrics": {
+        "SPECint avg": 21.23180450268921,
+        "perlbench": 18.912,
+        "bzip2": 11.153,
+        "gcc": 22.204,
+        "mcf": 30.092,
+        "gobmk": 15.896,
+        "hmmer": 19.302,
+        "sjeng": 14.295,
+        "libquantum": 58.992,
+        "h264ref": 25.239,
+        "omnetpp": 21.372,
+        "astar": 13.451,
+        "xalancbmk": 31.717
+      },
+      "details": {
+        "perlbench": {
+          "time": 172.198,
+          "ref_time": 9770.0,
+          "score": 18.912,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 288.408,
+          "ref_time": 9650.0,
+          "score": 11.153,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 120.848,
+          "ref_time": 8050.0,
+          "score": 22.204,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 101.024,
+          "ref_time": 9120.0,
+          "score": 30.092,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 219.978,
+          "ref_time": 10490.0,
+          "score": 15.896,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.125,
+          "ref_time": 9330.0,
+          "score": 19.302,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 282.156,
+          "ref_time": 12100.0,
+          "score": 14.295,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.078,
+          "ref_time": 20720.0,
+          "score": 58.992,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 292.271,
+          "ref_time": 22130.0,
+          "score": 25.239,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 97.479,
+          "ref_time": 6250.0,
+          "score": 21.372,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 173.968,
+          "ref_time": 7020.0,
+          "score": 13.451,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 72.515,
+          "ref_time": 6900.0,
+          "score": 31.717,
+          "coverage": 0.803
+        }
+      }
+    },
+    {
+      "run_id": 27250571617,
+      "run_number": 1463,
+      "created_at": "2026-06-10T03:12:31Z",
+      "commit": "3e7baff37e3c2ffd9c7311661d86206fa3a01667",
+      "short_commit": "3e7baff37e",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/3e7baff37e3c2ffd9c7311661d86206fa3a01667",
+      "title": "configs: Centralize prefetcher configuration policy",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/27250571617",
+      "metrics": {
+        "SPECint avg": 21.23180450268921,
+        "perlbench": 18.912,
+        "bzip2": 11.153,
+        "gcc": 22.204,
+        "mcf": 30.092,
+        "gobmk": 15.896,
+        "hmmer": 19.302,
+        "sjeng": 14.295,
+        "libquantum": 58.992,
+        "h264ref": 25.239,
+        "omnetpp": 21.372,
+        "astar": 13.451,
+        "xalancbmk": 31.717
+      },
+      "details": {
+        "perlbench": {
+          "time": 172.198,
+          "ref_time": 9770.0,
+          "score": 18.912,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 288.408,
+          "ref_time": 9650.0,
+          "score": 11.153,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 120.848,
+          "ref_time": 8050.0,
+          "score": 22.204,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 101.024,
+          "ref_time": 9120.0,
+          "score": 30.092,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 219.978,
+          "ref_time": 10490.0,
+          "score": 15.896,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.125,
+          "ref_time": 9330.0,
+          "score": 19.302,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 282.156,
+          "ref_time": 12100.0,
+          "score": 14.295,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.078,
+          "ref_time": 20720.0,
+          "score": 58.992,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 292.271,
+          "ref_time": 22130.0,
+          "score": 25.239,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 97.479,
+          "ref_time": 6250.0,
+          "score": 21.372,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 173.968,
+          "ref_time": 7020.0,
+          "score": 13.451,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 72.515,
+          "ref_time": 6900.0,
+          "score": 31.717,
+          "coverage": 0.803
+        }
+      }
     }
   ]
 }
