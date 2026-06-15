@@ -2298,6 +2298,105 @@
           "coverage": 0.803
         }
       }
+    },
+    {
+      "run_id": 27520690216,
+      "run_number": 1470,
+      "created_at": "2026-06-15T02:36:55Z",
+      "commit": "dda01e11d6fdd9438f418faa26b6153b051b7110",
+      "short_commit": "dda01e11d6",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/dda01e11d6fdd9438f418faa26b6153b051b7110",
+      "title": "[codex] Add standalone SC switch (#905)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/27520690216",
+      "metrics": {
+        "SPECint avg": 21.246218114332443,
+        "perlbench": 18.838,
+        "bzip2": 11.148,
+        "gcc": 22.198,
+        "mcf": 30.099,
+        "gobmk": 15.907,
+        "hmmer": 19.294,
+        "sjeng": 14.301,
+        "libquantum": 59.03,
+        "h264ref": 25.239,
+        "omnetpp": 21.553,
+        "astar": 13.47,
+        "xalancbmk": 31.759
+      },
+      "details": {
+        "perlbench": {
+          "time": 172.882,
+          "ref_time": 9770.0,
+          "score": 18.838,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 288.533,
+          "ref_time": 9650.0,
+          "score": 11.148,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 120.88,
+          "ref_time": 8050.0,
+          "score": 22.198,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 100.999,
+          "ref_time": 9120.0,
+          "score": 30.099,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 219.819,
+          "ref_time": 10490.0,
+          "score": 15.907,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.186,
+          "ref_time": 9330.0,
+          "score": 19.294,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 282.034,
+          "ref_time": 12100.0,
+          "score": 14.301,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.002,
+          "ref_time": 20720.0,
+          "score": 59.03,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 292.274,
+          "ref_time": 22130.0,
+          "score": 25.239,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 96.661,
+          "ref_time": 6250.0,
+          "score": 21.553,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 173.722,
+          "ref_time": 7020.0,
+          "score": 13.47,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 72.419,
+          "ref_time": 6900.0,
+          "score": 31.759,
+          "coverage": 0.803
+        }
+      }
     }
   ]
 }
