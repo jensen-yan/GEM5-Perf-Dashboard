@@ -23,105 +23,6 @@
   ],
   "points": [
     {
-      "run_id": 26489689999,
-      "run_number": 1423,
-      "created_at": "2026-05-27T03:52:37Z",
-      "commit": "98544c1107f9b90d2877b133062b0b554c14c1c9",
-      "short_commit": "98544c1107",
-      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/98544c1107f9b90d2877b133062b0b554c14c1c9",
-      "title": "mem: Partially implemented memory renaming. (#867)",
-      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/26489689999",
-      "metrics": {
-        "SPECint avg": 21.18192421461845,
-        "perlbench": 19.099,
-        "bzip2": 11.187,
-        "gcc": 21.939,
-        "mcf": 34.194,
-        "gobmk": 14.282,
-        "hmmer": 19.266,
-        "sjeng": 13.543,
-        "libquantum": 58.977,
-        "h264ref": 25.312,
-        "omnetpp": 21.8,
-        "astar": 13.052,
-        "xalancbmk": 32.156
-      },
-      "details": {
-        "perlbench": {
-          "time": 170.517,
-          "ref_time": 9770.0,
-          "score": 19.099,
-          "coverage": 0.824
-        },
-        "bzip2": {
-          "time": 287.536,
-          "ref_time": 9650.0,
-          "score": 11.187,
-          "coverage": 0.821
-        },
-        "gcc": {
-          "time": 122.309,
-          "ref_time": 8050.0,
-          "score": 21.939,
-          "coverage": 0.818
-        },
-        "mcf": {
-          "time": 88.903,
-          "ref_time": 9120.0,
-          "score": 34.194,
-          "coverage": 0.802
-        },
-        "gobmk": {
-          "time": 244.833,
-          "ref_time": 10490.0,
-          "score": 14.282,
-          "coverage": 0.819
-        },
-        "hmmer": {
-          "time": 161.425,
-          "ref_time": 9330.0,
-          "score": 19.266,
-          "coverage": 0.821
-        },
-        "sjeng": {
-          "time": 297.811,
-          "ref_time": 12100.0,
-          "score": 13.543,
-          "coverage": 0.824
-        },
-        "libquantum": {
-          "time": 117.107,
-          "ref_time": 20720.0,
-          "score": 58.977,
-          "coverage": 0.814
-        },
-        "h264ref": {
-          "time": 291.428,
-          "ref_time": 22130.0,
-          "score": 25.312,
-          "coverage": 0.81
-        },
-        "omnetpp": {
-          "time": 95.568,
-          "ref_time": 6250.0,
-          "score": 21.8,
-          "coverage": 0.828
-        },
-        "astar": {
-          "time": 179.285,
-          "ref_time": 7020.0,
-          "score": 13.052,
-          "coverage": 0.847
-        },
-        "xalancbmk": {
-          "time": 71.526,
-          "ref_time": 6900.0,
-          "score": 32.156,
-          "coverage": 0.803
-        }
-      }
-    },
-    {
       "run_id": 26551722720,
       "run_number": 1425,
       "created_at": "2026-05-28T02:53:32Z",
@@ -2493,6 +2394,204 @@
           "time": 72.174,
           "ref_time": 6900.0,
           "score": 31.867,
+          "coverage": 0.803
+        }
+      }
+    },
+    {
+      "run_id": 28225280157,
+      "run_number": 1486,
+      "created_at": "2026-06-26T08:00:12Z",
+      "commit": "b42594c220e13b6efe3ad04a272acb8cd3b27cbd",
+      "short_commit": "b42594c220",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/b42594c220e13b6efe3ad04a272acb8cd3b27cbd",
+      "title": "cpu-o3, mem-cache: Model L1D fake DCache mainpipe (#912)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28225280157",
+      "metrics": {
+        "SPECint avg": 20.994352858285968,
+        "perlbench": 18.769,
+        "bzip2": 11.014,
+        "gcc": 21.401,
+        "mcf": 29.305,
+        "gobmk": 15.881,
+        "hmmer": 19.265,
+        "sjeng": 14.304,
+        "libquantum": 59.027,
+        "h264ref": 25.169,
+        "omnetpp": 21.16,
+        "astar": 13.306,
+        "xalancbmk": 30.895
+      },
+      "details": {
+        "perlbench": {
+          "time": 173.513,
+          "ref_time": 9770.0,
+          "score": 18.769,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 292.057,
+          "ref_time": 9650.0,
+          "score": 11.014,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 125.383,
+          "ref_time": 8050.0,
+          "score": 21.401,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 103.735,
+          "ref_time": 9120.0,
+          "score": 29.305,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 220.184,
+          "ref_time": 10490.0,
+          "score": 15.881,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.436,
+          "ref_time": 9330.0,
+          "score": 19.265,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 281.969,
+          "ref_time": 12100.0,
+          "score": 14.304,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.009,
+          "ref_time": 20720.0,
+          "score": 59.027,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 293.08,
+          "ref_time": 22130.0,
+          "score": 25.169,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 98.455,
+          "ref_time": 6250.0,
+          "score": 21.16,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 175.861,
+          "ref_time": 7020.0,
+          "score": 13.306,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 74.446,
+          "ref_time": 6900.0,
+          "score": 30.895,
+          "coverage": 0.803
+        }
+      }
+    },
+    {
+      "run_id": 28229763792,
+      "run_number": 1487,
+      "created_at": "2026-06-26T09:33:14Z",
+      "commit": "5a6176ffc94d03e3b429f1e4a12aa2749b161a14",
+      "short_commit": "5a6176ffc9",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/5a6176ffc94d03e3b429f1e4a12aa2749b161a14",
+      "title": "mem-cache: Skip clean refill data reads in mainpipe (#922)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28229763792",
+      "metrics": {
+        "SPECint avg": 21.10316522426167,
+        "perlbench": 18.933,
+        "bzip2": 11.075,
+        "gcc": 21.467,
+        "mcf": 29.674,
+        "gobmk": 15.9,
+        "hmmer": 19.274,
+        "sjeng": 14.294,
+        "libquantum": 58.92,
+        "h264ref": 25.176,
+        "omnetpp": 21.47,
+        "astar": 13.353,
+        "xalancbmk": 31.352
+      },
+      "details": {
+        "perlbench": {
+          "time": 172.013,
+          "ref_time": 9770.0,
+          "score": 18.933,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 290.441,
+          "ref_time": 9650.0,
+          "score": 11.075,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 124.996,
+          "ref_time": 8050.0,
+          "score": 21.467,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 102.446,
+          "ref_time": 9120.0,
+          "score": 29.674,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 219.921,
+          "ref_time": 10490.0,
+          "score": 15.9,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.356,
+          "ref_time": 9330.0,
+          "score": 19.274,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 282.169,
+          "ref_time": 12100.0,
+          "score": 14.294,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.221,
+          "ref_time": 20720.0,
+          "score": 58.92,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 292.999,
+          "ref_time": 22130.0,
+          "score": 25.176,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 97.036,
+          "ref_time": 6250.0,
+          "score": 21.47,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 175.238,
+          "ref_time": 7020.0,
+          "score": 13.353,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 73.36,
+          "ref_time": 6900.0,
+          "score": 31.352,
           "coverage": 0.803
         }
       }
