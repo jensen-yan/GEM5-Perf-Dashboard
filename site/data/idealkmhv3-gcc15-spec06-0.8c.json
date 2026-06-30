@@ -2001,6 +2001,105 @@
           "coverage": 0.803
         }
       }
+    },
+    {
+      "run_id": 28369635805,
+      "run_number": 1492,
+      "created_at": "2026-06-29T11:45:47Z",
+      "commit": "3bbae89de71f7a180f31f1e49b72e187a53a6011",
+      "short_commit": "3bbae89de7",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/3bbae89de71f7a180f31f1e49b72e187a53a6011",
+      "title": "arch-riscv: Fix hidden lookup for compressed TLB (#930)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28369635805",
+      "metrics": {
+        "SPECint avg": 21.10316522426167,
+        "perlbench": 18.933,
+        "bzip2": 11.075,
+        "gcc": 21.467,
+        "mcf": 29.674,
+        "gobmk": 15.9,
+        "hmmer": 19.274,
+        "sjeng": 14.294,
+        "libquantum": 58.92,
+        "h264ref": 25.176,
+        "omnetpp": 21.47,
+        "astar": 13.353,
+        "xalancbmk": 31.352
+      },
+      "details": {
+        "perlbench": {
+          "time": 172.013,
+          "ref_time": 9770.0,
+          "score": 18.933,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 290.441,
+          "ref_time": 9650.0,
+          "score": 11.075,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 124.996,
+          "ref_time": 8050.0,
+          "score": 21.467,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 102.446,
+          "ref_time": 9120.0,
+          "score": 29.674,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 219.921,
+          "ref_time": 10490.0,
+          "score": 15.9,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.356,
+          "ref_time": 9330.0,
+          "score": 19.274,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 282.169,
+          "ref_time": 12100.0,
+          "score": 14.294,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.221,
+          "ref_time": 20720.0,
+          "score": 58.92,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 292.999,
+          "ref_time": 22130.0,
+          "score": 25.176,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 97.036,
+          "ref_time": 6250.0,
+          "score": 21.47,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 175.238,
+          "ref_time": 7020.0,
+          "score": 13.353,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 73.36,
+          "ref_time": 6900.0,
+          "score": 31.352,
+          "coverage": 0.803
+        }
+      }
     }
   ]
 }
