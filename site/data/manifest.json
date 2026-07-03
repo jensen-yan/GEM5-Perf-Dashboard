@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-02T04:57:52.825595+00:00",
+  "generated_at": "2026-07-03T04:39:55.117255+00:00",
   "datasets": [
     {
       "id": "kmhv3-gcc12-spec06-0.3c",
@@ -23,7 +23,7 @@
       "id": "idealkmhv3-gcc15-spec06-0.8c",
       "label": "idealkmhv3 / gcc15 / SPEC06 0.8c",
       "file": "idealkmhv3-gcc15-spec06-0.8c.json",
-      "point_count": 22
+      "point_count": 20
     }
   ]
 }
