@@ -290,6 +290,32 @@ def write_outputs(points_by_dataset: dict[str, list[dict[str, Any]]], out_dir: P
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
 
+def merge_existing_outputs(
+    points_by_dataset: dict[str, list[dict[str, Any]]], out_dir: Path
+) -> None:
+    for dataset in DATASETS:
+        path = out_dir / f"{dataset.id}.json"
+        if not path.exists():
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        existing_points = payload.get("points", [])
+        if not isinstance(existing_points, list):
+            continue
+        points_by_key = {}
+        for point in existing_points:
+            if not isinstance(point, dict):
+                continue
+            key = (point.get("run_id"), point.get("commit"))
+            points_by_key[key] = point
+        for point in points_by_dataset.get(dataset.id, []):
+            key = (point.get("run_id"), point.get("commit"))
+            points_by_key[key] = point
+        points_by_dataset[dataset.id] = list(points_by_key.values())
+
+
 def include_run(
     run: dict[str, Any],
     dataset: DatasetConfig,
@@ -403,6 +429,7 @@ def main(argv: list[str]) -> int:
     else:
         collect_from_workflows(args.branch, args.max_pages, args.per_page, points_by_dataset)
 
+    merge_existing_outputs(points_by_dataset, args.out_dir)
     write_outputs(points_by_dataset, args.out_dir)
     return 0
 
