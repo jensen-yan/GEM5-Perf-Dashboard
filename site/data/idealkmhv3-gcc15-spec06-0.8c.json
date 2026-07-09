@@ -2001,6 +2001,204 @@
           "coverage": 0.803
         }
       }
+    },
+    {
+      "run_id": 28913214059,
+      "run_number": 1514,
+      "created_at": "2026-07-08T02:31:52Z",
+      "commit": "2f9b48d19a4911892ca2446f6c79fe4c282699a3",
+      "short_commit": "2f9b48d19a",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/2f9b48d19a4911892ca2446f6c79fe4c282699a3",
+      "title": "cpu-o3: Limit store drain for barrier micro-ops (#947)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28913214059",
+      "metrics": {
+        "SPECint avg": 20.63555635926935,
+        "perlbench": 18.819,
+        "bzip2": 10.98,
+        "gcc": 20.773,
+        "mcf": 26.323,
+        "gobmk": 15.874,
+        "hmmer": 19.212,
+        "sjeng": 14.356,
+        "libquantum": 58.879,
+        "h264ref": 25.051,
+        "omnetpp": 19.912,
+        "astar": 13.205,
+        "xalancbmk": 31.074
+      },
+      "details": {
+        "perlbench": {
+          "time": 173.048,
+          "ref_time": 9770.0,
+          "score": 18.819,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 292.958,
+          "ref_time": 9650.0,
+          "score": 10.98,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 129.171,
+          "ref_time": 8050.0,
+          "score": 20.773,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 115.49,
+          "ref_time": 9120.0,
+          "score": 26.323,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 220.275,
+          "ref_time": 10490.0,
+          "score": 15.874,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.879,
+          "ref_time": 9330.0,
+          "score": 19.212,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 280.947,
+          "ref_time": 12100.0,
+          "score": 14.356,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.302,
+          "ref_time": 20720.0,
+          "score": 58.879,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 294.462,
+          "ref_time": 22130.0,
+          "score": 25.051,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 104.625,
+          "ref_time": 6250.0,
+          "score": 19.912,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 177.205,
+          "ref_time": 7020.0,
+          "score": 13.205,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 74.017,
+          "ref_time": 6900.0,
+          "score": 31.074,
+          "coverage": 0.803
+        }
+      }
+    },
+    {
+      "run_id": 28918469088,
+      "run_number": 1516,
+      "created_at": "2026-07-08T04:53:51Z",
+      "commit": "7104b23ab998eed932b897ed7225d96198832bc9",
+      "short_commit": "7104b23ab9",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/7104b23ab998eed932b897ed7225d96198832bc9",
+      "title": "arch-riscv: Fix extra CSR handling (#945)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28918469088",
+      "metrics": {
+        "SPECint avg": 20.635556824572838,
+        "perlbench": 18.819,
+        "bzip2": 10.98,
+        "gcc": 20.773,
+        "mcf": 26.323,
+        "gobmk": 15.874,
+        "hmmer": 19.212,
+        "sjeng": 14.356,
+        "libquantum": 58.879,
+        "h264ref": 25.051,
+        "omnetpp": 19.912,
+        "astar": 13.205,
+        "xalancbmk": 31.074
+      },
+      "details": {
+        "perlbench": {
+          "time": 173.048,
+          "ref_time": 9770.0,
+          "score": 18.819,
+          "coverage": 0.824
+        },
+        "bzip2": {
+          "time": 292.958,
+          "ref_time": 9650.0,
+          "score": 10.98,
+          "coverage": 0.821
+        },
+        "gcc": {
+          "time": 129.171,
+          "ref_time": 8050.0,
+          "score": 20.773,
+          "coverage": 0.818
+        },
+        "mcf": {
+          "time": 115.49,
+          "ref_time": 9120.0,
+          "score": 26.323,
+          "coverage": 0.802
+        },
+        "gobmk": {
+          "time": 220.275,
+          "ref_time": 10490.0,
+          "score": 15.874,
+          "coverage": 0.819
+        },
+        "hmmer": {
+          "time": 161.879,
+          "ref_time": 9330.0,
+          "score": 19.212,
+          "coverage": 0.821
+        },
+        "sjeng": {
+          "time": 280.947,
+          "ref_time": 12100.0,
+          "score": 14.356,
+          "coverage": 0.824
+        },
+        "libquantum": {
+          "time": 117.302,
+          "ref_time": 20720.0,
+          "score": 58.879,
+          "coverage": 0.814
+        },
+        "h264ref": {
+          "time": 294.462,
+          "ref_time": 22130.0,
+          "score": 25.051,
+          "coverage": 0.81
+        },
+        "omnetpp": {
+          "time": 104.625,
+          "ref_time": 6250.0,
+          "score": 19.912,
+          "coverage": 0.828
+        },
+        "astar": {
+          "time": 177.205,
+          "ref_time": 7020.0,
+          "score": 13.205,
+          "coverage": 0.847
+        },
+        "xalancbmk": {
+          "time": 74.017,
+          "ref_time": 6900.0,
+          "score": 31.074,
+          "coverage": 0.803
+        }
+      }
     }
   ]
 }
