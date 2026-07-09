@@ -61,7 +61,7 @@ Then open `http://localhost:8000`.
 This follows the same high-level idea as the XiangShan dashboard: fetch recent workflow runs, download `score.txt` artifacts, and rebuild static JSON.
 
 ```bash
-python3 scripts/update_data.py --source commits --branch xs-dev --max-pages 5 --per-page 100
+python3 scripts/update_data.py --source commits --branch xs-dev --max-pages 1 --per-page 100
 ```
 
 The default refresh mode is now commit-driven: it walks recent `xs-dev` commits, finds the

@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import time
 from typing import Any
 import zipfile
 
@@ -16,7 +17,6 @@ try:
         DATASETS,
         DatasetConfig,
         benchmark_metrics,
-        classify_run,
         make_commit_url,
         parse_score_text,
         run_matches_dataset,
@@ -26,7 +26,6 @@ except ImportError:
         DATASETS,
         DatasetConfig,
         benchmark_metrics,
-        classify_run,
         make_commit_url,
         parse_score_text,
         run_matches_dataset,
@@ -39,24 +38,32 @@ DEFAULT_OUT_DIR = Path(__file__).resolve().parent.parent / "site" / "data"
 
 
 def gh_api_json(path: str) -> Any:
-    result = subprocess.run(
-        ["gh", "api", path],
-        check=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
+    result = gh_api(path, text=True)
     return json.loads(result.stdout)
 
 
 def gh_api_bytes(path: str) -> bytes:
-    result = subprocess.run(
-        ["gh", "api", path],
-        check=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
+    result = gh_api(path, text=False)
     return result.stdout
+
+
+def gh_api(path: str, text: bool) -> subprocess.CompletedProcess:
+    last_error: subprocess.CalledProcessError | None = None
+    for attempt in range(3):
+        try:
+            return subprocess.run(
+                ["gh", "api", path],
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=text,
+            )
+        except subprocess.CalledProcessError as err:
+            last_error = err
+            if attempt < 2:
+                time.sleep(2**attempt)
+    stderr = last_error.stderr if last_error else ""
+    raise RuntimeError(f"gh api failed for {path}: {stderr}") from last_error
 
 
 def list_recent_runs(max_pages: int, per_page: int) -> list[dict[str, Any]]:
@@ -235,12 +242,13 @@ def collect_from_runs(
     for run in list_recent_runs(max_pages, per_page):
         if run.get("conclusion") != "success":
             continue
+        datasets = [dataset for dataset in DATASETS if run_matches_dataset(run, dataset)]
+        if not datasets:
+            continue
         artifacts = list_run_artifacts(run["id"])
-        for dataset in DATASETS:
+        for dataset in datasets:
             artifact = find_dataset_artifact(artifacts, dataset)
             if not artifact:
-                continue
-            if classify_run(run, artifact["name"]) is None:
                 continue
             include_run(run, dataset, artifact, points_by_dataset)
             break
@@ -252,7 +260,7 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description="Build dashboard data from GitHub Actions artifacts")
     parser.add_argument("--source", choices=("commits", "runs"), default="commits")
     parser.add_argument("--branch", default=DEFAULT_BRANCH)
-    parser.add_argument("--max-pages", type=int, default=5)
+    parser.add_argument("--max-pages", type=int, default=1)
     parser.add_argument("--per-page", type=int, default=100)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
     args = parser.parse_args(argv)

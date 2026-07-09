@@ -35,7 +35,7 @@ class ClassifyRunTest(unittest.TestCase):
     def test_classifies_align_push_dataset(self) -> None:
         run = {
             'name': 'gem5 Align BTB Performance Test(0.3c)',
-            'path': '.github/workflows/gem5-ideal-btb-0.3c.yml',
+            'path': '.github/workflows/gem5-align-btb-0.3c.yml',
             'event': 'push',
             'head_branch': 'xs-dev',
         }
@@ -56,7 +56,7 @@ class ClassifyRunTest(unittest.TestCase):
     def test_rejects_non_mainline_or_unknown_runs(self) -> None:
         run = {
             'name': 'gem5 Align BTB Performance Test(0.3c)',
-            'path': '.github/workflows/gem5-ideal-btb-0.3c.yml',
+            'path': '.github/workflows/gem5-align-btb-0.3c.yml',
             'event': 'workflow_dispatch',
             'head_branch': 'feature-branch',
         }

@@ -37,7 +37,7 @@ class SelectRunForDatasetTest(unittest.TestCase):
             {
                 'id': 10,
                 'name': 'gem5 Align BTB Performance Test(0.3c)',
-                'path': '.github/workflows/gem5-ideal-btb-0.3c.yml',
+                'path': '.github/workflows/gem5-align-btb-0.3c.yml',
                 'event': 'push',
                 'head_branch': 'topic',
                 'conclusion': 'success',
@@ -45,7 +45,7 @@ class SelectRunForDatasetTest(unittest.TestCase):
             {
                 'id': 11,
                 'name': 'gem5 Align BTB Performance Test(0.3c)',
-                'path': '.github/workflows/gem5-ideal-btb-0.3c.yml',
+                'path': '.github/workflows/gem5-align-btb-0.3c.yml',
                 'event': 'push',
                 'head_branch': 'xs-dev',
                 'conclusion': 'failure',
