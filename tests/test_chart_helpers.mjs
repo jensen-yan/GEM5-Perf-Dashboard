@@ -10,7 +10,10 @@ import {
 
 const benchmarks = [
   "SPECint avg",
+  "SPECfp avg",
+  "SPEC overall avg",
   "astar",
+  "fp:lbm",
   "gcc",
   "mcf",
 ];
@@ -20,7 +23,10 @@ const dataset = {
     {
       metrics: {
         "SPECint avg": 18.5,
+        "SPECfp avg": 19.5,
+        "SPEC overall avg": 19.0,
         astar: 19.1,
+        "fp:lbm": 20.2,
         gcc: 18.9,
         mcf: 17.0,
       },
@@ -28,7 +34,10 @@ const dataset = {
     {
       metrics: {
         "SPECint avg": 18.7,
+        "SPECfp avg": 19.7,
+        "SPEC overall avg": 19.2,
         astar: 19.3,
+        "fp:lbm": 20.4,
         gcc: 19.0,
         mcf: 17.2,
       },
@@ -39,7 +48,8 @@ const dataset = {
 const options = buildBenchmarkOptions(benchmarks);
 assert.equal(options[0].value, "SPECint avg");
 assert.equal(options[1].value, ALL_SPECINT_OPTION);
-assert.equal(options[1].label, "All SPECint subscores");
+assert.equal(options[1].label, "All benchmark subscores");
+assert.equal(options[2].value, "SPECfp avg");
 
 const singleSeries = resolveSeries(dataset, "gcc");
 assert.equal(singleSeries.length, 1);
@@ -47,10 +57,10 @@ assert.equal(singleSeries[0].name, "gcc");
 assert.deepEqual(singleSeries[0].values, [18.9, 19.0]);
 
 const allSeries = resolveSeries(dataset, ALL_SPECINT_OPTION);
-assert.equal(allSeries.length, 3);
+assert.equal(allSeries.length, 4);
 assert.deepEqual(
   allSeries.map((series) => series.name),
-  ["astar", "gcc", "mcf"],
+  ["astar", "fp:lbm", "gcc", "mcf"],
 );
 
 const filteredSeries = filterSeriesByVisibility(

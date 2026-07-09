@@ -3,14 +3,14 @@ export const AVG_LABEL = "SPECint avg";
 
 export function buildBenchmarkOptions(benchmarks) {
   const options = [{ value: AVG_LABEL, label: AVG_LABEL }];
-  const subscores = benchmarks.filter((name) => name !== AVG_LABEL);
+  const subscores = benchmarks.filter((name) => !name.startsWith("SPEC"));
   if (subscores.length) {
     options.push({
       value: ALL_SPECINT_OPTION,
-      label: "All SPECint subscores",
+      label: "All benchmark subscores",
     });
   }
-  for (const name of subscores) {
+  for (const name of benchmarks.filter((name) => name !== AVG_LABEL)) {
     options.push({ value: name, label: name });
   }
   return options;
@@ -23,8 +23,8 @@ export function resolveSeries(dataset, selectedBenchmark) {
 
   if (selectedBenchmark === ALL_SPECINT_OPTION) {
     const metricNames = dataset.benchmarks?.length
-      ? dataset.benchmarks.filter((name) => name !== AVG_LABEL)
-      : Object.keys(dataset.points[0]?.metrics || {}).filter((name) => name !== AVG_LABEL);
+      ? dataset.benchmarks.filter((name) => !name.startsWith("SPEC"))
+      : Object.keys(dataset.points[0]?.metrics || {}).filter((name) => !name.startsWith("SPEC"));
     return metricNames.map((name) => ({
       name,
       values: dataset.points.map((point) => point.metrics?.[name] ?? null),

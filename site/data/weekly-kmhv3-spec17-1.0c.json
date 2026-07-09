@@ -1,0 +1,573 @@
+{
+  "dataset": {
+    "id": "weekly-kmhv3-spec17-1.0c",
+    "label": "weekly kmhv3 / SPEC17 1.0c",
+    "config": "kmhv3",
+    "toolchain": "gcc15",
+    "coverage": "1.0c"
+  },
+  "benchmarks": [
+    "SPECint avg",
+    "SPECfp avg",
+    "SPEC overall avg",
+    "deepsjeng",
+    "exchange2",
+    "gcc",
+    "leela",
+    "mcf",
+    "omnetpp",
+    "perlbench",
+    "x264",
+    "xalancbmk",
+    "xz",
+    "fp:blender",
+    "fp:bwaves",
+    "fp:cactuBSSN",
+    "fp:cam4",
+    "fp:fotonik3d",
+    "fp:imagick",
+    "fp:lbm",
+    "fp:nab",
+    "fp:namd",
+    "fp:parest",
+    "fp:povray",
+    "fp:roms",
+    "fp:wrf"
+  ],
+  "points": [
+    {
+      "run_id": 27369519616,
+      "run_number": 84,
+      "created_at": "2026-06-11T18:42:54Z",
+      "commit": "e52aa2691f5cffdb53b81233a102dc318a62d1be",
+      "short_commit": "e52aa2691f",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/e52aa2691f5cffdb53b81233a102dc318a62d1be",
+      "title": "gem5 Ideal BTB Weekly Performance Test",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/27369519616",
+      "metrics": {
+        "SPECint avg": 1.9196143384552158,
+        "SPECfp avg": 2.1311398129076546,
+        "SPEC overall avg": 2.0364497591581228,
+        "perlbench": 1.791,
+        "gcc": 2.45,
+        "mcf": 2.078,
+        "omnetpp": 1.487,
+        "xalancbmk": 1.844,
+        "x264": 2.13,
+        "deepsjeng": 1.538,
+        "leela": 1.38,
+        "exchange2": 5.078,
+        "xz": 1.184,
+        "fp:bwaves": 9.266,
+        "fp:cactuBSSN": 1.448,
+        "fp:namd": 2.238,
+        "fp:parest": 1.767,
+        "fp:povray": 1.858,
+        "fp:lbm": 2.401,
+        "fp:wrf": 1.941,
+        "fp:blender": 1.866,
+        "fp:cam4": 2.253,
+        "fp:imagick": 0.944,
+        "fp:nab": 0.867,
+        "fp:fotonik3d": 5.415,
+        "fp:roms": 2.184
+      },
+      "details": {
+        "perlbench": {
+          "time": 296.228,
+          "ref_time": 1592.0,
+          "score": 1.791,
+          "coverage": 1.0
+        },
+        "gcc": {
+          "time": 192.635,
+          "ref_time": 1416.0,
+          "score": 2.45,
+          "coverage": 1.0
+        },
+        "mcf": {
+          "time": 259.184,
+          "ref_time": 1616.0,
+          "score": 2.078,
+          "coverage": 1.0
+        },
+        "omnetpp": {
+          "time": 294.142,
+          "ref_time": 1312.0,
+          "score": 1.487,
+          "coverage": 1.0
+        },
+        "xalancbmk": {
+          "time": 190.861,
+          "ref_time": 1056.0,
+          "score": 1.844,
+          "coverage": 1.0
+        },
+        "x264": {
+          "time": 273.989,
+          "ref_time": 1751.0,
+          "score": 2.13,
+          "coverage": 1.0
+        },
+        "deepsjeng": {
+          "time": 248.393,
+          "ref_time": 1146.0,
+          "score": 1.538,
+          "coverage": 1.0
+        },
+        "leela": {
+          "time": 400.141,
+          "ref_time": 1656.0,
+          "score": 1.38,
+          "coverage": 1.0
+        },
+        "exchange2": {
+          "time": 171.992,
+          "ref_time": 2620.0,
+          "score": 5.078,
+          "coverage": 1.0
+        },
+        "xz": {
+          "time": 304.165,
+          "ref_time": 1080.0,
+          "score": 1.184,
+          "coverage": 1.0
+        },
+        "fp:bwaves": {
+          "time": 360.75,
+          "ref_time": 10028.0,
+          "score": 9.266,
+          "coverage": 1.0
+        },
+        "fp:cactuBSSN": {
+          "time": 291.511,
+          "ref_time": 1266.0,
+          "score": 1.448,
+          "coverage": 1.0
+        },
+        "fp:namd": {
+          "time": 141.485,
+          "ref_time": 950.0,
+          "score": 2.238,
+          "coverage": 1.0
+        },
+        "fp:parest": {
+          "time": 493.521,
+          "ref_time": 2616.0,
+          "score": 1.767,
+          "coverage": 1.0
+        },
+        "fp:povray": {
+          "time": 418.897,
+          "ref_time": 2335.0,
+          "score": 1.858,
+          "coverage": 1.0
+        },
+        "fp:lbm": {
+          "time": 146.304,
+          "ref_time": 1054.0,
+          "score": 2.401,
+          "coverage": 1.0
+        },
+        "fp:wrf": {
+          "time": 384.709,
+          "ref_time": 2240.0,
+          "score": 1.941,
+          "coverage": 1.0
+        },
+        "fp:blender": {
+          "time": 272.068,
+          "ref_time": 1523.0,
+          "score": 1.866,
+          "coverage": 1.0
+        },
+        "fp:cam4": {
+          "time": 258.758,
+          "ref_time": 1749.0,
+          "score": 2.253,
+          "coverage": 1.0
+        },
+        "fp:imagick": {
+          "time": 877.872,
+          "ref_time": 2487.0,
+          "score": 0.944,
+          "coverage": 1.0
+        },
+        "fp:nab": {
+          "time": 646.915,
+          "ref_time": 1683.0,
+          "score": 0.867,
+          "coverage": 1.0
+        },
+        "fp:fotonik3d": {
+          "time": 239.906,
+          "ref_time": 3897.0,
+          "score": 5.415,
+          "coverage": 1.0
+        },
+        "fp:roms": {
+          "time": 242.49,
+          "ref_time": 1589.0,
+          "score": 2.184,
+          "coverage": 1.0
+        }
+      }
+    },
+    {
+      "run_id": 27780468777,
+      "run_number": 86,
+      "created_at": "2026-06-18T18:22:19Z",
+      "commit": "648e24682a9a7abbe9c5ad8e67013af533c62cec",
+      "short_commit": "648e24682a",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/648e24682a9a7abbe9c5ad8e67013af533c62cec",
+      "title": "gem5 Ideal BTB Weekly Performance Test",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/27780468777",
+      "metrics": {
+        "SPECint avg": 1.9201183011350984,
+        "SPECfp avg": 2.1308017884076174,
+        "SPEC overall avg": 2.0364995968231256,
+        "perlbench": 1.791,
+        "gcc": 2.451,
+        "mcf": 2.077,
+        "omnetpp": 1.487,
+        "xalancbmk": 1.844,
+        "x264": 2.133,
+        "deepsjeng": 1.538,
+        "leela": 1.379,
+        "exchange2": 5.081,
+        "xz": 1.185,
+        "fp:bwaves": 9.264,
+        "fp:cactuBSSN": 1.45,
+        "fp:namd": 2.238,
+        "fp:parest": 1.767,
+        "fp:povray": 1.854,
+        "fp:lbm": 2.4,
+        "fp:wrf": 1.941,
+        "fp:blender": 1.866,
+        "fp:cam4": 2.25,
+        "fp:imagick": 0.944,
+        "fp:nab": 0.867,
+        "fp:fotonik3d": 5.41,
+        "fp:roms": 2.187
+      },
+      "details": {
+        "perlbench": {
+          "time": 296.304,
+          "ref_time": 1592.0,
+          "score": 1.791,
+          "coverage": 1.0
+        },
+        "gcc": {
+          "time": 192.585,
+          "ref_time": 1416.0,
+          "score": 2.451,
+          "coverage": 1.0
+        },
+        "mcf": {
+          "time": 259.365,
+          "ref_time": 1616.0,
+          "score": 2.077,
+          "coverage": 1.0
+        },
+        "omnetpp": {
+          "time": 294.137,
+          "ref_time": 1312.0,
+          "score": 1.487,
+          "coverage": 1.0
+        },
+        "xalancbmk": {
+          "time": 190.849,
+          "ref_time": 1056.0,
+          "score": 1.844,
+          "coverage": 1.0
+        },
+        "x264": {
+          "time": 273.658,
+          "ref_time": 1751.0,
+          "score": 2.133,
+          "coverage": 1.0
+        },
+        "deepsjeng": {
+          "time": 248.369,
+          "ref_time": 1146.0,
+          "score": 1.538,
+          "coverage": 1.0
+        },
+        "leela": {
+          "time": 400.307,
+          "ref_time": 1656.0,
+          "score": 1.379,
+          "coverage": 1.0
+        },
+        "exchange2": {
+          "time": 171.867,
+          "ref_time": 2620.0,
+          "score": 5.081,
+          "coverage": 1.0
+        },
+        "xz": {
+          "time": 303.673,
+          "ref_time": 1080.0,
+          "score": 1.185,
+          "coverage": 1.0
+        },
+        "fp:bwaves": {
+          "time": 360.831,
+          "ref_time": 10028.0,
+          "score": 9.264,
+          "coverage": 1.0
+        },
+        "fp:cactuBSSN": {
+          "time": 290.98,
+          "ref_time": 1266.0,
+          "score": 1.45,
+          "coverage": 1.0
+        },
+        "fp:namd": {
+          "time": 141.514,
+          "ref_time": 950.0,
+          "score": 2.238,
+          "coverage": 1.0
+        },
+        "fp:parest": {
+          "time": 493.485,
+          "ref_time": 2616.0,
+          "score": 1.767,
+          "coverage": 1.0
+        },
+        "fp:povray": {
+          "time": 419.748,
+          "ref_time": 2335.0,
+          "score": 1.854,
+          "coverage": 1.0
+        },
+        "fp:lbm": {
+          "time": 146.378,
+          "ref_time": 1054.0,
+          "score": 2.4,
+          "coverage": 1.0
+        },
+        "fp:wrf": {
+          "time": 384.701,
+          "ref_time": 2240.0,
+          "score": 1.941,
+          "coverage": 1.0
+        },
+        "fp:blender": {
+          "time": 272.133,
+          "ref_time": 1523.0,
+          "score": 1.866,
+          "coverage": 1.0
+        },
+        "fp:cam4": {
+          "time": 259.054,
+          "ref_time": 1749.0,
+          "score": 2.25,
+          "coverage": 1.0
+        },
+        "fp:imagick": {
+          "time": 877.789,
+          "ref_time": 2487.0,
+          "score": 0.944,
+          "coverage": 1.0
+        },
+        "fp:nab": {
+          "time": 646.972,
+          "ref_time": 1683.0,
+          "score": 0.867,
+          "coverage": 1.0
+        },
+        "fp:fotonik3d": {
+          "time": 240.097,
+          "ref_time": 3897.0,
+          "score": 5.41,
+          "coverage": 1.0
+        },
+        "fp:roms": {
+          "time": 242.211,
+          "ref_time": 1589.0,
+          "score": 2.187,
+          "coverage": 1.0
+        }
+      }
+    },
+    {
+      "run_id": 28609858864,
+      "run_number": 88,
+      "created_at": "2026-07-02T17:39:23Z",
+      "commit": "74fd899705e0a685d490ebcad4f6976d9b152972",
+      "short_commit": "74fd899705",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/74fd899705e0a685d490ebcad4f6976d9b152972",
+      "title": "gem5 Ideal BTB Weekly Performance Test",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28609858864",
+      "metrics": {
+        "SPECint avg": 1.8956457383197198,
+        "SPECfp avg": 2.1143335129229572,
+        "SPEC overall avg": 2.016311859538237,
+        "perlbench": 1.771,
+        "gcc": 2.441,
+        "mcf": 2.086,
+        "omnetpp": 1.48,
+        "xalancbmk": 1.817,
+        "x264": 2.132,
+        "deepsjeng": 1.531,
+        "leela": 1.375,
+        "exchange2": 4.636,
+        "xz": 1.188,
+        "fp:bwaves": 9.265,
+        "fp:cactuBSSN": 1.379,
+        "fp:namd": 2.243,
+        "fp:parest": 1.762,
+        "fp:povray": 1.855,
+        "fp:lbm": 2.39,
+        "fp:wrf": 1.913,
+        "fp:blender": 1.87,
+        "fp:cam4": 2.226,
+        "fp:imagick": 0.944,
+        "fp:nab": 0.878,
+        "fp:fotonik3d": 5.299,
+        "fp:roms": 2.155
+      },
+      "details": {
+        "perlbench": {
+          "time": 299.727,
+          "ref_time": 1592.0,
+          "score": 1.771,
+          "coverage": 1.0
+        },
+        "gcc": {
+          "time": 193.339,
+          "ref_time": 1416.0,
+          "score": 2.441,
+          "coverage": 1.0
+        },
+        "mcf": {
+          "time": 258.189,
+          "ref_time": 1616.0,
+          "score": 2.086,
+          "coverage": 1.0
+        },
+        "omnetpp": {
+          "time": 295.491,
+          "ref_time": 1312.0,
+          "score": 1.48,
+          "coverage": 1.0
+        },
+        "xalancbmk": {
+          "time": 193.722,
+          "ref_time": 1056.0,
+          "score": 1.817,
+          "coverage": 1.0
+        },
+        "x264": {
+          "time": 273.781,
+          "ref_time": 1751.0,
+          "score": 2.132,
+          "coverage": 1.0
+        },
+        "deepsjeng": {
+          "time": 249.493,
+          "ref_time": 1146.0,
+          "score": 1.531,
+          "coverage": 1.0
+        },
+        "leela": {
+          "time": 401.494,
+          "ref_time": 1656.0,
+          "score": 1.375,
+          "coverage": 1.0
+        },
+        "exchange2": {
+          "time": 188.375,
+          "ref_time": 2620.0,
+          "score": 4.636,
+          "coverage": 1.0
+        },
+        "xz": {
+          "time": 303.142,
+          "ref_time": 1080.0,
+          "score": 1.188,
+          "coverage": 1.0
+        },
+        "fp:bwaves": {
+          "time": 360.768,
+          "ref_time": 10028.0,
+          "score": 9.265,
+          "coverage": 1.0
+        },
+        "fp:cactuBSSN": {
+          "time": 305.99,
+          "ref_time": 1266.0,
+          "score": 1.379,
+          "coverage": 1.0
+        },
+        "fp:namd": {
+          "time": 141.181,
+          "ref_time": 950.0,
+          "score": 2.243,
+          "coverage": 1.0
+        },
+        "fp:parest": {
+          "time": 494.84,
+          "ref_time": 2616.0,
+          "score": 1.762,
+          "coverage": 1.0
+        },
+        "fp:povray": {
+          "time": 419.513,
+          "ref_time": 2335.0,
+          "score": 1.855,
+          "coverage": 1.0
+        },
+        "fp:lbm": {
+          "time": 146.982,
+          "ref_time": 1054.0,
+          "score": 2.39,
+          "coverage": 1.0
+        },
+        "fp:wrf": {
+          "time": 390.256,
+          "ref_time": 2240.0,
+          "score": 1.913,
+          "coverage": 1.0
+        },
+        "fp:blender": {
+          "time": 271.42,
+          "ref_time": 1523.0,
+          "score": 1.87,
+          "coverage": 1.0
+        },
+        "fp:cam4": {
+          "time": 261.9,
+          "ref_time": 1749.0,
+          "score": 2.226,
+          "coverage": 1.0
+        },
+        "fp:imagick": {
+          "time": 878.618,
+          "ref_time": 2487.0,
+          "score": 0.944,
+          "coverage": 1.0
+        },
+        "fp:nab": {
+          "time": 638.997,
+          "ref_time": 1683.0,
+          "score": 0.878,
+          "coverage": 1.0
+        },
+        "fp:fotonik3d": {
+          "time": 245.135,
+          "ref_time": 3897.0,
+          "score": 5.299,
+          "coverage": 1.0
+        },
+        "fp:roms": {
+          "time": 245.833,
+          "ref_time": 1589.0,
+          "score": 2.155,
+          "coverage": 1.0
+        }
+      }
+    }
+  ]
+}

@@ -4,7 +4,10 @@ import unittest
 from scripts.dashboard_data import (
     AVG_LABEL,
     DATASET_BY_ID,
+    FP_AVG_LABEL,
+    OVERALL_AVG_LABEL,
     benchmark_metrics,
+    benchmark_names,
     classify_run,
     make_commit_url,
     run_matches_dataset,
@@ -29,6 +32,28 @@ class ParseScoreTextTest(unittest.TestCase):
 
         self.assertAlmostEqual(metrics[AVG_LABEL], 18.69279014105546)
         self.assertAlmostEqual(metrics['gcc'], 19.022)
+
+    def test_parse_full_suite_averages_and_fp_rows(self) -> None:
+        text = '''
+================ Int =================
+time         ref_time score      coverage
+gcc        120.0     8050.0  22.361       1.0
+Estimated Int score per GHz: 20.0
+================ FP =================
+time         ref_time score      coverage
+lbm        150.0     13740.0  30.533       1.0
+Estimated FP score per GHz: 21.5
+================ Overall =================
+Estimated overall score per GHz: 20.75
+'''
+        parsed = parse_score_text(text)
+        metrics = benchmark_metrics(parsed)
+
+        self.assertAlmostEqual(metrics[AVG_LABEL], 20.0)
+        self.assertAlmostEqual(metrics[FP_AVG_LABEL], 21.5)
+        self.assertAlmostEqual(metrics[OVERALL_AVG_LABEL], 20.75)
+        self.assertAlmostEqual(metrics['fp:lbm'], 30.533)
+        self.assertIn('fp:lbm', benchmark_names(parsed))
 
 
 class ClassifyRunTest(unittest.TestCase):
@@ -75,6 +100,19 @@ class ClassifyRunTest(unittest.TestCase):
 
         self.assertTrue(run_matches_dataset(matching_run, dataset))
         self.assertFalse(run_matches_dataset(wrong_path_run, dataset))
+
+    def test_classifies_weekly_smt_schedule_dataset(self) -> None:
+        run = {
+            'name': 'gem5 SMT SPEC2006 Performance Test(0.3c)',
+            'path': '.github/workflows/gem5-smt-spec06-0.3c.yml',
+            'event': 'schedule',
+            'head_branch': 'xs-dev',
+        }
+
+        dataset = classify_run(run, 'performance-score-gcc12-spec06-smt-0.3c')
+
+        self.assertIsNotNone(dataset)
+        self.assertEqual(dataset.id, 'weekly-smt-idealkmhv3-gcc12-spec06-smt-0.3c')
 
 
 class CommitUrlTest(unittest.TestCase):

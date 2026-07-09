@@ -9,6 +9,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+from urllib.parse import quote
 from typing import Any
 import zipfile
 
@@ -16,6 +17,7 @@ try:
     from .dashboard_data import (
         DATASETS,
         DatasetConfig,
+        AVERAGE_LABELS,
         benchmark_metrics,
         make_commit_url,
         parse_score_text,
@@ -25,6 +27,7 @@ except ImportError:
     from dashboard_data import (
         DATASETS,
         DatasetConfig,
+        AVERAGE_LABELS,
         benchmark_metrics,
         make_commit_url,
         parse_score_text,
@@ -49,7 +52,8 @@ def gh_api_bytes(path: str) -> bytes:
 
 def gh_api(path: str, text: bool) -> subprocess.CompletedProcess:
     last_error: subprocess.CalledProcessError | None = None
-    for attempt in range(3):
+    max_attempts = 5
+    for attempt in range(max_attempts):
         try:
             return subprocess.run(
                 ["gh", "api", path],
@@ -60,8 +64,8 @@ def gh_api(path: str, text: bool) -> subprocess.CompletedProcess:
             )
         except subprocess.CalledProcessError as err:
             last_error = err
-            if attempt < 2:
-                time.sleep(2**attempt)
+            if attempt < max_attempts - 1:
+                time.sleep(min(2**attempt, 8))
     stderr = last_error.stderr if last_error else ""
     raise RuntimeError(f"gh api failed for {path}: {stderr}") from last_error
 
@@ -71,6 +75,25 @@ def list_recent_runs(max_pages: int, per_page: int) -> list[dict[str, Any]]:
     for page in range(1, max_pages + 1):
         payload = gh_api_json(
             f"repos/{OWNER}/{REPO}/actions/runs?per_page={per_page}&page={page}"
+        )
+        page_runs = payload.get("workflow_runs", [])
+        if not page_runs:
+            break
+        runs.extend(page_runs)
+    return runs
+
+
+def list_workflow_runs(
+    workflow_path: str,
+    branch: str,
+    max_pages: int,
+    per_page: int,
+) -> list[dict[str, Any]]:
+    workflow_id = quote(Path(workflow_path).name)
+    runs: list[dict[str, Any]] = []
+    for page in range(1, max_pages + 1):
+        payload = gh_api_json(
+            f"repos/{OWNER}/{REPO}/actions/workflows/{workflow_id}/runs?branch={branch}&per_page={per_page}&page={page}"
         )
         page_runs = payload.get("workflow_runs", [])
         if not page_runs:
@@ -103,6 +126,11 @@ def list_run_artifacts(run_id: int) -> list[dict[str, Any]]:
     return payload.get("artifacts", [])
 
 
+def list_run_jobs(run_id: int) -> list[dict[str, Any]]:
+    payload = gh_api_json(f"repos/{OWNER}/{REPO}/actions/runs/{run_id}/jobs?per_page=100")
+    return payload.get("jobs", [])
+
+
 def select_run_for_dataset(
     runs: list[dict[str, Any]], dataset: DatasetConfig
 ) -> dict[str, Any] | None:
@@ -123,14 +151,59 @@ def select_run_for_dataset(
     )
 
 
-def find_dataset_artifact(
-    artifacts: list[dict[str, Any]], dataset: DatasetConfig
+def _parse_github_time(value: str | None) -> datetime | None:
+    if not value:
+        return None
+    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+
+def find_dataset_job(
+    jobs: list[dict[str, Any]], dataset: DatasetConfig
 ) -> dict[str, Any] | None:
-    for artifact in artifacts:
-        if artifact.get("expired"):
-            continue
-        if artifact.get("name") == dataset.artifact_name:
-            return artifact
+    if not dataset.job_name_prefix:
+        return None
+    candidates = [
+        job
+        for job in jobs
+        if job.get("conclusion") == "success"
+        and str(job.get("name", "")).startswith(dataset.job_name_prefix)
+    ]
+    if not candidates:
+        return None
+    return max(
+        candidates,
+        key=lambda job: (
+            job.get("completed_at") or "",
+            job.get("started_at") or "",
+            job.get("id", 0),
+        ),
+    )
+
+
+def find_dataset_artifact(
+    artifacts: list[dict[str, Any]], dataset: DatasetConfig, job: dict[str, Any] | None = None
+) -> dict[str, Any] | None:
+    candidates = [
+        artifact
+        for artifact in artifacts
+        if not artifact.get("expired") and artifact.get("name") == dataset.artifact_name
+    ]
+    if not candidates:
+        return None
+    if job is None:
+        return candidates[0]
+
+    completed_at = _parse_github_time(job.get("completed_at"))
+    if completed_at is None:
+        return None
+
+    def distance_from_job(artifact: dict[str, Any]) -> float:
+        created_at = _parse_github_time(artifact.get("created_at"))
+        if created_at is None:
+            return float("inf")
+        return abs((created_at - completed_at).total_seconds())
+
+    return min(candidates, key=distance_from_job)
     return None
 
 
@@ -144,6 +217,16 @@ def download_score_text(artifact_id: int) -> str:
 def fetch_commit_subject(sha: str) -> str:
     payload = gh_api_json(f"repos/{OWNER}/{REPO}/commits/{sha}")
     return payload["commit"]["message"].splitlines()[0]
+
+
+def run_title(run: dict[str, Any]) -> str:
+    title = str(run.get("display_title") or "").strip()
+    if title:
+        return title
+    message = str(run.get("head_commit", {}).get("message") or "").strip()
+    if message:
+        return message.splitlines()[0]
+    return fetch_commit_subject(run["head_sha"])
 
 
 def build_point(run: dict[str, Any], parsed: dict[str, Any], title: str) -> dict[str, Any]:
@@ -172,7 +255,16 @@ def write_outputs(points_by_dataset: dict[str, list[dict[str, Any]]], out_dir: P
         points = sorted(points_by_dataset.get(dataset.id, []), key=lambda item: item["created_at"])
         benchmarks = ["SPECint avg"]
         if points:
-            benchmarks = sorted(points[-1]["metrics"].keys(), key=lambda name: (name != "SPECint avg", name))
+            average_order = {name: index for index, name in enumerate(AVERAGE_LABELS)}
+            benchmarks = sorted(
+                points[-1]["metrics"].keys(),
+                key=lambda name: (
+                    0 if name in average_order else 1,
+                    average_order.get(name, 0),
+                    name.startswith("fp:"),
+                    name,
+                ),
+            )
         payload = {
             "dataset": {
                 "id": dataset.id,
@@ -210,7 +302,7 @@ def include_run(
     except ValueError as err:
         print(f"skipped {dataset.id}: run {run['id']} ({err})", file=sys.stderr)
         return False
-    title = fetch_commit_subject(run["head_sha"])
+    title = run_title(run)
     points_by_dataset[dataset.id].append(build_point(run, parsed, title))
     print(f"included {dataset.id}: run {run['id']}", file=sys.stderr)
     return True
@@ -228,7 +320,9 @@ def collect_from_commits(
             run = select_run_for_dataset(runs, dataset)
             if not run:
                 continue
-            artifact = find_dataset_artifact(list_run_artifacts(run["id"]), dataset)
+            artifacts = list_run_artifacts(run["id"])
+            job = find_dataset_job(list_run_jobs(run["id"]), dataset)
+            artifact = find_dataset_artifact(artifacts, dataset, job)
             if not artifact:
                 continue
             include_run(run, dataset, artifact, points_by_dataset)
@@ -240,25 +334,60 @@ def collect_from_runs(
     points_by_dataset: dict[str, list[dict[str, Any]]],
 ) -> None:
     for run in list_recent_runs(max_pages, per_page):
-        if run.get("conclusion") != "success":
-            continue
         datasets = [dataset for dataset in DATASETS if run_matches_dataset(run, dataset)]
+        if run.get("conclusion") != "success":
+            datasets = [dataset for dataset in datasets if dataset.job_name_prefix]
         if not datasets:
             continue
         artifacts = list_run_artifacts(run["id"])
+        jobs: list[dict[str, Any]] | None = None
         for dataset in datasets:
-            artifact = find_dataset_artifact(artifacts, dataset)
+            job = None
+            if dataset.job_name_prefix:
+                if jobs is None:
+                    jobs = list_run_jobs(run["id"])
+                job = find_dataset_job(jobs, dataset)
+            artifact = find_dataset_artifact(artifacts, dataset, job)
             if not artifact:
                 continue
             include_run(run, dataset, artifact, points_by_dataset)
-            break
+
+
+def collect_from_workflows(
+    branch: str,
+    max_pages: int,
+    per_page: int,
+    points_by_dataset: dict[str, list[dict[str, Any]]],
+) -> None:
+    workflow_paths = sorted({dataset.workflow_path for dataset in DATASETS})
+    for workflow_path in workflow_paths:
+        for run in list_workflow_runs(workflow_path, branch, max_pages, per_page):
+            datasets = [dataset for dataset in DATASETS if run_matches_dataset(run, dataset)]
+            if run.get("conclusion") != "success":
+                datasets = [dataset for dataset in datasets if dataset.job_name_prefix]
+            if not datasets:
+                continue
+            artifacts = list_run_artifacts(run["id"])
+            jobs: list[dict[str, Any]] | None = None
+            for dataset in datasets:
+                job = None
+                if dataset.job_name_prefix:
+                    if jobs is None:
+                        jobs = list_run_jobs(run["id"])
+                    job = find_dataset_job(jobs, dataset)
+                    if job is None:
+                        continue
+                artifact = find_dataset_artifact(artifacts, dataset, job)
+                if not artifact:
+                    continue
+                include_run(run, dataset, artifact, points_by_dataset)
 
 
 def main(argv: list[str]) -> int:
     import argparse
 
     parser = argparse.ArgumentParser(description="Build dashboard data from GitHub Actions artifacts")
-    parser.add_argument("--source", choices=("commits", "runs"), default="commits")
+    parser.add_argument("--source", choices=("commits", "runs", "workflows"), default="workflows")
     parser.add_argument("--branch", default=DEFAULT_BRANCH)
     parser.add_argument("--max-pages", type=int, default=1)
     parser.add_argument("--per-page", type=int, default=100)
@@ -269,8 +398,10 @@ def main(argv: list[str]) -> int:
 
     if args.source == "commits":
         collect_from_commits(args.branch, args.max_pages, args.per_page, points_by_dataset)
-    else:
+    elif args.source == "runs":
         collect_from_runs(args.max_pages, args.per_page, points_by_dataset)
+    else:
+        collect_from_workflows(args.branch, args.max_pages, args.per_page, points_by_dataset)
 
     write_outputs(points_by_dataset, args.out_dir)
     return 0

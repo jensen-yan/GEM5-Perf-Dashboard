@@ -325,10 +325,10 @@ function renderChart(dataset, benchmark) {
     visibleSeriesNames ?? new Set(),
     benchmark,
   );
-  chartTitle.textContent = `${dataset.dataset.label} - ${benchmark === ALL_SPECINT_OPTION ? "All SPECint subscores" : benchmark}`;
+  chartTitle.textContent = `${dataset.dataset.label} - ${benchmark === ALL_SPECINT_OPTION ? "All benchmark subscores" : benchmark}`;
   chartNote.textContent =
     benchmark === ALL_SPECINT_OPTION
-      ? "Overlay SPECint sub-scores, and use the legend to hide or restore specific lines."
+      ? "Overlay benchmark sub-scores, and use the legend to hide or restore specific lines."
       : "Hover a point to inspect the exact score, commit, and workflow.";
   pointCount.textContent = String(points.length);
   latestValue.textContent = latestSummary(dataset, benchmark);

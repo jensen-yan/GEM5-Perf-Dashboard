@@ -61,12 +61,11 @@ Then open `http://localhost:8000`.
 This follows the same high-level idea as the XiangShan dashboard: fetch recent workflow runs, download `score.txt` artifacts, and rebuild static JSON.
 
 ```bash
-python3 scripts/update_data.py --source commits --branch xs-dev --max-pages 1 --per-page 100
+python3 scripts/update_data.py --source workflows --branch xs-dev --max-pages 1 --per-page 20
 ```
 
-The default refresh mode is now commit-driven: it walks recent `xs-dev` commits, finds the
-matching performance workflow runs for each dataset, and downloads the exact `score.txt`
-artifact for that workflow.
+The default refresh mode is workflow-driven: it walks the recent runs for each configured
+performance workflow, then downloads the exact `score.txt` artifact for each dataset.
 
 Requirements:
 
