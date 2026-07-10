@@ -1,7 +1,15 @@
+import json
+from pathlib import Path
+import tempfile
 import unittest
 
 from scripts.dashboard_data import DATASET_BY_ID
-from scripts.update_data import find_dataset_artifact, find_dataset_job, select_run_for_dataset
+from scripts.update_data import (
+    find_dataset_artifact,
+    find_dataset_job,
+    select_run_for_dataset,
+    write_outputs,
+)
 
 
 class SelectRunForDatasetTest(unittest.TestCase):
@@ -119,6 +127,44 @@ class FindDatasetJobTest(unittest.TestCase):
 
         self.assertIsNotNone(job)
         self.assertEqual(job['id'], 2)
+
+
+class WriteOutputsTest(unittest.TestCase):
+    def test_normalizes_archive_timestamps_before_sorting_points(self) -> None:
+        dataset_id = 'idealkmhv3-gcc15-spec06-0.8c'
+        points = [
+            {
+                'run_id': 2,
+                'run_number': 2,
+                'created_at': '2026-07-08T04:53:51Z',
+                'commit': 'july',
+                'short_commit': 'jul',
+                'commit_url': '',
+                'title': '',
+                'workflow_url': '',
+                'metrics': {'SPECint avg': 2.0},
+                'details': {},
+            },
+            {
+                'run_id': 1,
+                'run_number': 1,
+                'created_at': '20260618_174901',
+                'commit': 'june',
+                'short_commit': 'jun',
+                'commit_url': '',
+                'title': '',
+                'workflow_url': '',
+                'metrics': {'SPECint avg': 1.0},
+                'details': {},
+            },
+        ]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            write_outputs({dataset_id: points}, Path(tmp))
+            payload = json.loads((Path(tmp) / f'{dataset_id}.json').read_text(encoding='utf-8'))
+
+        self.assertEqual([point['short_commit'] for point in payload['points']], ['jun', 'jul'])
+        self.assertEqual(payload['points'][0]['created_at'], '2026-06-18T17:49:01Z')
 
 
 if __name__ == '__main__':

@@ -10,6 +10,8 @@ from scripts.dashboard_data import (
     benchmark_names,
     classify_run,
     make_commit_url,
+    normalize_created_at,
+    point_created_at_sort_key,
     run_matches_dataset,
     parse_score_text,
 )
@@ -54,6 +56,23 @@ Estimated overall score per GHz: 20.75
         self.assertAlmostEqual(metrics[OVERALL_AVG_LABEL], 20.75)
         self.assertAlmostEqual(metrics['fp:lbm'], 30.533)
         self.assertIn('fp:lbm', benchmark_names(parsed))
+
+
+class TimestampTest(unittest.TestCase):
+    def test_normalizes_archive_timestamp_for_sorting(self) -> None:
+        self.assertEqual(
+            normalize_created_at('20260618_174901'),
+            '2026-06-18T17:49:01Z',
+        )
+
+        points = [
+            {'created_at': '2026-07-08T04:53:51Z', 'short_commit': 'jul'},
+            {'created_at': '20260618_174901', 'short_commit': 'jun'},
+        ]
+
+        sorted_points = sorted(points, key=point_created_at_sort_key)
+
+        self.assertEqual([point['short_commit'] for point in sorted_points], ['jun', 'jul'])
 
 
 class ClassifyRunTest(unittest.TestCase):

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import UTC, datetime
 import re
 from typing import Any
 
@@ -175,6 +176,35 @@ _ROW_RE = re.compile(
     r"(?P<coverage>[\d.]+)$"
 )
 _AVG_RE = re.compile(r"^Estimated (?P<section>Int|FP|overall) score per GHz: (?P<value>[\d.]+)$")
+_ARCHIVE_TIMESTAMP_RE = re.compile(r"^\d{8}_\d{6}$")
+
+
+def normalize_created_at(value: Any) -> str:
+    """Normalize GitHub/archive timestamps so generated points sort chronologically."""
+    if not isinstance(value, str):
+        return ""
+    value = value.strip()
+    if not value:
+        return ""
+    if _ARCHIVE_TIMESTAMP_RE.match(value):
+        return (
+            datetime.strptime(value, "%Y%m%d_%H%M%S")
+            .replace(tzinfo=UTC)
+            .isoformat()
+            .replace("+00:00", "Z")
+        )
+    return value
+
+
+def point_created_at_sort_key(point: dict[str, Any]) -> str:
+    return normalize_created_at(point.get("created_at")) or str(point.get("created_at", ""))
+
+
+def normalize_point_created_at(point: dict[str, Any]) -> dict[str, Any]:
+    normalized = normalize_created_at(point.get("created_at"))
+    if normalized and normalized != point.get("created_at"):
+        return {**point, "created_at": normalized}
+    return point
 
 
 def parse_score_text(text: str) -> dict[str, Any]:

@@ -15,7 +15,9 @@ try:
         DATASETS,
         benchmark_metrics,
         make_commit_url,
+        normalize_point_created_at,
         parse_score_text,
+        point_created_at_sort_key,
         run_matches_dataset,
     )
 except ImportError:
@@ -24,7 +26,9 @@ except ImportError:
         DATASETS,
         benchmark_metrics,
         make_commit_url,
+        normalize_point_created_at,
         parse_score_text,
+        point_created_at_sort_key,
         run_matches_dataset,
     )
 
@@ -87,7 +91,10 @@ def write_outputs(points_by_dataset: dict[str, list[dict[str, Any]]], out_dir: P
     manifest = {'generated_at': datetime.now(UTC).isoformat(), 'datasets': []}
 
     for dataset in DATASETS:
-        points = sorted(points_by_dataset.get(dataset.id, []), key=lambda item: item['created_at'])
+        points = sorted(
+            (normalize_point_created_at(point) for point in points_by_dataset.get(dataset.id, [])),
+            key=point_created_at_sort_key,
+        )
         benchmarks = ['SPECint avg']
         if points:
             average_order = {name: index for index, name in enumerate(AVERAGE_LABELS)}
