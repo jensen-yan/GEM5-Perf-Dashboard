@@ -48,7 +48,7 @@
       "commit": "74fd899705e0a685d490ebcad4f6976d9b152972",
       "short_commit": "74fd899705",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/74fd899705e0a685d490ebcad4f6976d9b152972",
-      "title": "configs: Tune ideal KMHv3 params align with RTL (#924)",
+      "title": "gem5 Ideal BTB Weekly Performance Test",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28609858864",
       "metrics": {
         "SPECint avg": 22.133908808115557,

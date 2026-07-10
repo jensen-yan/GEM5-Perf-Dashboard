@@ -266,9 +266,9 @@
       "run_number": 10,
       "created_at": "2026-06-23T17:58:42Z",
       "commit": "648e24682a9a7abbe9c5ad8e67013af533c62cec",
-      "short_commit": "648e246",
+      "short_commit": "648e24682a",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/648e24682a9a7abbe9c5ad8e67013af533c62cec",
-      "title": "configs: should not define another `numDelay` in MicroTAGE (#916)[skip ci]",
+      "title": "gem5 SMT SPEC2006 Performance Test(0.3c)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28046201063",
       "metrics": {
         "SPECint avg": 25.205421497335145,
@@ -488,7 +488,7 @@
       "commit": "c33990719c34b7ce88b5a371a5d15adab3986025",
       "short_commit": "c33990719c",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/c33990719c34b7ce88b5a371a5d15adab3986025",
-      "title": "misc: Extend manual perf timeout (#932)[skip ci]",
+      "title": "gem5 SMT SPEC2006 Performance Test(0.3c)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28465175666",
       "metrics": {
         "SPECint avg": 24.841535644918423,
@@ -708,7 +708,7 @@
       "commit": "ccce7461c158aa8a8348c7538a9bb35feb30d0b7",
       "short_commit": "ccce7461c1",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/ccce7461c158aa8a8348c7538a9bb35feb30d0b7",
-      "title": "arch-riscv: Limit PTW level parallelism (#938)",
+      "title": "gem5 SMT SPEC2006 Performance Test(0.3c)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28887718589",
       "metrics": {
         "SPECint avg": 24.72016920989785,

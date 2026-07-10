@@ -754,7 +754,7 @@
       "commit": "e52aa2691f5cffdb53b81233a102dc318a62d1be",
       "short_commit": "e52aa2691f",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/e52aa2691f5cffdb53b81233a102dc318a62d1be",
-      "title": "Calibrate XS-GEM5 RVV WITH XS-RTL (#896)",
+      "title": "gem5 Ideal BTB Weekly Performance Test",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/27369519616",
       "metrics": {
         "SPECint avg": 1.9196143384552158,
@@ -932,7 +932,7 @@
       "commit": "648e24682a9a7abbe9c5ad8e67013af533c62cec",
       "short_commit": "648e24682a",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/648e24682a9a7abbe9c5ad8e67013af533c62cec",
-      "title": "configs: should not define another `numDelay` in MicroTAGE (#916)[skip ci]",
+      "title": "gem5 Ideal BTB Weekly Performance Test",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/27780468777",
       "metrics": {
         "SPECint avg": 1.9201183011350984,
@@ -1288,7 +1288,7 @@
       "commit": "74fd899705e0a685d490ebcad4f6976d9b152972",
       "short_commit": "74fd899705",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/74fd899705e0a685d490ebcad4f6976d9b152972",
-      "title": "configs: Tune ideal KMHv3 params align with RTL (#924)",
+      "title": "gem5 Ideal BTB Weekly Performance Test",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28609858864",
       "metrics": {
         "SPECint avg": 1.8956457383197198,
@@ -1455,6 +1455,184 @@
           "time": 245.833,
           "ref_time": 1589.0,
           "score": 2.155,
+          "coverage": 1.0
+        }
+      }
+    },
+    {
+      "run_id": 29038421818,
+      "run_number": 89,
+      "created_at": "2026-07-09T17:49:39Z",
+      "commit": "45bed11d1b9eff11a9eb185438402a46f7502245",
+      "short_commit": "45bed11d1b",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/45bed11d1b9eff11a9eb185438402a46f7502245",
+      "title": "gem5 Ideal BTB Weekly Performance Test",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/29038421818",
+      "metrics": {
+        "SPECint avg": 1.8964504625057106,
+        "SPECfp avg": 2.10436197982761,
+        "SPEC overall avg": 2.011302658463705,
+        "perlbench": 1.77,
+        "gcc": 2.448,
+        "mcf": 2.085,
+        "omnetpp": 1.483,
+        "xalancbmk": 1.817,
+        "x264": 2.132,
+        "deepsjeng": 1.532,
+        "leela": 1.375,
+        "exchange2": 4.636,
+        "xz": 1.187,
+        "fp:bwaves": 9.267,
+        "fp:cactuBSSN": 1.314,
+        "fp:namd": 2.244,
+        "fp:parest": 1.763,
+        "fp:povray": 1.855,
+        "fp:lbm": 2.39,
+        "fp:wrf": 1.913,
+        "fp:blender": 1.874,
+        "fp:cam4": 2.227,
+        "fp:imagick": 0.944,
+        "fp:nab": 0.867,
+        "fp:fotonik3d": 5.3,
+        "fp:roms": 2.147
+      },
+      "details": {
+        "perlbench": {
+          "time": 299.877,
+          "ref_time": 1592.0,
+          "score": 1.77,
+          "coverage": 1.0
+        },
+        "gcc": {
+          "time": 192.786,
+          "ref_time": 1416.0,
+          "score": 2.448,
+          "coverage": 1.0
+        },
+        "mcf": {
+          "time": 258.322,
+          "ref_time": 1616.0,
+          "score": 2.085,
+          "coverage": 1.0
+        },
+        "omnetpp": {
+          "time": 294.869,
+          "ref_time": 1312.0,
+          "score": 1.483,
+          "coverage": 1.0
+        },
+        "xalancbmk": {
+          "time": 193.714,
+          "ref_time": 1056.0,
+          "score": 1.817,
+          "coverage": 1.0
+        },
+        "x264": {
+          "time": 273.768,
+          "ref_time": 1751.0,
+          "score": 2.132,
+          "coverage": 1.0
+        },
+        "deepsjeng": {
+          "time": 249.325,
+          "ref_time": 1146.0,
+          "score": 1.532,
+          "coverage": 1.0
+        },
+        "leela": {
+          "time": 401.56,
+          "ref_time": 1656.0,
+          "score": 1.375,
+          "coverage": 1.0
+        },
+        "exchange2": {
+          "time": 188.392,
+          "ref_time": 2620.0,
+          "score": 4.636,
+          "coverage": 1.0
+        },
+        "xz": {
+          "time": 303.208,
+          "ref_time": 1080.0,
+          "score": 1.187,
+          "coverage": 1.0
+        },
+        "fp:bwaves": {
+          "time": 360.708,
+          "ref_time": 10028.0,
+          "score": 9.267,
+          "coverage": 1.0
+        },
+        "fp:cactuBSSN": {
+          "time": 321.084,
+          "ref_time": 1266.0,
+          "score": 1.314,
+          "coverage": 1.0
+        },
+        "fp:namd": {
+          "time": 141.097,
+          "ref_time": 950.0,
+          "score": 2.244,
+          "coverage": 1.0
+        },
+        "fp:parest": {
+          "time": 494.726,
+          "ref_time": 2616.0,
+          "score": 1.763,
+          "coverage": 1.0
+        },
+        "fp:povray": {
+          "time": 419.518,
+          "ref_time": 2335.0,
+          "score": 1.855,
+          "coverage": 1.0
+        },
+        "fp:lbm": {
+          "time": 147.02,
+          "ref_time": 1054.0,
+          "score": 2.39,
+          "coverage": 1.0
+        },
+        "fp:wrf": {
+          "time": 390.303,
+          "ref_time": 2240.0,
+          "score": 1.913,
+          "coverage": 1.0
+        },
+        "fp:blender": {
+          "time": 270.955,
+          "ref_time": 1523.0,
+          "score": 1.874,
+          "coverage": 1.0
+        },
+        "fp:cam4": {
+          "time": 261.833,
+          "ref_time": 1749.0,
+          "score": 2.227,
+          "coverage": 1.0
+        },
+        "fp:imagick": {
+          "time": 878.612,
+          "ref_time": 2487.0,
+          "score": 0.944,
+          "coverage": 1.0
+        },
+        "fp:nab": {
+          "time": 647.006,
+          "ref_time": 1683.0,
+          "score": 0.867,
+          "coverage": 1.0
+        },
+        "fp:fotonik3d": {
+          "time": 245.092,
+          "ref_time": 3897.0,
+          "score": 5.3,
+          "coverage": 1.0
+        },
+        "fp:roms": {
+          "time": 246.72,
+          "ref_time": 1589.0,
+          "score": 2.147,
           "coverage": 1.0
         }
       }

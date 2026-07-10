@@ -3346,7 +3346,7 @@
       "run_number": 61,
       "created_at": "2026-06-25T16:00:01Z",
       "commit": "92c796cf86e840a4e29f8de08e9f71e8ff5d281c",
-      "short_commit": "92c796cf8",
+      "short_commit": "92c796cf86",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/92c796cf86e840a4e29f8de08e9f71e8ff5d281c",
       "title": "Merge pull request #904 from Gekyume777/tlb-l1-direct-compression",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28183298743",
@@ -3786,7 +3786,7 @@
       "run_number": 63,
       "created_at": "2026-06-26T08:00:12Z",
       "commit": "b42594c220e13b6efe3ad04a272acb8cd3b27cbd",
-      "short_commit": "b42594c22",
+      "short_commit": "b42594c220",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/b42594c220e13b6efe3ad04a272acb8cd3b27cbd",
       "title": "cpu-o3, mem-cache: Model L1D fake DCache mainpipe (#912)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28225280097",
@@ -4006,7 +4006,7 @@
       "run_number": 64,
       "created_at": "2026-06-26T09:33:14Z",
       "commit": "5a6176ffc94d03e3b429f1e4a12aa2749b161a14",
-      "short_commit": "5a6176ffc",
+      "short_commit": "5a6176ffc9",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/5a6176ffc94d03e3b429f1e4a12aa2749b161a14",
       "title": "mem-cache: Skip clean refill data reads in mainpipe (#922)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28229763780",
@@ -4226,7 +4226,7 @@
       "run_number": 76,
       "created_at": "2026-06-29T11:45:47Z",
       "commit": "3bbae89de71f7a180f31f1e49b72e187a53a6011",
-      "short_commit": "3bbae89de",
+      "short_commit": "3bbae89de7",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/3bbae89de71f7a180f31f1e49b72e187a53a6011",
       "title": "arch-riscv: Fix hidden lookup for compressed TLB (#930)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28369635787",
@@ -4446,7 +4446,7 @@
       "run_number": 80,
       "created_at": "2026-07-01T04:03:34Z",
       "commit": "0fd054091dc3559323e242013c829f2af17712c7",
-      "short_commit": "0fd054091",
+      "short_commit": "0fd054091d",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/0fd054091dc3559323e242013c829f2af17712c7",
       "title": "cpu-o3: Split redirect to fetch delay (#934)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28492653397",
@@ -5326,7 +5326,7 @@
       "run_number": 88,
       "created_at": "2026-07-03T06:40:01Z",
       "commit": "a239d9d66acca7c608cfdfbd8743a8ceb8f1f671",
-      "short_commit": "a239d9d66",
+      "short_commit": "a239d9d66a",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/a239d9d66acca7c608cfdfbd8743a8ceb8f1f671",
       "title": "arch-riscv: calibrate RVV split rulses (#929)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28643297294",
@@ -5986,7 +5986,7 @@
       "run_number": 108,
       "created_at": "2026-07-08T02:31:52Z",
       "commit": "2f9b48d19a4911892ca2446f6c79fe4c282699a3",
-      "short_commit": "2f9b48d19",
+      "short_commit": "2f9b48d19a",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/2f9b48d19a4911892ca2446f6c79fe4c282699a3",
       "title": "cpu-o3: Limit store drain for barrier micro-ops (#947)",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28913214013",
@@ -6273,6 +6273,226 @@
           "time": 239.564,
           "ref_time": 10490.0,
           "score": 14.596,
+          "coverage": 0.346
+        },
+        "hmmer": {
+          "time": 165.835,
+          "ref_time": 9330.0,
+          "score": 18.754,
+          "coverage": 0.379
+        },
+        "sjeng": {
+          "time": 296.321,
+          "ref_time": 12100.0,
+          "score": 13.611,
+          "coverage": 0.33
+        },
+        "libquantum": {
+          "time": 152.915,
+          "ref_time": 20720.0,
+          "score": 45.167,
+          "coverage": 0.33
+        },
+        "h264ref": {
+          "time": 307.97,
+          "ref_time": 22130.0,
+          "score": 23.953,
+          "coverage": 0.34
+        },
+        "omnetpp": {
+          "time": 138.567,
+          "ref_time": 6250.0,
+          "score": 15.035,
+          "coverage": 0.377
+        },
+        "astar": {
+          "time": 120.64,
+          "ref_time": 7020.0,
+          "score": 19.397,
+          "coverage": 0.355
+        },
+        "xalancbmk": {
+          "time": 87.578,
+          "ref_time": 6900.0,
+          "score": 26.262,
+          "coverage": 0.309
+        },
+        "fp:bwaves": {
+          "time": 163.585,
+          "ref_time": 13590.0,
+          "score": 27.692,
+          "coverage": 0.719
+        },
+        "fp:gamess": {
+          "time": 402.041,
+          "ref_time": 19580.0,
+          "score": 16.234,
+          "coverage": 0.32
+        },
+        "fp:milc": {
+          "time": 107.532,
+          "ref_time": 9180.0,
+          "score": 28.457,
+          "coverage": 0.316
+        },
+        "fp:zeusmp": {
+          "time": 118.6,
+          "ref_time": 9100.0,
+          "score": 25.576,
+          "coverage": 0.341
+        },
+        "fp:gromacs": {
+          "time": 135.386,
+          "ref_time": 7140.0,
+          "score": 17.579,
+          "coverage": 0.418
+        },
+        "fp:cactusADM": {
+          "time": 201.145,
+          "ref_time": 11950.0,
+          "score": 19.803,
+          "coverage": 0.876
+        },
+        "fp:leslie3d": {
+          "time": 137.762,
+          "ref_time": 9400.0,
+          "score": 22.745,
+          "coverage": 0.344
+        },
+        "fp:namd": {
+          "time": 170.018,
+          "ref_time": 8020.0,
+          "score": 15.724,
+          "coverage": 0.319
+        },
+        "fp:dealII": {
+          "time": 262.323,
+          "ref_time": 11440.0,
+          "score": 14.537,
+          "coverage": 0.329
+        },
+        "fp:soplex": {
+          "time": 146.14,
+          "ref_time": 8340.0,
+          "score": 19.023,
+          "coverage": 0.383
+        },
+        "fp:povray": {
+          "time": 78.621,
+          "ref_time": 5320.0,
+          "score": 22.555,
+          "coverage": 0.337
+        },
+        "fp:calculix": {
+          "time": 146.282,
+          "ref_time": 8250.0,
+          "score": 18.799,
+          "coverage": 0.307
+        },
+        "fp:GemsFDTD": {
+          "time": 113.783,
+          "ref_time": 10610.0,
+          "score": 31.082,
+          "coverage": 0.475
+        },
+        "fp:tonto": {
+          "time": 199.348,
+          "ref_time": 9840.0,
+          "score": 16.454,
+          "coverage": 0.378
+        },
+        "fp:lbm": {
+          "time": 137.822,
+          "ref_time": 13740.0,
+          "score": 33.231,
+          "coverage": 0.358
+        },
+        "fp:wrf": {
+          "time": 265.399,
+          "ref_time": 11170.0,
+          "score": 14.029,
+          "coverage": 0.368
+        },
+        "fp:sphinx3": {
+          "time": 321.202,
+          "ref_time": 19490.0,
+          "score": 20.226,
+          "coverage": 0.355
+        }
+      }
+    },
+    {
+      "run_id": 29008501367,
+      "run_number": 121,
+      "created_at": "2026-07-09T09:31:44Z",
+      "commit": "45bed11d1b9eff11a9eb185438402a46f7502245",
+      "short_commit": "45bed11d1b",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/45bed11d1b9eff11a9eb185438402a46f7502245",
+      "title": "cpu-o3: Avoid SMT frontend work during pending redirects (#935)",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/29008501367",
+      "metrics": {
+        "SPECint avg": 18.755988338408997,
+        "SPECfp avg": 20.674445349649105,
+        "SPEC overall avg": 19.85788254545734,
+        "perlbench": 17.166,
+        "bzip2": 11.148,
+        "gcc": 18.868,
+        "mcf": 17.001,
+        "gobmk": 14.598,
+        "hmmer": 18.754,
+        "sjeng": 13.611,
+        "libquantum": 45.167,
+        "h264ref": 23.953,
+        "omnetpp": 15.035,
+        "astar": 19.397,
+        "xalancbmk": 26.262,
+        "fp:bwaves": 27.692,
+        "fp:gamess": 16.234,
+        "fp:milc": 28.457,
+        "fp:zeusmp": 25.576,
+        "fp:gromacs": 17.579,
+        "fp:cactusADM": 19.803,
+        "fp:leslie3d": 22.745,
+        "fp:namd": 15.724,
+        "fp:dealII": 14.537,
+        "fp:soplex": 19.023,
+        "fp:povray": 22.555,
+        "fp:calculix": 18.799,
+        "fp:GemsFDTD": 31.082,
+        "fp:tonto": 16.454,
+        "fp:lbm": 33.231,
+        "fp:wrf": 14.029,
+        "fp:sphinx3": 20.226
+      },
+      "details": {
+        "perlbench": {
+          "time": 189.717,
+          "ref_time": 9770.0,
+          "score": 17.166,
+          "coverage": 0.454
+        },
+        "bzip2": {
+          "time": 288.535,
+          "ref_time": 9650.0,
+          "score": 11.148,
+          "coverage": 0.349
+        },
+        "gcc": {
+          "time": 142.218,
+          "ref_time": 8050.0,
+          "score": 18.868,
+          "coverage": 0.367
+        },
+        "mcf": {
+          "time": 178.811,
+          "ref_time": 9120.0,
+          "score": 17.001,
+          "coverage": 0.341
+        },
+        "gobmk": {
+          "time": 239.529,
+          "ref_time": 10490.0,
+          "score": 14.598,
           "coverage": 0.346
         },
         "hmmer": {

@@ -574,9 +574,9 @@
       "run_number": 84,
       "created_at": "2026-06-11T18:42:54Z",
       "commit": "e52aa2691f5cffdb53b81233a102dc318a62d1be",
-      "short_commit": "e52aa26",
+      "short_commit": "e52aa2691f",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/e52aa2691f5cffdb53b81233a102dc318a62d1be",
-      "title": "Calibrate XS-GEM5 RVV WITH XS-RTL (#896)",
+      "title": "gem5 Ideal BTB Weekly Performance Test",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/27369519616",
       "metrics": {
         "SPECint avg": 2.1893433692481064,
@@ -1108,9 +1108,9 @@
       "run_number": 88,
       "created_at": "2026-07-02T17:39:23Z",
       "commit": "74fd899705e0a685d490ebcad4f6976d9b152972",
-      "short_commit": "74fd89970",
+      "short_commit": "74fd899705",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/74fd899705e0a685d490ebcad4f6976d9b152972",
-      "title": "configs: Tune ideal KMHv3 params align with RTL (#924)",
+      "title": "gem5 Ideal BTB Weekly Performance Test",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/28609858864",
       "metrics": {
         "SPECint avg": 2.141304351245817,
@@ -1277,6 +1277,184 @@
           "time": 215.807,
           "ref_time": 1589.0,
           "score": 2.454,
+          "coverage": 1.0
+        }
+      }
+    },
+    {
+      "run_id": 29038421818,
+      "run_number": 89,
+      "created_at": "2026-07-09T17:49:39Z",
+      "commit": "45bed11d1b9eff11a9eb185438402a46f7502245",
+      "short_commit": "45bed11d1b",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/45bed11d1b9eff11a9eb185438402a46f7502245",
+      "title": "gem5 Ideal BTB Weekly Performance Test",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/29038421818",
+      "metrics": {
+        "SPECint avg": 2.142847070220001,
+        "SPECfp avg": 2.355902674397015,
+        "SPEC overall avg": 2.260783690378065,
+        "perlbench": 2.14,
+        "gcc": 2.754,
+        "mcf": 2.193,
+        "omnetpp": 1.884,
+        "xalancbmk": 2.273,
+        "x264": 2.197,
+        "deepsjeng": 1.595,
+        "leela": 1.527,
+        "exchange2": 5.675,
+        "xz": 1.213,
+        "fp:bwaves": 12.654,
+        "fp:cactuBSSN": 1.53,
+        "fp:namd": 2.389,
+        "fp:parest": 1.953,
+        "fp:povray": 2.227,
+        "fp:lbm": 2.235,
+        "fp:wrf": 2.054,
+        "fp:blender": 2.084,
+        "fp:cam4": 2.385,
+        "fp:imagick": 1.005,
+        "fp:nab": 0.931,
+        "fp:fotonik3d": 6.538,
+        "fp:roms": 2.453
+      },
+      "details": {
+        "perlbench": {
+          "time": 247.969,
+          "ref_time": 1592.0,
+          "score": 2.14,
+          "coverage": 1.0
+        },
+        "gcc": {
+          "time": 171.372,
+          "ref_time": 1416.0,
+          "score": 2.754,
+          "coverage": 1.0
+        },
+        "mcf": {
+          "time": 245.622,
+          "ref_time": 1616.0,
+          "score": 2.193,
+          "coverage": 1.0
+        },
+        "omnetpp": {
+          "time": 232.074,
+          "ref_time": 1312.0,
+          "score": 1.884,
+          "coverage": 1.0
+        },
+        "xalancbmk": {
+          "time": 154.875,
+          "ref_time": 1056.0,
+          "score": 2.273,
+          "coverage": 1.0
+        },
+        "x264": {
+          "time": 265.63,
+          "ref_time": 1751.0,
+          "score": 2.197,
+          "coverage": 1.0
+        },
+        "deepsjeng": {
+          "time": 239.46,
+          "ref_time": 1146.0,
+          "score": 1.595,
+          "coverage": 1.0
+        },
+        "leela": {
+          "time": 361.411,
+          "ref_time": 1656.0,
+          "score": 1.527,
+          "coverage": 1.0
+        },
+        "exchange2": {
+          "time": 153.879,
+          "ref_time": 2620.0,
+          "score": 5.675,
+          "coverage": 1.0
+        },
+        "xz": {
+          "time": 296.668,
+          "ref_time": 1080.0,
+          "score": 1.213,
+          "coverage": 1.0
+        },
+        "fp:bwaves": {
+          "time": 264.153,
+          "ref_time": 10028.0,
+          "score": 12.654,
+          "coverage": 1.0
+        },
+        "fp:cactuBSSN": {
+          "time": 275.795,
+          "ref_time": 1266.0,
+          "score": 1.53,
+          "coverage": 1.0
+        },
+        "fp:namd": {
+          "time": 132.546,
+          "ref_time": 950.0,
+          "score": 2.389,
+          "coverage": 1.0
+        },
+        "fp:parest": {
+          "time": 446.386,
+          "ref_time": 2616.0,
+          "score": 1.953,
+          "coverage": 1.0
+        },
+        "fp:povray": {
+          "time": 349.534,
+          "ref_time": 2335.0,
+          "score": 2.227,
+          "coverage": 1.0
+        },
+        "fp:lbm": {
+          "time": 157.197,
+          "ref_time": 1054.0,
+          "score": 2.235,
+          "coverage": 1.0
+        },
+        "fp:wrf": {
+          "time": 363.589,
+          "ref_time": 2240.0,
+          "score": 2.054,
+          "coverage": 1.0
+        },
+        "fp:blender": {
+          "time": 243.554,
+          "ref_time": 1523.0,
+          "score": 2.084,
+          "coverage": 1.0
+        },
+        "fp:cam4": {
+          "time": 244.429,
+          "ref_time": 1749.0,
+          "score": 2.385,
+          "coverage": 1.0
+        },
+        "fp:imagick": {
+          "time": 825.023,
+          "ref_time": 2487.0,
+          "score": 1.005,
+          "coverage": 1.0
+        },
+        "fp:nab": {
+          "time": 602.797,
+          "ref_time": 1683.0,
+          "score": 0.931,
+          "coverage": 1.0
+        },
+        "fp:fotonik3d": {
+          "time": 198.689,
+          "ref_time": 3897.0,
+          "score": 6.538,
+          "coverage": 1.0
+        },
+        "fp:roms": {
+          "time": 215.896,
+          "ref_time": 1589.0,
+          "score": 2.453,
           "coverage": 1.0
         }
       }
