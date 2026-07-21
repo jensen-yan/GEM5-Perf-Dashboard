@@ -935,9 +935,9 @@
       "title": "gem5 Ideal BTB Weekly Performance Test",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/27780468777",
       "metrics": {
-        "SPECint avg": 2.189353891050088,
+        "SPECint avg": 2.1893448673939133,
         "SPECfp avg": 2.4288705299437092,
-        "SPEC overall avg": 2.321671200515651,
+        "SPEC overall avg": 2.3216670400690167,
         "perlbench": 2.15,
         "gcc": 2.84,
         "mcf": 2.297,
@@ -976,7 +976,7 @@
           "coverage": 1.0
         },
         "mcf": {
-          "time": 234.549,
+          "time": 234.559,
           "ref_time": 1616.0,
           "score": 2.297,
           "coverage": 1.0
