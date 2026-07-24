@@ -622,7 +622,10 @@ async function main() {
     const dataset = await loadJson(`./data/${entry.file}`);
     state.datasets.set(entry.id, dataset);
   }
-  state.currentDatasetId = state.manifest.datasets[0]?.id || null;
+  const defaultDataset =
+    state.manifest.datasets.find((entry) => entry.point_count > 0) ||
+    state.manifest.datasets[0];
+  state.currentDatasetId = defaultDataset?.id || null;
   renderDatasetOptions();
   render();
 }

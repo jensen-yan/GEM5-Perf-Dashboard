@@ -97,6 +97,19 @@ class ClassifyRunTest(unittest.TestCase):
         dataset = classify_run(run, 'performance-score-gcc12-spec06-0.8c')
         self.assertIsNone(dataset)
 
+    def test_classifies_current_ideal_push_dataset(self) -> None:
+        run = {
+            'name': 'gem5 Ideal BTB Performance Test',
+            'path': '.github/workflows/gem5-ideal-btb-perf.yml',
+            'event': 'push',
+            'head_branch': 'xs-dev',
+        }
+
+        dataset = classify_run(run, 'performance-score-gcc15-spec06-0.3c')
+
+        self.assertIsNotNone(dataset)
+        self.assertEqual(dataset.id, 'idealkmhv3-gcc15-spec06-0.3c')
+
     def test_rejects_non_mainline_or_unknown_runs(self) -> None:
         run = {
             'name': 'gem5 Align BTB Performance Test(0.3c)',
@@ -132,6 +145,19 @@ class ClassifyRunTest(unittest.TestCase):
 
         self.assertIsNotNone(dataset)
         self.assertEqual(dataset.id, 'weekly-smt-idealkmhv3-gcc12-spec06-smt-0.3c')
+
+    def test_classifies_current_smt_push_separately_from_weekly(self) -> None:
+        run = {
+            'name': 'gem5 SMT SPEC2006 Performance Test(0.3c)',
+            'path': '.github/workflows/gem5-smt-spec06-0.3c.yml',
+            'event': 'push',
+            'head_branch': 'xs-dev',
+        }
+
+        dataset = classify_run(run, 'performance-score-gcc12-spec06-smt-0.3c')
+
+        self.assertIsNotNone(dataset)
+        self.assertEqual(dataset.id, 'smt-idealkmhv3-gcc12-spec06-smt-0.3c')
 
 
 class CommitUrlTest(unittest.TestCase):

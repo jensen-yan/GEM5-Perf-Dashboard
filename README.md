@@ -5,7 +5,7 @@ The published site consumes generated JSON directly; it does not require a CSV e
 
 ## What it shows
 
-- Separate datasets for `kmhv3` and `idealkmhv3`
+- Separate datasets for `kmhv3`, `idealkmhv3`, and `smt_idealkmhv3`
 - Separate recent history for `gcc12` and `gcc15`
 - A single selected line at a time for a clean trend view
 - `SPECint avg` and every SPECint sub-score parsed from `score.txt`
@@ -78,8 +78,12 @@ The MVP focuses on recent mainline-style datasets:
 
 - `kmhv3-gcc12-spec06-0.3c`
 - `kmhv3-gcc15-spec06-0.3c`
-- `idealkmhv3-gcc12-spec06-0.8c`
-- `idealkmhv3-gcc15-spec06-0.8c`
+- `idealkmhv3-gcc15-spec06-0.3c`
+- `smt-idealkmhv3-gcc12-spec06-smt-0.3c`
+
+The older ideal `0.8c` datasets and scheduled weekly datasets remain available as
+separate historical series. Results from different slices or workflow events are never
+merged into one trend line.
 
 ## Deploying to GitHub Pages
 

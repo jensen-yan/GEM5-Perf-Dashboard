@@ -127,6 +127,25 @@ h3 {
   font-size: 15px;
 }
 
+.related-dashboard-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  color: var(--accent-deep);
+  font-family: "IBM Plex Mono", "Menlo", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration-color: rgba(142, 53, 23, 0.4);
+  text-underline-offset: 4px;
+}
+
+.related-dashboard-link:hover,
+.related-dashboard-link:focus-visible {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+
 .controls,
 .meta,
 .detail-panel {

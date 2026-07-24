@@ -14,7 +14,7 @@ from scripts.update_data import (
 
 class SelectRunForDatasetTest(unittest.TestCase):
     def test_picks_matching_workflow_for_commit(self) -> None:
-        dataset = DATASET_BY_ID['idealkmhv3-gcc12-spec06-0.8c']
+        dataset = DATASET_BY_ID['idealkmhv3-gcc15-spec06-0.3c']
         runs = [
             {
                 'id': 1201,
@@ -65,11 +65,11 @@ class SelectRunForDatasetTest(unittest.TestCase):
 
 class FindDatasetArtifactTest(unittest.TestCase):
     def test_selects_exact_unexpired_artifact(self) -> None:
-        dataset = DATASET_BY_ID['idealkmhv3-gcc15-spec06-0.8c']
+        dataset = DATASET_BY_ID['idealkmhv3-gcc15-spec06-0.3c']
         artifacts = [
-            {'id': 1, 'name': 'performance-score-gcc15-spec06-0.8c-debug', 'expired': False},
-            {'id': 2, 'name': 'performance-score-gcc15-spec06-0.8c', 'expired': True},
-            {'id': 3, 'name': 'performance-score-gcc15-spec06-0.8c', 'expired': False},
+            {'id': 1, 'name': 'performance-score-gcc15-spec06-0.3c-debug', 'expired': False},
+            {'id': 2, 'name': 'performance-score-gcc15-spec06-0.3c', 'expired': True},
+            {'id': 3, 'name': 'performance-score-gcc15-spec06-0.3c', 'expired': False},
         ]
 
         artifact = find_dataset_artifact(artifacts, dataset)
@@ -131,7 +131,7 @@ class FindDatasetJobTest(unittest.TestCase):
 
 class WriteOutputsTest(unittest.TestCase):
     def test_normalizes_archive_timestamps_before_sorting_points(self) -> None:
-        dataset_id = 'idealkmhv3-gcc15-spec06-0.8c'
+        dataset_id = 'idealkmhv3-gcc15-spec06-0.3c'
         points = [
             {
                 'run_id': 2,
