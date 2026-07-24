@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-23T04:09:22.981206+00:00",
+  "generated_at": "2026-07-24T04:09:04.157332+00:00",
   "datasets": [
     {
       "id": "kmhv3-gcc12-spec06-0.3c",
@@ -11,7 +11,7 @@
       "id": "kmhv3-gcc15-spec06-0.3c",
       "label": "kmhv3 / gcc15 / SPEC06 0.3c",
       "file": "kmhv3-gcc15-spec06-0.3c.json",
-      "point_count": 44
+      "point_count": 47
     },
     {
       "id": "idealkmhv3-gcc12-spec06-0.8c",
@@ -29,31 +29,31 @@
       "id": "weekly-kmhv3-gcc15-spec06-1.0c",
       "label": "weekly kmhv3 / gcc15 / SPEC06 1.0c",
       "file": "weekly-kmhv3-gcc15-spec06-1.0c.json",
-      "point_count": 9
+      "point_count": 10
     },
     {
       "id": "weekly-kmhv3-spec17-1.0c",
       "label": "weekly kmhv3 / SPEC17 1.0c",
       "file": "weekly-kmhv3-spec17-1.0c.json",
-      "point_count": 9
+      "point_count": 10
     },
     {
       "id": "weekly-idealkmhv3-gcc15-spec06-1.0c",
       "label": "weekly idealkmhv3 / gcc15 / SPEC06 1.0c",
       "file": "weekly-idealkmhv3-gcc15-spec06-1.0c.json",
-      "point_count": 9
+      "point_count": 10
     },
     {
       "id": "weekly-idealkmhv3-spec17-1.0c",
       "label": "weekly idealkmhv3 / SPEC17 1.0c",
       "file": "weekly-idealkmhv3-spec17-1.0c.json",
-      "point_count": 8
+      "point_count": 9
     },
     {
       "id": "weekly-smt-idealkmhv3-gcc12-spec06-smt-1.0c",
       "label": "weekly smt_idealkmhv3 / gcc12 / SPEC06 SMT 1.0c",
       "file": "weekly-smt-idealkmhv3-gcc12-spec06-smt-1.0c.json",
-      "point_count": 2
+      "point_count": 3
     },
     {
       "id": "weekly-smt-idealkmhv3-gcc12-spec06-smt-0.3c",
