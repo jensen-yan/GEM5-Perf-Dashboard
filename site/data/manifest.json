@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-06T03:59:10.395062+00:00",
+  "generated_at": "2026-08-07T03:44:02.313717+00:00",
   "datasets": [
     {
       "id": "kmhv3-gcc12-spec06-0.3c",
@@ -47,7 +47,7 @@
       "id": "weekly-kmhv3-spec17-1.0c",
       "label": "weekly kmhv3 / SPEC17 1.0c",
       "file": "weekly-kmhv3-spec17-1.0c.json",
-      "point_count": 11
+      "point_count": 12
     },
     {
       "id": "weekly-idealkmhv3-gcc15-spec06-1.0c",
@@ -59,13 +59,13 @@
       "id": "weekly-idealkmhv3-spec17-1.0c",
       "label": "weekly idealkmhv3 / SPEC17 1.0c",
       "file": "weekly-idealkmhv3-spec17-1.0c.json",
-      "point_count": 10
+      "point_count": 11
     },
     {
       "id": "weekly-smt-idealkmhv3-gcc12-spec06-smt-1.0c",
       "label": "weekly smt_idealkmhv3 / gcc12 / SPEC06 SMT 1.0c",
       "file": "weekly-smt-idealkmhv3-gcc12-spec06-smt-1.0c.json",
-      "point_count": 4
+      "point_count": 5
     },
     {
       "id": "weekly-smt-idealkmhv3-gcc12-spec06-smt-0.3c",
