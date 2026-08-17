@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-13T03:23:23.015278+00:00",
+  "generated_at": "2026-08-17T09:59:56.466480+00:00",
   "datasets": [
     {
       "id": "kmhv3-gcc12-spec06-0.3c",
@@ -11,19 +11,19 @@
       "id": "kmhv3-gcc15-spec06-0.3c",
       "label": "kmhv3 / gcc15 / SPEC06 0.3c",
       "file": "kmhv3-gcc15-spec06-0.3c.json",
-      "point_count": 77
+      "point_count": 82
     },
     {
       "id": "idealkmhv3-gcc15-spec06-0.3c",
       "label": "idealkmhv3 / gcc15 / SPEC06 0.3c",
       "file": "idealkmhv3-gcc15-spec06-0.3c.json",
-      "point_count": 37
+      "point_count": 42
     },
     {
       "id": "smt-idealkmhv3-gcc12-spec06-smt-0.3c",
       "label": "smt_idealkmhv3 / gcc12 / SPEC06 SMT 0.3c",
       "file": "smt-idealkmhv3-gcc12-spec06-smt-0.3c.json",
-      "point_count": 38
+      "point_count": 43
     },
     {
       "id": "idealkmhv3-gcc12-spec06-0.8c",
@@ -41,31 +41,31 @@
       "id": "weekly-kmhv3-gcc15-spec06-1.0c",
       "label": "weekly kmhv3 / gcc15 / SPEC06 1.0c",
       "file": "weekly-kmhv3-gcc15-spec06-1.0c.json",
-      "point_count": 11
+      "point_count": 12
     },
     {
       "id": "weekly-kmhv3-spec17-1.0c",
       "label": "weekly kmhv3 / SPEC17 1.0c",
       "file": "weekly-kmhv3-spec17-1.0c.json",
-      "point_count": 12
+      "point_count": 13
     },
     {
       "id": "weekly-idealkmhv3-gcc15-spec06-1.0c",
       "label": "weekly idealkmhv3 / gcc15 / SPEC06 1.0c",
       "file": "weekly-idealkmhv3-gcc15-spec06-1.0c.json",
-      "point_count": 12
+      "point_count": 13
     },
     {
       "id": "weekly-idealkmhv3-spec17-1.0c",
       "label": "weekly idealkmhv3 / SPEC17 1.0c",
       "file": "weekly-idealkmhv3-spec17-1.0c.json",
-      "point_count": 11
+      "point_count": 12
     },
     {
       "id": "weekly-smt-idealkmhv3-gcc12-spec06-smt-1.0c",
       "label": "weekly smt_idealkmhv3 / gcc12 / SPEC06 SMT 1.0c",
       "file": "weekly-smt-idealkmhv3-gcc12-spec06-smt-1.0c.json",
-      "point_count": 5
+      "point_count": 6
     },
     {
       "id": "weekly-smt-idealkmhv3-gcc12-spec06-smt-0.3c",
