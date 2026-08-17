@@ -1,15 +1,60 @@
+import io
 import json
 from pathlib import Path
 import tempfile
 import unittest
+import zipfile
 
 from scripts.dashboard_data import DATASET_BY_ID
 from scripts.update_data import (
+    extract_score_text,
     find_dataset_artifact,
     find_dataset_job,
     select_run_for_dataset,
     write_outputs,
 )
+
+
+def make_zip(entries: dict[str, str]) -> bytes:
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w") as archive:
+        for name, text in entries.items():
+            archive.writestr(name, text)
+    return buffer.getvalue()
+
+
+class ExtractScoreTextTest(unittest.TestCase):
+    def test_reads_score_from_artifact_root(self) -> None:
+        self.assertEqual(
+            extract_score_text(make_zip({"score.txt": "root score\n"})),
+            "root score\n",
+        )
+
+    def test_reads_score_from_nested_artifact_path(self) -> None:
+        blob = make_zip(
+            {
+                "cirunner/actions-runner-gem5/node028-1/_work/GEM5/GEM5/score.txt": (
+                    "nested score\n"
+                )
+            }
+        )
+
+        self.assertEqual(extract_score_text(blob), "nested score\n")
+
+    def test_rejects_artifact_without_score(self) -> None:
+        with self.assertRaisesRegex(ValueError, "found 0: none"):
+            extract_score_text(make_zip({"summary.txt": "not a score\n"}))
+
+    def test_rejects_ambiguous_score_files(self) -> None:
+        blob = make_zip(
+            {
+                "first/score.txt": "first score\n",
+                "second/score.txt": "second score\n",
+            }
+        )
+
+        with self.assertRaisesRegex(ValueError, "found 2"):
+            extract_score_text(blob)
 
 
 class SelectRunForDatasetTest(unittest.TestCase):

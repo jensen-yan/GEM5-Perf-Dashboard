@@ -213,8 +213,23 @@ def find_dataset_artifact(
 
 def download_score_text(artifact_id: int) -> str:
     blob = gh_api_bytes(f"repos/{OWNER}/{REPO}/actions/artifacts/{artifact_id}/zip")
+    return extract_score_text(blob)
+
+
+def extract_score_text(blob: bytes) -> str:
+    """Read the only score.txt from an artifact, regardless of its directory."""
     with zipfile.ZipFile(io.BytesIO(blob)) as zf:
-        with zf.open("score.txt") as fp:
+        matches = [
+            entry
+            for entry in zf.infolist()
+            if not entry.is_dir() and entry.filename.rsplit("/", 1)[-1] == "score.txt"
+        ]
+        if len(matches) != 1:
+            names = ", ".join(entry.filename for entry in matches) or "none"
+            raise ValueError(
+                f"Expected exactly one score.txt in artifact, found {len(matches)}: {names}"
+            )
+        with zf.open(matches[0]) as fp:
             return fp.read().decode("utf-8")
 
 
