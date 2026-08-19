@@ -1,5 +1,19 @@
 export const ALL_SPECINT_OPTION = "__all_specint__";
 export const AVG_LABEL = "SPECint avg";
+export const DEFAULT_CHART_POINT_LIMIT = 30;
+
+export function selectChartPoints(
+  points,
+  { showAll = false, limit = DEFAULT_CHART_POINT_LIMIT } = {},
+) {
+  if (!Array.isArray(points)) {
+    return [];
+  }
+  if (showAll || points.length <= limit) {
+    return points;
+  }
+  return points.slice(-limit);
+}
 
 export function buildBenchmarkOptions(benchmarks) {
   const options = [{ value: AVG_LABEL, label: AVG_LABEL }];

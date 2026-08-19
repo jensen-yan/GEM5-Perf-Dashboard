@@ -1,11 +1,13 @@
 import {
   ALL_SPECINT_OPTION,
   AVG_LABEL,
+  DEFAULT_CHART_POINT_LIMIT,
   buildBenchmarkOptions,
   chartFullscreenButtonLabel,
   filterSeriesByVisibility,
   latestSummary,
   resolveSeries,
+  selectChartPoints,
 } from "./chart-helpers.mjs";
 import { buildTableModel } from "./table-helpers.mjs";
 
@@ -31,6 +33,7 @@ const state = {
   currentDatasetId: null,
   currentBenchmark: AVG_LABEL,
   visibleSeriesNames: null,
+  showAllPoints: false,
 };
 
 const datasetSelect = document.getElementById("dataset-select");
@@ -42,6 +45,9 @@ const pointCount = document.getElementById("point-count");
 const latestValue = document.getElementById("latest-value");
 const modeLabel = document.getElementById("mode-label");
 const legendRoot = document.getElementById("chart-legend");
+const chartRange = document.getElementById("chart-range");
+const chartRangeRecent = document.getElementById("chart-range-recent");
+const chartRangeAll = document.getElementById("chart-range-all");
 const chart = document.getElementById("chart");
 const chartEmpty = document.getElementById("chart-empty");
 const pointDetail = document.getElementById("point-detail");
@@ -312,10 +318,26 @@ function seriesColor(index) {
   return palette[index % palette.length];
 }
 
+function renderChartRange(totalPointCount, visiblePointCount) {
+  chartRange.classList.toggle("hidden", totalPointCount <= DEFAULT_CHART_POINT_LIMIT);
+  chartRangeRecent.textContent = `Recent ${Math.min(DEFAULT_CHART_POINT_LIMIT, totalPointCount)}`;
+  chartRangeAll.textContent = `All ${totalPointCount}`;
+  chartRangeRecent.setAttribute("aria-pressed", String(!state.showAllPoints));
+  chartRangeAll.setAttribute("aria-pressed", String(state.showAllPoints));
+  pointCount.textContent =
+    visiblePointCount === totalPointCount
+      ? String(totalPointCount)
+      : `${visiblePointCount} / ${totalPointCount}`;
+}
+
 function renderChart(dataset, benchmark) {
   chart.replaceChildren();
-  const points = dataset.points;
-  const allSeries = resolveSeries(dataset, benchmark).map((series, index) => ({
+  const totalPointCount = dataset.points.length;
+  const points = selectChartPoints(dataset.points, { showAll: state.showAllPoints });
+  const densePoints = points.length > DEFAULT_CHART_POINT_LIMIT;
+  chart.classList.toggle("dense-points", densePoints);
+  const chartDataset = { ...dataset, points };
+  const allSeries = resolveSeries(chartDataset, benchmark).map((series, index) => ({
     ...series,
     color: seriesColor(index),
   }));
@@ -330,7 +352,10 @@ function renderChart(dataset, benchmark) {
     benchmark === ALL_SPECINT_OPTION
       ? "Overlay benchmark sub-scores, and use the legend to hide or restore specific lines."
       : "Hover a point to inspect the exact score, commit, and workflow.";
-  pointCount.textContent = String(points.length);
+  if (points.length < totalPointCount) {
+    chartNote.textContent += ` Showing the latest ${points.length} of ${totalPointCount} points.`;
+  }
+  renderChartRange(totalPointCount, points.length);
   latestValue.textContent = latestSummary(dataset, benchmark);
   modeLabel.textContent =
     benchmark === ALL_SPECINT_OPTION ? "Multi-line comparison" : "Single selected line";
@@ -497,6 +522,10 @@ function renderChart(dataset, benchmark) {
   seriesList.forEach((series, seriesIndex) => {
     const color = series.color;
     const pathParts = [];
+    let coreRadius = seriesList.length > 1 ? 4.4 : 5.8;
+    if (densePoints) {
+      coreRadius = seriesList.length > 1 ? 2.4 : 3.2;
+    }
 
     series.values.forEach((value, pointIndex) => {
       if (typeof value !== "number") {
@@ -533,7 +562,7 @@ function renderChart(dataset, benchmark) {
       const core = svgNode("circle", {
         cx: x,
         cy: y,
-        r: seriesList.length > 1 ? 4.4 : 5.8,
+        r: coreRadius,
         class: "point-core",
         fill: "#fffaf1",
         stroke: color,
@@ -632,6 +661,7 @@ async function main() {
 
 datasetSelect.addEventListener("change", (event) => {
   state.currentDatasetId = event.target.value;
+  state.showAllPoints = false;
   resetSeriesVisibility();
   render();
 });
@@ -639,6 +669,16 @@ datasetSelect.addEventListener("change", (event) => {
 benchmarkSelect.addEventListener("change", (event) => {
   state.currentBenchmark = event.target.value;
   resetSeriesVisibility();
+  render();
+});
+
+chartRangeRecent.addEventListener("click", () => {
+  state.showAllPoints = false;
+  render();
+});
+
+chartRangeAll.addEventListener("click", () => {
+  state.showAllPoints = true;
   render();
 });
 

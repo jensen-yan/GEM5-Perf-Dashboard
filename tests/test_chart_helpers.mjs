@@ -2,10 +2,12 @@ import assert from "node:assert/strict";
 
 import {
   ALL_SPECINT_OPTION,
+  DEFAULT_CHART_POINT_LIMIT,
   buildBenchmarkOptions,
   chartFullscreenButtonLabel,
   filterSeriesByVisibility,
   resolveSeries,
+  selectChartPoints,
 } from "../site/chart-helpers.mjs";
 
 const benchmarks = [
@@ -89,5 +91,14 @@ assert.deepEqual(unchangedSingleSeries, singleSeries);
 
 assert.equal(chartFullscreenButtonLabel(false), "Fullscreen Chart");
 assert.equal(chartFullscreenButtonLabel(true), "Exit Fullscreen");
+
+const history = Array.from({ length: 35 }, (_, index) => ({ index }));
+assert.deepEqual(
+  selectChartPoints(history).map((point) => point.index),
+  Array.from({ length: DEFAULT_CHART_POINT_LIMIT }, (_, index) => index + 5),
+);
+assert.equal(selectChartPoints(history, { showAll: true }), history);
+assert.equal(selectChartPoints(history.slice(0, 10)).length, 10);
+assert.deepEqual(selectChartPoints(null), []);
 
 console.log("chart helpers ok");
