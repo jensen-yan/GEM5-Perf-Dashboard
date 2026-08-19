@@ -213,6 +213,38 @@ select:focus {
   flex-wrap: wrap;
 }
 
+.chart-range {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid rgba(173, 146, 111, 0.5);
+  border-radius: 999px;
+  background: rgba(246, 238, 226, 0.72);
+}
+
+.chart-range-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: transparent;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", "Menlo", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chart-range-button[aria-pressed="true"] {
+  background: var(--panel-solid);
+  color: var(--accent-deep);
+  box-shadow: 0 2px 8px rgba(78, 55, 24, 0.12);
+}
+
+.chart-range-button:focus-visible {
+  outline: 2px solid rgba(187, 77, 40, 0.28);
+  outline-offset: 1px;
+}
+
 .toolbar-copy strong {
   display: block;
   margin-top: 4px;
@@ -426,6 +458,7 @@ button.legend-chip,
 
 .point-core {
   stroke-width: 2.5;
+  transition: opacity 140ms ease;
 }
 
 .point-halo {
@@ -436,6 +469,15 @@ button.legend-chip,
 
 .point.active .point-halo,
 .point:hover .point-halo {
+  opacity: 1;
+}
+
+#chart.dense-points .point-core {
+  opacity: 0.64;
+}
+
+#chart.dense-points .point.active .point-core,
+#chart.dense-points .point:hover .point-core {
   opacity: 1;
 }
 
