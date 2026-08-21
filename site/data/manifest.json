@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-21T02:18:54.069540+00:00",
+  "generated_at": "2026-08-21T08:04:53.390373+00:00",
   "datasets": [
     {
       "id": "kmhv3-gcc12-spec06-0.3c",
@@ -23,7 +23,7 @@
       "id": "smt-idealkmhv3-gcc12-spec06-smt-0.3c",
       "label": "smt_idealkmhv3 / gcc12 / SPEC06 SMT 0.3c",
       "file": "smt-idealkmhv3-gcc12-spec06-smt-0.3c.json",
-      "point_count": 54
+      "point_count": 55
     },
     {
       "id": "idealkmhv3-gcc12-spec06-0.8c",
@@ -50,6 +50,12 @@
       "point_count": 14
     },
     {
+      "id": "weekly-kmhv3-gcc15-spec26-1.0c",
+      "label": "weekly kmhv3 / gcc15 / SPEC26 1.0c",
+      "file": "weekly-kmhv3-gcc15-spec26-1.0c.json",
+      "point_count": 4
+    },
+    {
       "id": "weekly-idealkmhv3-gcc15-spec06-1.0c",
       "label": "weekly idealkmhv3 / gcc15 / SPEC06 1.0c",
       "file": "weekly-idealkmhv3-gcc15-spec06-1.0c.json",
@@ -60,6 +66,18 @@
       "label": "weekly idealkmhv3 / SPEC17 1.0c",
       "file": "weekly-idealkmhv3-spec17-1.0c.json",
       "point_count": 13
+    },
+    {
+      "id": "weekly-idealkmhv3-gcc15-spec26-1.0c",
+      "label": "weekly idealkmhv3 / gcc15 / SPEC26 1.0c",
+      "file": "weekly-idealkmhv3-gcc15-spec26-1.0c.json",
+      "point_count": 4
+    },
+    {
+      "id": "weekly-idealkmhv3-gcc12-spec06-dynpf-1.0c",
+      "label": "weekly idealkmhv3 / gcc12 / SPEC06 1.0c / dynamic PF",
+      "file": "weekly-idealkmhv3-gcc12-spec06-dynpf-1.0c.json",
+      "point_count": 4
     },
     {
       "id": "weekly-smt-idealkmhv3-gcc12-spec06-smt-1.0c",

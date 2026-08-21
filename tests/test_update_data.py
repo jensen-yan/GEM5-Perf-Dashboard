@@ -173,6 +173,26 @@ class FindDatasetJobTest(unittest.TestCase):
         self.assertIsNotNone(job)
         self.assertEqual(job['id'], 2)
 
+    def test_weekly_dataset_jobs_cover_current_workflow(self) -> None:
+        expected_prefixes = {
+            'align_test_spec06 / ',
+            'align_test_spec17 / ',
+            'align_test_spec26 / ',
+            'perf_test_spec06 / ',
+            'perf_test_spec17 / ',
+            'perf_test_spec26 / ',
+            'perf_test_spec06_gcc12_dynpf / ',
+            'smt_test_spec06 / ',
+        }
+        actual_prefixes = {
+            dataset.job_name_prefix
+            for dataset in DATASET_BY_ID.values()
+            if dataset.workflow_path
+            == '.github/workflows/gem5-ideal-btb-perf-weekly.yml'
+        }
+
+        self.assertEqual(actual_prefixes, expected_prefixes)
+
 
 class WriteOutputsTest(unittest.TestCase):
     def test_normalizes_archive_timestamps_before_sorting_points(self) -> None:
