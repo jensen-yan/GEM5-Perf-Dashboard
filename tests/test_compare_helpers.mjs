@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 
 import {
   buildComparisonRows,
@@ -7,6 +8,7 @@ import {
   comparisonSummary,
   diffBarRatio,
   parseActionsRunId,
+  parsePastedScore,
   resolveRunSelection,
 } from "../site/compare-helpers.mjs";
 
@@ -21,6 +23,35 @@ assert.equal(
 assert.equal(parseActionsRunId("32160902176"), "32160902176");
 assert.equal(parseActionsRunId("https://example.com/actions/runs/32160902176"), null);
 assert.equal(parseActionsRunId("not a run"), null);
+
+const pastedScore = parsePastedScore(
+  await readFile(new URL("./fixtures/sample_score.txt", import.meta.url), "utf8"),
+);
+assert.equal(pastedScore.specVersion, "06");
+assert.equal(pastedScore.counts.int, 12);
+assert.equal(pastedScore.counts.fp, 0);
+assert.equal(pastedScore.metrics["SPECint avg"], 18.69279014105546);
+assert.equal(pastedScore.metrics.gcc, 19.022);
+assert.equal(pastedScore.details.mcf.coverage, 0.341);
+
+const fullSuiteScore = parsePastedScore(`
+================ SPEC26 =================
+================ Int =================
+time ref_time score coverage
+706.stockfish, 10, 20, 2.0, 1.0
+Estimated Int score per GHz: 2.0
+================ FP =================
+time ref_time score coverage
+782.lbm 20 30 1.5 1.0
+Estimated FP score per GHz: 1.5
+================ Overall =================
+Estimated overall score per GHz: 1.75
+`);
+assert.equal(fullSuiteScore.specVersion, "26");
+assert.deepEqual(fullSuiteScore.counts, { int: 1, fp: 1 });
+assert.equal(fullSuiteScore.metrics["SPEC overall avg"], 1.75);
+assert.equal(fullSuiteScore.metrics["fp:782.lbm"], 1.5);
+assert.throws(() => parsePastedScore("not score data"), /Estimated Int score per GHz/);
 
 assert.equal(diffBarRatio(0), 0);
 assert.ok(diffBarRatio(2) > 0.3);

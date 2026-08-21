@@ -1,4 +1,21 @@
 const SUMMARY_METRICS = ["SPECint avg", "SPECfp avg", "SPEC overall avg"];
+const SCORE_SECTION_LABELS = {
+  Int: "int",
+  FP: "fp",
+};
+const SCORE_AVERAGE_LABELS = {
+  Int: "SPECint avg",
+  FP: "SPECfp avg",
+  overall: "SPEC overall avg",
+};
+const SCORE_NUMBER_PATTERN = "[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?";
+const SCORE_ROW_RE = new RegExp(
+  `^([A-Za-z0-9_.-]+)\\s+(${SCORE_NUMBER_PATTERN})\\s+(${SCORE_NUMBER_PATTERN})\\s+(${SCORE_NUMBER_PATTERN})\\s+(${SCORE_NUMBER_PATTERN})$`,
+);
+const SCORE_AVERAGE_RE = new RegExp(
+  `^Estimated (Int|FP|overall) score per GHz:\\s*(${SCORE_NUMBER_PATTERN})$`,
+  "i",
+);
 
 function numericMetric(point, name) {
   const value = point?.metrics?.[name];
@@ -23,6 +40,72 @@ export function parseActionsRunId(value) {
   } catch {
     return null;
   }
+}
+
+export function parsePastedScore(value) {
+  const text = String(value || "");
+  const details = {};
+  const averages = {};
+  const counts = { int: 0, fp: 0 };
+  let currentSection = null;
+  let specVersion = null;
+
+  for (const rawLine of text.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    const specMatch = /^=+\s*SPEC(?:20)?(06|17|26)\s*=+$/i.exec(line);
+    if (specMatch) {
+      specVersion = specMatch[1];
+      currentSection = null;
+      continue;
+    }
+
+    const sectionMatch = /^=+\s*(Int|FP)\s*=+$/.exec(line);
+    if (sectionMatch) {
+      currentSection = SCORE_SECTION_LABELS[sectionMatch[1]];
+      continue;
+    }
+    if (line.startsWith("================")) {
+      currentSection = null;
+    }
+
+    const averageMatch = SCORE_AVERAGE_RE.exec(line);
+    if (averageMatch) {
+      const averageSection = averageMatch[1].toLowerCase();
+      const section = averageSection === "overall" ? "overall" : averageSection === "fp" ? "FP" : "Int";
+      averages[SCORE_AVERAGE_LABELS[section]] = Number(averageMatch[2]);
+      continue;
+    }
+
+    if (!currentSection || !line || /^(?:benchmark\s+)?time(?:[\s,]|$)/i.test(line)) {
+      continue;
+    }
+
+    const rowMatch = SCORE_ROW_RE.exec(line.replaceAll(",", " ").replace(/\s+/g, " "));
+    if (!rowMatch) {
+      continue;
+    }
+    const name = currentSection === "int" ? rowMatch[1] : `${currentSection}:${rowMatch[1]}`;
+    details[name] = {
+      time: Number(rowMatch[2]),
+      ref_time: Number(rowMatch[3]),
+      score: Number(rowMatch[4]),
+      coverage: Number(rowMatch[5]),
+    };
+    counts[currentSection] += 1;
+  }
+
+  if (!("SPECint avg" in averages)) {
+    throw new Error("Could not find 'Estimated Int score per GHz' in pasted score data.");
+  }
+  if (!Object.keys(details).length) {
+    throw new Error("Could not find benchmark rows in pasted score data.");
+  }
+
+  const metrics = { ...averages };
+  for (const [name, detail] of Object.entries(details)) {
+    metrics[name] = detail.score;
+  }
+  return { specVersion, averages, metrics, details, counts };
 }
 
 export function buildRunIndex(datasets) {

@@ -16,7 +16,9 @@ import {
   comparisonCompatibility,
   comparisonSummary,
   diffBarRatio,
+  inferSpecVersion,
   parseActionsRunId,
+  parsePastedScore,
   resolveRunSelection,
 } from "./compare-helpers.mjs";
 
@@ -159,13 +161,18 @@ function comparisonDataset(id) {
 
 function comparisonPoint(id) {
   const source = comparisonSelection(id);
+  if (source.customPoint) {
+    return source.customPoint;
+  }
   return comparisonDataset(id)?.points.find(
     (point) => String(point.run_id) === String(source.runId),
   );
 }
 
 function selectionToken(source) {
-  return source.datasetId && source.runId ? `${source.datasetId}@${source.runId}` : null;
+  return !source.customPoint && source.datasetId && source.runId
+    ? `${source.datasetId}@${source.runId}`
+    : null;
 }
 
 function parseSelectionToken(value) {
@@ -222,6 +229,8 @@ function updateComparisonUrl() {
       const token = selectionToken(comparisonSelection(id));
       if (token) {
         url.searchParams.set(id, token);
+      } else {
+        url.searchParams.delete(id);
       }
     }
   } else {
@@ -276,6 +285,12 @@ function renderComparisonSource(id) {
     option.value = String(point.run_id);
     option.textContent = `${point.run_id} · ${point.short_commit} · ${formatDate(point.created_at).slice(0, 10)}`;
     elements.run.appendChild(option);
+  }
+  if (source.customPoint) {
+    const option = document.createElement("option");
+    option.value = String(source.customPoint.run_id);
+    option.textContent = `Pasted raw score · ${source.customPoint.metric_count} metrics`;
+    elements.run.prepend(option);
   }
   elements.run.value = String(source.runId || "");
 }
@@ -432,6 +447,14 @@ function renderComparison() {
   const rows = buildComparisonRows(basePoint, targetPoint);
   const summary = comparisonSummary(rows);
   const warnings = [...compatibility.warnings];
+  const hasRawInput = Boolean(basePoint.raw_input || targetPoint.raw_input);
+  comparisonCopyLinkButton.disabled = hasRawInput;
+  comparisonCopyLinkButton.textContent = hasRawInput
+    ? "Raw input is browser-local"
+    : "Copy comparison link";
+  if (hasRawInput) {
+    warnings.push("Pasted raw scores stay in this browser tab and are not included in share links.");
+  }
   if (summary.common < summary.total) {
     warnings.push(
       `Only ${summary.common} of ${summary.total} benchmark metrics exist in both sources. Missing values are not included in a diff.`,
@@ -465,7 +488,12 @@ function applyRunReference(id, value) {
   const source = comparisonSelection(id);
   const resolution = resolveRunSelection(state.runIndex, runId, source.datasetId);
   if (resolution.status === "missing") {
-    setSourceFeedback(id, `Run ${runId} is not in the dashboard data yet.`, true);
+    source.pendingRunId = runId;
+    setSourceFeedback(
+      id,
+      `Run ${runId} is not stored yet. Paste its complete score.txt contents here instead.`,
+      true,
+    );
     return;
   }
   if (resolution.status === "ambiguous") {
@@ -480,26 +508,100 @@ function applyRunReference(id, value) {
 
   source.datasetId = resolution.match.datasetId;
   source.runId = String(resolution.match.point.run_id);
+  source.customPoint = null;
+  source.pendingRunId = null;
   setSourceFeedback(id, `Resolved ${resolution.match.dataset.dataset.label}.`);
   render();
   updateComparisonUrl();
 }
 
-async function pasteRunReference(id) {
+function applyPastedScore(id, value) {
+  const source = comparisonSelection(id);
+  const dataset = comparisonDataset(id);
+  if (!dataset) {
+    setSourceFeedback(id, "Select a dataset before applying raw score data.", true);
+    return;
+  }
+
+  let parsed;
+  try {
+    parsed = parsePastedScore(value);
+  } catch (error) {
+    setSourceFeedback(
+      id,
+      error instanceof Error ? error.message : "Could not parse pasted score data.",
+      true,
+    );
+    return;
+  }
+
+  const selectedVersion = inferSpecVersion(dataset);
+  if (parsed.specVersion && selectedVersion && parsed.specVersion !== selectedVersion) {
+    setSourceFeedback(
+      id,
+      `Pasted data is SPEC${parsed.specVersion}, but the selected dataset is SPEC${selectedVersion}.`,
+      true,
+    );
+    return;
+  }
+
+  const metricCount = Object.keys(parsed.metrics).length;
+  const pendingRunId = source.pendingRunId;
+  const rawId = pendingRunId || `raw-${id}-${Date.now()}`;
+  source.runId = rawId;
+  source.customPoint = {
+    run_id: rawId,
+    run_number: null,
+    created_at: new Date().toISOString(),
+    commit: "",
+    short_commit: pendingRunId ? `run ${pendingRunId}` : "pasted score",
+    commit_url: "",
+    title: pendingRunId ? `Pasted score for Actions Run ${pendingRunId}` : "Pasted raw score",
+    workflow_url: pendingRunId
+      ? `https://github.com/OpenXiangShan/GEM5/actions/runs/${pendingRunId}`
+      : "",
+    metrics: parsed.metrics,
+    details: parsed.details,
+    metric_count: metricCount,
+    raw_input: true,
+  };
+  source.pendingRunId = null;
+  setSourceFeedback(
+    id,
+    `Parsed ${parsed.counts.int} INT and ${parsed.counts.fp} FP benchmark rows${
+      pendingRunId ? ` for Run ${pendingRunId}` : ""
+    }.`,
+  );
+  render();
+  updateComparisonUrl();
+}
+
+function applyComparisonInput(id, value) {
+  if (parseActionsRunId(value)) {
+    applyRunReference(id, value);
+    return;
+  }
+  applyPastedScore(id, value);
+}
+
+async function pasteComparisonInput(id) {
   if (!navigator.clipboard?.readText) {
-    setSourceFeedback(id, "Clipboard access is unavailable; paste the URL into the field.", true);
+    setSourceFeedback(id, "Clipboard access is unavailable; paste into the field manually.", true);
     return;
   }
   try {
     const text = await navigator.clipboard.readText();
     comparisonElements[id].url.value = text.trim();
-    applyRunReference(id, text);
+    applyComparisonInput(id, text);
   } catch {
-    setSourceFeedback(id, "Clipboard permission was denied; paste the URL into the field.", true);
+    setSourceFeedback(id, "Clipboard permission was denied; paste into the field manually.", true);
   }
 }
 
 async function copyComparisonLink() {
+  if (comparisonPoint("a")?.raw_input || comparisonPoint("b")?.raw_input) {
+    return;
+  }
   updateComparisonUrl();
   const value = window.location.href;
   if (!navigator.clipboard?.writeText) {
@@ -1121,27 +1223,38 @@ for (const id of ["a", "b"]) {
     const source = comparisonSelection(id);
     source.datasetId = event.target.value;
     source.runId = defaultRunId(state.datasets.get(source.datasetId), id);
+    source.customPoint = null;
     setSourceFeedback(id);
     render();
     updateComparisonUrl();
   });
   elements.run.addEventListener("change", (event) => {
-    comparisonSelection(id).runId = event.target.value;
+    const source = comparisonSelection(id);
+    source.runId = event.target.value;
+    if (String(source.customPoint?.run_id) !== String(source.runId)) {
+      source.customPoint = null;
+      source.pendingRunId = null;
+    }
     setSourceFeedback(id);
     render();
     updateComparisonUrl();
   });
-  elements.apply.addEventListener("click", () => applyRunReference(id, elements.url.value));
-  elements.paste.addEventListener("click", () => pasteRunReference(id));
+  elements.apply.addEventListener("click", () => applyComparisonInput(id, elements.url.value));
+  elements.paste.addEventListener("click", () => pasteComparisonInput(id));
   elements.url.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      applyRunReference(id, elements.url.value);
+    if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault();
+      applyComparisonInput(id, elements.url.value);
     }
   });
 }
 
 comparisonSwapButton.addEventListener("click", () => {
   [state.comparison.a, state.comparison.b] = [state.comparison.b, state.comparison.a];
+  [comparisonElements.a.url.value, comparisonElements.b.url.value] = [
+    comparisonElements.b.url.value,
+    comparisonElements.a.url.value,
+  ];
   setSourceFeedback("a");
   setSourceFeedback("b");
   render();

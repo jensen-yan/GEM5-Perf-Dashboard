@@ -66,6 +66,12 @@ belong to several weekly datasets, so select the intended dataset before applyin
 an ambiguous URL. The browser compares the JSON already published with the site;
 it does not download missing GitHub Actions artifacts or require a GitHub token.
 
+For runs that are not stored in the dashboard, paste the complete `score.txt` or
+whitespace-formatted `score.csv` contents into either comparison source. The raw
+score is parsed locally and uses the currently selected dataset's config, toolchain,
+coverage, and SPEC version. Pasted scores stay in the current browser tab and are
+not embedded in shareable comparison links.
+
 ### 3. Refresh from GitHub Actions artifacts
 
 This follows the same high-level idea as the XiangShan dashboard: fetch recent workflow runs, download `score.txt` artifacts, and rebuild static JSON.

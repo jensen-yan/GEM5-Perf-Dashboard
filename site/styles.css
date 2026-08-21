@@ -199,7 +199,8 @@ h3 {
 }
 
 select,
-input[type="text"] {
+input[type="text"],
+textarea {
   width: 100%;
   padding: 12px 14px;
   border-radius: 16px;
@@ -211,13 +212,23 @@ input[type="text"] {
 }
 
 select:focus,
-input[type="text"]:focus {
+input[type="text"]:focus,
+textarea:focus {
   outline: 2px solid rgba(59, 130, 246, 0.18);
   border-color: var(--accent);
 }
 
-input[type="text"]::placeholder {
+input[type="text"]::placeholder,
+textarea::placeholder {
   color: #94a3b8;
+}
+
+textarea {
+  min-height: 74px;
+  resize: vertical;
+  font-family: "IBM Plex Mono", "Menlo", monospace;
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 .compare-source-card {
@@ -297,6 +308,13 @@ input[type="text"]::placeholder {
   margin: 0;
   color: var(--muted);
   font-size: 12px;
+  line-height: 1.45;
+}
+
+.source-help {
+  margin: -1px 0 0;
+  color: var(--muted);
+  font-size: 11px;
   line-height: 1.45;
 }
 
