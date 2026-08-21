@@ -10,32 +10,54 @@ import {
   selectChartPoints,
 } from "./chart-helpers.mjs";
 import { buildTableModel } from "./table-helpers.mjs";
+import {
+  buildComparisonRows,
+  buildRunIndex,
+  comparisonCompatibility,
+  comparisonSummary,
+  diffBarRatio,
+  parseActionsRunId,
+  resolveRunSelection,
+} from "./compare-helpers.mjs";
 
 const manifestPath = "./data/manifest.json";
 const palette = [
-  "#BB4D28",
-  "#2E6F6B",
-  "#5A4FCF",
-  "#AA8A11",
-  "#D0667D",
-  "#0081A7",
-  "#5C4B51",
-  "#7A9E2F",
-  "#A545D3",
-  "#C56A1F",
-  "#4D7CFE",
-  "#A13D63",
+  "#3B82F6",
+  "#0F766E",
+  "#8B5CF6",
+  "#D97706",
+  "#EC4899",
+  "#0891B2",
+  "#475569",
+  "#65A30D",
+  "#A855F7",
+  "#EA580C",
+  "#2563EB",
+  "#BE185D",
 ];
 
 const state = {
   manifest: null,
   datasets: new Map(),
+  runIndex: new Map(),
   currentDatasetId: null,
   currentBenchmark: AVG_LABEL,
   visibleSeriesNames: null,
   showAllPoints: false,
+  mode: "trend",
+  comparison: {
+    a: { datasetId: null, runId: null },
+    b: { datasetId: null, runId: null },
+    regressionsOnly: false,
+  },
 };
 
+const trendModeButton = document.getElementById("trend-mode-button");
+const compareModeButton = document.getElementById("compare-mode-button");
+const trendSidebar = document.getElementById("trend-sidebar");
+const compareSidebar = document.getElementById("compare-sidebar");
+const trendView = document.getElementById("trend-view");
+const compareView = document.getElementById("compare-view");
 const datasetSelect = document.getElementById("dataset-select");
 const benchmarkSelect = document.getElementById("benchmark-select");
 const datasetMeta = document.getElementById("dataset-meta");
@@ -61,6 +83,35 @@ const tableFrameModal = document.getElementById("table-frame-modal");
 const tableFullscreenButton = document.getElementById("table-fullscreen-button");
 const tableCloseButton = document.getElementById("table-close-button");
 const tableModalBackdrop = document.getElementById("table-modal-backdrop");
+const comparisonTitle = document.getElementById("comparison-title");
+const comparisonNote = document.getElementById("comparison-note");
+const comparisonCommonCount = document.getElementById("comparison-common-count");
+const comparisonHeadlineLabel = document.getElementById("comparison-headline-label");
+const comparisonHeadlineDiff = document.getElementById("comparison-headline-diff");
+const comparisonAlerts = document.getElementById("comparison-alerts");
+const comparisonTableFrame = document.getElementById("comparison-table-frame");
+const comparisonRegressionsButton = document.getElementById("comparison-regressions-button");
+const comparisonCopyLinkButton = document.getElementById("comparison-copy-link-button");
+const comparisonSwapButton = document.getElementById("compare-swap-button");
+
+const comparisonElements = {
+  a: {
+    dataset: document.getElementById("compare-a-dataset"),
+    run: document.getElementById("compare-a-run"),
+    url: document.getElementById("compare-a-url"),
+    apply: document.getElementById("compare-a-apply"),
+    paste: document.getElementById("compare-a-paste"),
+    feedback: document.getElementById("compare-a-feedback"),
+  },
+  b: {
+    dataset: document.getElementById("compare-b-dataset"),
+    run: document.getElementById("compare-b-run"),
+    url: document.getElementById("compare-b-url"),
+    apply: document.getElementById("compare-b-apply"),
+    paste: document.getElementById("compare-b-paste"),
+    feedback: document.getElementById("compare-b-feedback"),
+  },
+};
 
 async function loadJson(path) {
   const response = await fetch(path);
@@ -83,6 +134,384 @@ function formatDate(value) {
     return value;
   }
   return date.toISOString().slice(0, 16).replace("T", " ");
+}
+
+function formatComparisonValue(value) {
+  return typeof value === "number" ? value.toFixed(3) : "—";
+}
+
+function formatSigned(value, suffix = "") {
+  if (typeof value !== "number") {
+    return "—";
+  }
+  const normalized = Math.abs(value) < 0.0005 ? 0 : value;
+  const sign = normalized > 0 ? "+" : "";
+  return `${sign}${normalized.toFixed(3)}${suffix}`;
+}
+
+function comparisonSelection(id) {
+  return state.comparison[id];
+}
+
+function comparisonDataset(id) {
+  return state.datasets.get(comparisonSelection(id).datasetId);
+}
+
+function comparisonPoint(id) {
+  const source = comparisonSelection(id);
+  return comparisonDataset(id)?.points.find(
+    (point) => String(point.run_id) === String(source.runId),
+  );
+}
+
+function selectionToken(source) {
+  return source.datasetId && source.runId ? `${source.datasetId}@${source.runId}` : null;
+}
+
+function parseSelectionToken(value) {
+  const separator = String(value || "").lastIndexOf("@");
+  if (separator <= 0) {
+    return null;
+  }
+  return {
+    datasetId: value.slice(0, separator),
+    runId: value.slice(separator + 1),
+  };
+}
+
+function selectionExists(source) {
+  const dataset = state.datasets.get(source?.datasetId);
+  return Boolean(
+    dataset?.points.some((point) => String(point.run_id) === String(source?.runId)),
+  );
+}
+
+function defaultRunId(dataset, id) {
+  const points = dataset?.points || [];
+  if (!points.length) {
+    return null;
+  }
+  const index = id === "a" && points.length > 1 ? points.length - 2 : points.length - 1;
+  return String(points[index].run_id);
+}
+
+function initializeComparisonState(defaultDatasetId) {
+  const dataset = state.datasets.get(defaultDatasetId);
+  for (const id of ["a", "b"]) {
+    state.comparison[id] = {
+      datasetId: defaultDatasetId,
+      runId: defaultRunId(dataset, id),
+    };
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  for (const id of ["a", "b"]) {
+    const saved = parseSelectionToken(params.get(id));
+    if (selectionExists(saved)) {
+      state.comparison[id] = saved;
+    }
+  }
+  state.mode = params.get("view") === "compare" ? "compare" : "trend";
+}
+
+function updateComparisonUrl() {
+  const url = new URL(window.location.href);
+  if (state.mode === "compare") {
+    url.searchParams.set("view", "compare");
+    for (const id of ["a", "b"]) {
+      const token = selectionToken(comparisonSelection(id));
+      if (token) {
+        url.searchParams.set(id, token);
+      }
+    }
+  } else {
+    url.searchParams.delete("view");
+    url.searchParams.delete("a");
+    url.searchParams.delete("b");
+  }
+  window.history.replaceState({}, "", url);
+}
+
+function setMode(mode) {
+  state.mode = mode;
+  render();
+  updateComparisonUrl();
+}
+
+function renderModeVisibility() {
+  const comparing = state.mode === "compare";
+  trendModeButton.setAttribute("aria-pressed", String(!comparing));
+  compareModeButton.setAttribute("aria-pressed", String(comparing));
+  trendSidebar.classList.toggle("hidden", comparing);
+  compareSidebar.classList.toggle("hidden", !comparing);
+  trendView.classList.toggle("hidden", comparing);
+  compareView.classList.toggle("hidden", !comparing);
+}
+
+function setSourceFeedback(id, message = "", error = false) {
+  const feedback = comparisonElements[id].feedback;
+  feedback.textContent = message;
+  feedback.classList.toggle("source-feedback-error", error);
+}
+
+function renderComparisonSource(id) {
+  const source = comparisonSelection(id);
+  const elements = comparisonElements[id];
+  elements.dataset.replaceChildren();
+
+  for (const entry of state.manifest.datasets) {
+    const dataset = state.datasets.get(entry.id);
+    const option = document.createElement("option");
+    option.value = entry.id;
+    option.textContent = `${entry.label} (${dataset?.points.length || 0})`;
+    option.disabled = !dataset?.points.length;
+    elements.dataset.appendChild(option);
+  }
+  elements.dataset.value = source.datasetId;
+
+  const dataset = state.datasets.get(source.datasetId);
+  elements.run.replaceChildren();
+  for (const point of [...(dataset?.points || [])].reverse()) {
+    const option = document.createElement("option");
+    option.value = String(point.run_id);
+    option.textContent = `${point.run_id} · ${point.short_commit} · ${formatDate(point.created_at).slice(0, 10)}`;
+    elements.run.appendChild(option);
+  }
+  elements.run.value = String(source.runId || "");
+}
+
+function comparisonSourceName(dataset, point) {
+  if (!dataset || !point) {
+    return "Not selected";
+  }
+  return `${dataset.dataset.label} · Run ${point.run_id} · ${point.short_commit}`;
+}
+
+function renderComparisonAlerts(blocking, warnings) {
+  comparisonAlerts.replaceChildren();
+  for (const message of blocking) {
+    const item = document.createElement("div");
+    item.className = "comparison-alert comparison-alert-error";
+    item.textContent = message;
+    comparisonAlerts.appendChild(item);
+  }
+  for (const message of warnings) {
+    const item = document.createElement("div");
+    item.className = "comparison-alert";
+    item.textContent = message;
+    comparisonAlerts.appendChild(item);
+  }
+  comparisonAlerts.classList.toggle("hidden", !blocking.length && !warnings.length);
+}
+
+function comparisonCell(value, className = "") {
+  const cell = document.createElement("td");
+  cell.textContent = value;
+  if (className) {
+    cell.className = className;
+  }
+  return cell;
+}
+
+function diffClass(value) {
+  if (typeof value !== "number" || Math.abs(value) < 0.0005) {
+    return "";
+  }
+  return value > 0 ? "diff-positive" : "diff-negative";
+}
+
+function applyConditionalDiff(element, value) {
+  const className = diffClass(value);
+  if (!className) {
+    return element;
+  }
+  element.classList.add(className);
+  return element;
+}
+
+function applyConditionalBar(element, value) {
+  applyConditionalDiff(element, value);
+  if (!diffClass(value)) {
+    return element;
+  }
+  const origin = 18;
+  const ratio = diffBarRatio(value);
+  const width = value > 0 ? (100 - origin) * ratio : origin * ratio;
+  const left = value > 0 ? origin : origin - width;
+  element.classList.add("diff-data-bar");
+  element.style.setProperty("--diff-bar-left", `${left.toFixed(2)}%`);
+  element.style.setProperty("--diff-bar-width", `${width.toFixed(2)}%`);
+  return element;
+}
+
+function renderComparisonTable(rows, blocked) {
+  if (blocked) {
+    const empty = document.createElement("div");
+    empty.className = "table-empty";
+    empty.textContent = "Choose compatible SPEC datasets to compare scores.";
+    comparisonTableFrame.replaceChildren(empty);
+    return;
+  }
+
+  const visibleRows = state.comparison.regressionsOnly
+    ? rows.filter((row) => row.summary || (row.hasBoth && row.diffPct < 0))
+    : rows;
+  if (!visibleRows.length) {
+    const empty = document.createElement("div");
+    empty.className = "table-empty";
+    empty.textContent = state.comparison.regressionsOnly
+      ? "No benchmark regressions in this comparison."
+      : "No comparable score data is available.";
+    comparisonTableFrame.replaceChildren(empty);
+    return;
+  }
+
+  const table = document.createElement("table");
+  table.className = "data-table comparison-table";
+  const thead = document.createElement("thead");
+  const header = document.createElement("tr");
+  for (const label of ["Group", "Benchmark", "Baseline A", "Target B", "Δ", "Δ %"]) {
+    const th = document.createElement("th");
+    th.textContent = label;
+    header.appendChild(th);
+  }
+  thead.appendChild(header);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  for (const row of visibleRows) {
+    const tr = document.createElement("tr");
+    if (row.summary) {
+      tr.classList.add("comparison-summary-row");
+    }
+    tr.appendChild(comparisonCell(row.group, "comparison-group-cell"));
+    tr.appendChild(comparisonCell(row.label));
+    tr.appendChild(
+      comparisonCell(
+        formatComparisonValue(row.base),
+        row.base === null ? "comparison-missing" : "",
+      ),
+    );
+    tr.appendChild(
+      comparisonCell(
+        formatComparisonValue(row.target),
+        row.target === null ? "comparison-missing" : "",
+      ),
+    );
+    tr.appendChild(applyConditionalDiff(comparisonCell(formatSigned(row.diff)), row.diffPct));
+    tr.appendChild(
+      applyConditionalBar(comparisonCell(formatSigned(row.diffPct, "%")), row.diffPct),
+    );
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  comparisonTableFrame.replaceChildren(table);
+}
+
+function renderComparison() {
+  renderComparisonSource("a");
+  renderComparisonSource("b");
+
+  const baseDataset = comparisonDataset("a");
+  const targetDataset = comparisonDataset("b");
+  const basePoint = comparisonPoint("a");
+  const targetPoint = comparisonPoint("b");
+  if (!baseDataset || !targetDataset || !basePoint || !targetPoint) {
+    comparisonTitle.textContent = "Select two runs";
+    comparisonCommonCount.textContent = "-";
+    comparisonHeadlineDiff.textContent = "-";
+    renderComparisonAlerts(["Both comparison sources must contain a valid run."], []);
+    renderComparisonTable([], true);
+    return;
+  }
+
+  comparisonTitle.textContent = `${basePoint.short_commit} → ${targetPoint.short_commit}`;
+  comparisonNote.textContent = `${comparisonSourceName(baseDataset, basePoint)} vs ${comparisonSourceName(targetDataset, targetPoint)}`;
+
+  const compatibility = comparisonCompatibility(baseDataset, targetDataset);
+  const rows = buildComparisonRows(basePoint, targetPoint);
+  const summary = comparisonSummary(rows);
+  const warnings = [...compatibility.warnings];
+  if (summary.common < summary.total) {
+    warnings.push(
+      `Only ${summary.common} of ${summary.total} benchmark metrics exist in both sources. Missing values are not included in a diff.`,
+    );
+  }
+  if (!summary.common) {
+    compatibility.blocking.push("The selected runs have no benchmark scores in common.");
+  }
+  renderComparisonAlerts(compatibility.blocking, warnings);
+
+  comparisonCommonCount.textContent = `${summary.common}/${summary.total}`;
+  comparisonHeadlineLabel.textContent = summary.headlineName
+    ? `${summary.headlineName} Δ`
+    : "Aggregate Δ";
+  comparisonHeadlineDiff.textContent = formatSigned(summary.headlineDiffPct, "%");
+  comparisonHeadlineDiff.className = "";
+  applyConditionalDiff(comparisonHeadlineDiff, summary.headlineDiffPct);
+  comparisonRegressionsButton.setAttribute(
+    "aria-pressed",
+    String(state.comparison.regressionsOnly),
+  );
+  renderComparisonTable(rows, compatibility.blocking.length > 0);
+}
+
+function applyRunReference(id, value) {
+  const runId = parseActionsRunId(value);
+  if (!runId) {
+    setSourceFeedback(id, "Paste a GEM5 Actions Run URL or numeric Run ID.", true);
+    return;
+  }
+  const source = comparisonSelection(id);
+  const resolution = resolveRunSelection(state.runIndex, runId, source.datasetId);
+  if (resolution.status === "missing") {
+    setSourceFeedback(id, `Run ${runId} is not in the dashboard data yet.`, true);
+    return;
+  }
+  if (resolution.status === "ambiguous") {
+    const labels = resolution.matches.map((match) => match.dataset.dataset.label).join(", ");
+    setSourceFeedback(
+      id,
+      `Run ${runId} exists in multiple datasets. Select one first: ${labels}`,
+      true,
+    );
+    return;
+  }
+
+  source.datasetId = resolution.match.datasetId;
+  source.runId = String(resolution.match.point.run_id);
+  setSourceFeedback(id, `Resolved ${resolution.match.dataset.dataset.label}.`);
+  render();
+  updateComparisonUrl();
+}
+
+async function pasteRunReference(id) {
+  if (!navigator.clipboard?.readText) {
+    setSourceFeedback(id, "Clipboard access is unavailable; paste the URL into the field.", true);
+    return;
+  }
+  try {
+    const text = await navigator.clipboard.readText();
+    comparisonElements[id].url.value = text.trim();
+    applyRunReference(id, text);
+  } catch {
+    setSourceFeedback(id, "Clipboard permission was denied; paste the URL into the field.", true);
+  }
+}
+
+async function copyComparisonLink() {
+  updateComparisonUrl();
+  const value = window.location.href;
+  if (!navigator.clipboard?.writeText) {
+    window.prompt("Copy comparison link", value);
+    return;
+  }
+  await navigator.clipboard.writeText(value);
+  const original = comparisonCopyLinkButton.textContent;
+  comparisonCopyLinkButton.textContent = "Copied";
+  window.setTimeout(() => {
+    comparisonCopyLinkButton.textContent = original;
+  }, 1400);
 }
 
 function renderLinks(point) {
@@ -564,7 +993,7 @@ function renderChart(dataset, benchmark) {
         cy: y,
         r: coreRadius,
         class: "point-core",
-        fill: "#fffaf1",
+        fill: "#ffffff",
         stroke: color,
       });
 
@@ -634,7 +1063,7 @@ function renderChart(dataset, benchmark) {
   }
 }
 
-function render() {
+function renderTrend() {
   const dataset = state.datasets.get(state.currentDatasetId);
   if (!dataset) {
     return;
@@ -643,6 +1072,15 @@ function render() {
   renderBenchmarks(dataset);
   renderChart(dataset, state.currentBenchmark);
   renderTable(dataset, state.currentBenchmark);
+}
+
+function render() {
+  renderModeVisibility();
+  if (state.mode === "compare") {
+    renderComparison();
+    return;
+  }
+  renderTrend();
 }
 
 async function main() {
@@ -655,9 +1093,14 @@ async function main() {
     state.manifest.datasets.find((entry) => entry.point_count > 0) ||
     state.manifest.datasets[0];
   state.currentDatasetId = defaultDataset?.id || null;
+  state.runIndex = buildRunIndex(state.datasets);
+  initializeComparisonState(state.currentDatasetId);
   renderDatasetOptions();
   render();
 }
+
+trendModeButton.addEventListener("click", () => setMode("trend"));
+compareModeButton.addEventListener("click", () => setMode("compare"));
 
 datasetSelect.addEventListener("change", (event) => {
   state.currentDatasetId = event.target.value;
@@ -670,6 +1113,50 @@ benchmarkSelect.addEventListener("change", (event) => {
   state.currentBenchmark = event.target.value;
   resetSeriesVisibility();
   render();
+});
+
+for (const id of ["a", "b"]) {
+  const elements = comparisonElements[id];
+  elements.dataset.addEventListener("change", (event) => {
+    const source = comparisonSelection(id);
+    source.datasetId = event.target.value;
+    source.runId = defaultRunId(state.datasets.get(source.datasetId), id);
+    setSourceFeedback(id);
+    render();
+    updateComparisonUrl();
+  });
+  elements.run.addEventListener("change", (event) => {
+    comparisonSelection(id).runId = event.target.value;
+    setSourceFeedback(id);
+    render();
+    updateComparisonUrl();
+  });
+  elements.apply.addEventListener("click", () => applyRunReference(id, elements.url.value));
+  elements.paste.addEventListener("click", () => pasteRunReference(id));
+  elements.url.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      applyRunReference(id, elements.url.value);
+    }
+  });
+}
+
+comparisonSwapButton.addEventListener("click", () => {
+  [state.comparison.a, state.comparison.b] = [state.comparison.b, state.comparison.a];
+  setSourceFeedback("a");
+  setSourceFeedback("b");
+  render();
+  updateComparisonUrl();
+});
+
+comparisonRegressionsButton.addEventListener("click", () => {
+  state.comparison.regressionsOnly = !state.comparison.regressionsOnly;
+  renderComparison();
+});
+
+comparisonCopyLinkButton.addEventListener("click", () => {
+  copyComparisonLink().catch(() => {
+    comparisonCopyLinkButton.textContent = "Copy failed";
+  });
 });
 
 chartRangeRecent.addEventListener("click", () => {
@@ -715,4 +1202,7 @@ main().catch((error) => {
   message.textContent = error.message;
   tableFrame.replaceChildren(message);
   tableFrameModal.replaceChildren(message.cloneNode(true));
+  comparisonTitle.textContent = "Failed to load dashboard data";
+  renderComparisonAlerts([error.message], []);
+  renderComparisonTable([], true);
 });

@@ -9,6 +9,8 @@ The published site consumes generated JSON directly; it does not require a CSV e
 - Separate recent history for `gcc12` and `gcc15`
 - A single selected line at a time for a clean trend view
 - `SPECint avg` and every SPECint sub-score parsed from `score.txt`
+- A two-run comparison view with absolute and percentage score differences
+- Stored GitHub Actions Run URL lookup and shareable comparison links
 
 The site is dependency-light:
 
@@ -55,6 +57,14 @@ python3 -m http.server 8000
 ```
 
 Then open `http://localhost:8000`.
+
+### Compare two runs
+
+Open the `Compare` view and choose a dataset and run for baseline A and target B.
+You can also paste a stored GEM5 Actions Run URL or numeric Run ID. A Run ID can
+belong to several weekly datasets, so select the intended dataset before applying
+an ambiguous URL. The browser compares the JSON already published with the site;
+it does not download missing GitHub Actions artifacts or require a GitHub token.
 
 ### 3. Refresh from GitHub Actions artifacts
 

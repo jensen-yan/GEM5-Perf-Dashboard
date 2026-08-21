@@ -26,93 +26,194 @@
           </a>
         </div>
 
-        <section class="panel controls">
-          <label for="dataset-select">Dataset</label>
-          <select id="dataset-select"></select>
+        <nav class="panel mode-switch" aria-label="Dashboard view">
+          <button class="mode-switch-button" id="trend-mode-button" type="button" aria-pressed="true">
+            Trend
+          </button>
+          <button class="mode-switch-button" id="compare-mode-button" type="button" aria-pressed="false">
+            Compare
+          </button>
+        </nav>
 
-          <label for="benchmark-select">Line</label>
-          <select id="benchmark-select"></select>
-        </section>
+        <div class="sidebar-stack" id="trend-sidebar">
+          <section class="panel controls">
+            <label for="dataset-select">Dataset</label>
+            <select id="dataset-select"></select>
 
-        <section class="panel meta" id="dataset-meta"></section>
+            <label for="benchmark-select">Line</label>
+            <select id="benchmark-select"></select>
+          </section>
+
+          <section class="panel meta" id="dataset-meta"></section>
+        </div>
+
+        <div class="sidebar-stack hidden" id="compare-sidebar">
+          <section class="panel compare-source-card">
+            <div class="compare-source-heading">
+              <span class="compare-source-letter">A</span>
+              <div>
+                <span class="eyebrow">Baseline</span>
+                <strong>Reference run</strong>
+              </div>
+            </div>
+            <label for="compare-a-dataset">Dataset</label>
+            <select id="compare-a-dataset"></select>
+            <label for="compare-a-run">Run</label>
+            <select id="compare-a-run"></select>
+            <label for="compare-a-url">Actions Run URL or ID</label>
+            <input id="compare-a-url" type="text" inputmode="url" placeholder=".../actions/runs/123456789">
+            <div class="compare-source-actions">
+              <button class="source-button source-button-primary" id="compare-a-apply" type="button">Use URL</button>
+              <button class="source-button" id="compare-a-paste" type="button">Paste</button>
+            </div>
+            <p class="source-feedback" id="compare-a-feedback" aria-live="polite"></p>
+          </section>
+
+          <button class="swap-button" id="compare-swap-button" type="button">
+            <span aria-hidden="true">&#8645;</span> Swap baseline and target
+          </button>
+
+          <section class="panel compare-source-card">
+            <div class="compare-source-heading">
+              <span class="compare-source-letter compare-source-letter-target">B</span>
+              <div>
+                <span class="eyebrow">Target</span>
+                <strong>Candidate run</strong>
+              </div>
+            </div>
+            <label for="compare-b-dataset">Dataset</label>
+            <select id="compare-b-dataset"></select>
+            <label for="compare-b-run">Run</label>
+            <select id="compare-b-run"></select>
+            <label for="compare-b-url">Actions Run URL or ID</label>
+            <input id="compare-b-url" type="text" inputmode="url" placeholder=".../actions/runs/123456789">
+            <div class="compare-source-actions">
+              <button class="source-button source-button-primary" id="compare-b-apply" type="button">Use URL</button>
+              <button class="source-button" id="compare-b-paste" type="button">Paste</button>
+            </div>
+            <p class="source-feedback" id="compare-b-feedback" aria-live="polite"></p>
+          </section>
+        </div>
       </aside>
 
       <main class="content">
-        <section class="hero panel">
-          <div>
-            <p class="eyebrow">Trend</p>
-            <h2 id="chart-title">Loading...</h2>
-            <p class="hero-note" id="chart-note">Recent mainline performance history.</p>
-          </div>
-          <div class="hero-stats">
+        <div class="view-stack" id="trend-view">
+          <section class="hero panel">
             <div>
-              <span class="stat-label">Points</span>
-              <strong id="point-count">-</strong>
+              <p class="eyebrow">Trend</p>
+              <h2 id="chart-title">Loading...</h2>
+              <p class="hero-note" id="chart-note">Recent mainline performance history.</p>
             </div>
-            <div>
-              <span class="stat-label">Latest</span>
-              <strong id="latest-value">-</strong>
+            <div class="hero-stats">
+              <div>
+                <span class="stat-label">Points</span>
+                <strong id="point-count">-</strong>
+              </div>
+              <div>
+                <span class="stat-label">Latest</span>
+                <strong id="latest-value">-</strong>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section class="panel chart-panel">
-          <div class="chart-toolbar">
-            <div class="toolbar-copy">
-              <span class="eyebrow">Chart Mode</span>
-              <strong id="mode-label">Single line</strong>
-            </div>
-            <div class="chart-toolbar-actions">
-              <div
-                class="chart-range"
-                id="chart-range"
-                role="group"
-                aria-label="Chart data range"
-              >
-                <button
-                  id="chart-range-recent"
-                  class="chart-range-button"
-                  type="button"
-                  aria-pressed="true"
+          <section class="panel chart-panel">
+            <div class="chart-toolbar">
+              <div class="toolbar-copy">
+                <span class="eyebrow">Chart Mode</span>
+                <strong id="mode-label">Single line</strong>
+              </div>
+              <div class="chart-toolbar-actions">
+                <div
+                  class="chart-range"
+                  id="chart-range"
+                  role="group"
+                  aria-label="Chart data range"
                 >
-                  Recent 30
-                </button>
-                <button
-                  id="chart-range-all"
-                  class="chart-range-button"
-                  type="button"
-                  aria-pressed="false"
-                >
-                  All
+                  <button
+                    id="chart-range-recent"
+                    class="chart-range-button"
+                    type="button"
+                    aria-pressed="true"
+                  >
+                    Recent 30
+                  </button>
+                  <button
+                    id="chart-range-all"
+                    class="chart-range-button"
+                    type="button"
+                    aria-pressed="false"
+                  >
+                    All
+                  </button>
+                </div>
+                <div class="chart-legend" id="chart-legend"></div>
+                <button id="chart-fullscreen-button" class="table-button" type="button">
+                  Fullscreen Chart
                 </button>
               </div>
-              <div class="chart-legend" id="chart-legend"></div>
-              <button id="chart-fullscreen-button" class="table-button" type="button">
-                Fullscreen Chart
-              </button>
             </div>
-          </div>
-          <div class="chart-frame">
-            <svg id="chart" viewBox="0 0 960 420" preserveAspectRatio="none"></svg>
-          </div>
-          <div id="chart-empty" class="empty hidden">No data available for this dataset.</div>
-        </section>
-
-        <section class="panel detail-panel" id="point-detail">
-          <h3>Point Detail</h3>
-          <p>Select a point on the chart.</p>
-        </section>
-
-        <section class="panel table-panel">
-          <div class="table-toolbar">
-            <div class="toolbar-copy">
-              <span class="eyebrow">Data Table</span>
-              <strong id="table-title">Loading...</strong>
+            <div class="chart-frame">
+              <svg id="chart" viewBox="0 0 960 420" preserveAspectRatio="none"></svg>
             </div>
-            <button id="table-fullscreen-button" class="table-button" type="button">Fullscreen</button>
-          </div>
-          <div class="table-scroll" id="table-frame"></div>
-        </section>
+            <div id="chart-empty" class="empty hidden">No data available for this dataset.</div>
+          </section>
+
+          <section class="panel detail-panel" id="point-detail">
+            <h3>Point Detail</h3>
+            <p>Select a point on the chart.</p>
+          </section>
+
+          <section class="panel table-panel">
+            <div class="table-toolbar">
+              <div class="toolbar-copy">
+                <span class="eyebrow">Data Table</span>
+                <strong id="table-title">Loading...</strong>
+              </div>
+              <button id="table-fullscreen-button" class="table-button" type="button">Fullscreen</button>
+            </div>
+            <div class="table-scroll" id="table-frame"></div>
+          </section>
+        </div>
+
+        <div class="view-stack hidden" id="compare-view">
+          <section class="hero panel comparison-hero">
+            <div>
+              <p class="eyebrow">Performance Diff</p>
+              <h2 id="comparison-title">Select two runs</h2>
+              <p class="hero-note" id="comparison-note">Target minus baseline. Positive score differences are improvements.</p>
+            </div>
+            <div class="hero-stats">
+              <div>
+                <span class="stat-label">Common</span>
+                <strong id="comparison-common-count">-</strong>
+              </div>
+              <div>
+                <span class="stat-label" id="comparison-headline-label">Overall Δ</span>
+                <strong id="comparison-headline-diff">-</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel comparison-alerts hidden" id="comparison-alerts" aria-live="polite"></section>
+
+          <section class="panel table-panel comparison-table-panel">
+            <div class="table-toolbar comparison-toolbar">
+              <div class="toolbar-copy">
+                <span class="eyebrow">Score Comparison</span>
+                <strong>Baseline A vs Target B</strong>
+              </div>
+              <div class="comparison-actions">
+                <button id="comparison-regressions-button" class="table-button" type="button" aria-pressed="false">
+                  Regressions only
+                </button>
+                <button id="comparison-copy-link-button" class="table-button" type="button">
+                  Copy comparison link
+                </button>
+              </div>
+            </div>
+            <div class="table-scroll comparison-table-scroll" id="comparison-table-frame"></div>
+          </section>
+        </div>
       </main>
     </div>
 
