@@ -1,0 +1,13 @@
+{
+  "dataset": {
+    "id": "weekly-kmhv3-spec06-rva23-novec-gcc16-1.0c",
+    "label": "weekly kmhv3 / gcc16 RVA23 no-vector / SPEC06 1.0c",
+    "config": "kmhv3",
+    "toolchain": "gcc16",
+    "coverage": "1.0c"
+  },
+  "benchmarks": [
+    "SPECint avg"
+  ],
+  "points": []
+}

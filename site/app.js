@@ -15,6 +15,7 @@ import {
   buildRunIndex,
   comparisonCompatibility,
   comparisonSummary,
+  datasetEntriesWithPoints,
   diffBarRatio,
   inferSpecVersion,
   parseActionsRunId,
@@ -268,12 +269,11 @@ function renderComparisonSource(id) {
   const elements = comparisonElements[id];
   elements.dataset.replaceChildren();
 
-  for (const entry of state.manifest.datasets) {
+  for (const entry of datasetEntriesWithPoints(state.manifest.datasets, state.datasets)) {
     const dataset = state.datasets.get(entry.id);
     const option = document.createElement("option");
     option.value = entry.id;
     option.textContent = `${entry.label} (${dataset?.points.length || 0})`;
-    option.disabled = !dataset?.points.length;
     elements.dataset.appendChild(option);
   }
   elements.dataset.value = source.datasetId;
@@ -754,7 +754,7 @@ function renderBenchmarks(dataset) {
 
 function renderDatasetOptions() {
   datasetSelect.innerHTML = "";
-  for (const item of state.manifest.datasets) {
+  for (const item of datasetEntriesWithPoints(state.manifest.datasets, state.datasets)) {
     const option = document.createElement("option");
     option.value = item.id;
     option.textContent = `${item.label} (${item.point_count})`;
@@ -1191,9 +1191,10 @@ async function main() {
     const dataset = await loadJson(`./data/${entry.file}`);
     state.datasets.set(entry.id, dataset);
   }
-  const defaultDataset =
-    state.manifest.datasets.find((entry) => entry.point_count > 0) ||
-    state.manifest.datasets[0];
+  const defaultDataset = datasetEntriesWithPoints(
+    state.manifest.datasets,
+    state.datasets,
+  )[0];
   state.currentDatasetId = defaultDataset?.id || null;
   state.runIndex = buildRunIndex(state.datasets);
   initializeComparisonState(state.currentDatasetId);

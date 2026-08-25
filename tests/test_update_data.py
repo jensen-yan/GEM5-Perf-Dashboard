@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 import zipfile
 
 from scripts.dashboard_data import DATASET_BY_ID
@@ -10,6 +11,7 @@ from scripts.update_data import (
     extract_score_text,
     find_dataset_artifact,
     find_dataset_job,
+    list_workflow_runs,
     select_run_for_dataset,
     write_outputs,
 )
@@ -106,6 +108,23 @@ class SelectRunForDatasetTest(unittest.TestCase):
         ]
 
         self.assertIsNone(select_run_for_dataset(runs, dataset))
+
+
+class ListWorkflowRunsTest(unittest.TestCase):
+    @patch('scripts.update_data.gh_api_json')
+    def test_fetches_latest_runs_without_stale_branch_filter(self, api_json) -> None:
+        api_json.return_value = {'workflow_runs': []}
+
+        list_workflow_runs(
+            '.github/workflows/gem5-align-btb-0.3c.yml',
+            max_pages=1,
+            per_page=20,
+        )
+
+        api_json.assert_called_once_with(
+            'repos/OpenXiangShan/GEM5/actions/workflows/'
+            'gem5-align-btb-0.3c.yml/runs?per_page=20&page=1'
+        )
 
 
 class FindDatasetArtifactTest(unittest.TestCase):

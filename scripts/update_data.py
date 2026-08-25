@@ -89,7 +89,6 @@ def list_recent_runs(max_pages: int, per_page: int) -> list[dict[str, Any]]:
 
 def list_workflow_runs(
     workflow_path: str,
-    branch: str,
     max_pages: int,
     per_page: int,
 ) -> list[dict[str, Any]]:
@@ -97,7 +96,8 @@ def list_workflow_runs(
     runs: list[dict[str, Any]] = []
     for page in range(1, max_pages + 1):
         payload = gh_api_json(
-            f"repos/{OWNER}/{REPO}/actions/workflows/{workflow_id}/runs?branch={branch}&per_page={per_page}&page={page}"
+            f"repos/{OWNER}/{REPO}/actions/workflows/{workflow_id}/runs"
+            f"?per_page={per_page}&page={page}"
         )
         page_runs = payload.get("workflow_runs", [])
         if not page_runs:
@@ -409,7 +409,10 @@ def collect_from_workflows(
 ) -> None:
     workflow_paths = sorted({dataset.workflow_path for dataset in DATASETS})
     for workflow_path in workflow_paths:
-        for run in list_workflow_runs(workflow_path, branch, max_pages, per_page):
+        # GitHub's workflow endpoint can return stale pages when the branch
+        # query is present. Fetch the latest workflow runs and rely on the
+        # exact head-branch check in run_matches_dataset instead.
+        for run in list_workflow_runs(workflow_path, max_pages, per_page):
             datasets = [dataset for dataset in DATASETS if run_matches_dataset(run, dataset)]
             if run.get("conclusion") != "success":
                 datasets = [dataset for dataset in datasets if dataset.job_name_prefix]

@@ -6,6 +6,7 @@ import {
   buildRunIndex,
   comparisonCompatibility,
   comparisonSummary,
+  datasetEntriesWithPoints,
   diffBarRatio,
   parseActionsRunId,
   parsePastedScore,
@@ -23,6 +24,18 @@ assert.equal(
 assert.equal(parseActionsRunId("32160902176"), "32160902176");
 assert.equal(parseActionsRunId("https://example.com/actions/runs/32160902176"), null);
 assert.equal(parseActionsRunId("not a run"), null);
+
+const visibleEntries = datasetEntriesWithPoints(
+  [
+    { id: "empty", point_count: 0 },
+    { id: "current", point_count: 2 },
+  ],
+  new Map([
+    ["empty", { points: [] }],
+    ["current", { points: [{ run_id: 1 }, { run_id: 2 }] }],
+  ]),
+);
+assert.deepEqual(visibleEntries.map((entry) => entry.id), ["current"]);
 
 const pastedScore = parsePastedScore(
   await readFile(new URL("./fixtures/sample_score.txt", import.meta.url), "utf8"),

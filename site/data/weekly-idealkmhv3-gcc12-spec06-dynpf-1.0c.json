@@ -1,7 +1,7 @@
 {
   "dataset": {
     "id": "weekly-idealkmhv3-gcc12-spec06-dynpf-1.0c",
-    "label": "weekly idealkmhv3 / gcc12 / SPEC06 1.0c / dynamic PF",
+    "label": "weekly idealkmhv3 / gcc12 / SPEC06 1.0c / dynamic PF (SMT baseline)",
     "config": "idealkmhv3",
     "toolchain": "gcc12",
     "coverage": "1.0c"

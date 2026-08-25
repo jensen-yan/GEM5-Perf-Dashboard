@@ -121,6 +121,12 @@ export function buildRunIndex(datasets) {
   return index;
 }
 
+export function datasetEntriesWithPoints(entries, datasets) {
+  return entries.filter(
+    (entry) => (datasets.get(entry.id)?.points?.length || 0) > 0,
+  );
+}
+
 export function resolveRunSelection(runIndex, runId, preferredDatasetId = null) {
   const matches = runIndex.get(String(runId)) || [];
   const preferred = matches.find((match) => match.datasetId === preferredDatasetId);

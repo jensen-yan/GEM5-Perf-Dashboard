@@ -76,6 +76,22 @@ class TimestampTest(unittest.TestCase):
 
 
 class ClassifyRunTest(unittest.TestCase):
+    def test_gcc16_rva23_datasets_match_current_artifact_names(self) -> None:
+        daily = DATASET_BY_ID['kmhv3-spec06-rva23-novec-gcc16-0.3c']
+        weekly = DATASET_BY_ID[
+            'weekly-idealkmhv3-spec06-rva23-novec-gcc16-1.0c'
+        ]
+
+        self.assertEqual(
+            daily.artifact_name,
+            'performance-score-spec06-rva23-novec-gcc16-0.3c',
+        )
+        self.assertEqual(
+            weekly.artifact_name,
+            'performance-score-spec06-rva23-novec-gcc16-1.0c',
+        )
+        self.assertEqual(weekly.job_name_prefix, 'perf_test_spec06 / ')
+
     def test_classifies_align_push_dataset(self) -> None:
         run = {
             'name': 'gem5 Align BTB Performance Test(0.3c)',
