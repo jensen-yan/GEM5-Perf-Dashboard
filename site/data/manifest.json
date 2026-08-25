@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-25T06:42:25.503254+00:00",
+  "generated_at": "2026-08-25T06:51:55.915798+00:00",
   "datasets": [
     {
       "id": "kmhv3-gcc12-spec06-0.3c",
@@ -23,7 +23,7 @@
       "id": "smt-idealkmhv3-gcc12-spec06-smt-0.3c",
       "label": "smt_idealkmhv3 / gcc12 / SPEC06 SMT 0.3c",
       "file": "smt-idealkmhv3-gcc12-spec06-smt-0.3c.json",
-      "point_count": 57
+      "point_count": 58
     },
     {
       "id": "idealkmhv3-gcc12-spec06-0.8c",
