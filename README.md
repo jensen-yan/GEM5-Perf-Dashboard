@@ -110,4 +110,5 @@ Once this repo is pushed to GitHub and Pages is enabled, the workflow publishes 
 
 `.github/workflows/update-data.yml` can refresh `site/data` automatically from GitHub Actions
 artifacts every day at `01:00 UTC`, which is `09:00` China Standard Time, and it also supports
-manual dispatch.
+manual dispatch. The dashboard's **Sync latest data** button opens that workflow so an
+on-demand refresh can be started without navigating through the repository first.

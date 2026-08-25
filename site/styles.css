@@ -135,15 +135,26 @@ h3 {
   font-size: 15px;
 }
 
-.related-dashboard-link {
+.dashboard-shortcuts {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.related-dashboard-link,
+.sync-data-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 14px;
-  color: var(--accent-deep);
   font-family: "IBM Plex Mono", "Menlo", monospace;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
+}
+
+.related-dashboard-link {
+  color: var(--accent-deep);
   text-decoration-color: rgba(29, 78, 216, 0.34);
   text-underline-offset: 4px;
 }
@@ -152,6 +163,27 @@ h3 {
 .related-dashboard-link:focus-visible {
   color: var(--accent);
   text-decoration-color: currentColor;
+}
+
+.sync-data-link {
+  padding: 9px 11px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 13px;
+  color: var(--accent-deep);
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+.sync-data-link:hover,
+.sync-data-link:focus-visible {
+  border-color: rgba(59, 130, 246, 0.5);
+  color: #ffffff;
+  background: var(--accent);
+}
+
+.sync-data-link:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.28);
+  outline-offset: 2px;
 }
 
 .mode-switch {
