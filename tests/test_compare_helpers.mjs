@@ -7,7 +7,9 @@ import {
   comparisonCompatibility,
   comparisonSummary,
   datasetEntriesWithPoints,
+  diffBarGeometry,
   diffBarRatio,
+  diffBarScale,
   parseActionsRunId,
   parsePastedScore,
   resolveRunSelection,
@@ -67,9 +69,14 @@ assert.equal(fullSuiteScore.metrics["fp:782.lbm"], 1.5);
 assert.throws(() => parsePastedScore("not score data"), /Estimated Int score per GHz/);
 
 assert.equal(diffBarRatio(0), 0);
-assert.ok(diffBarRatio(2) > 0.3);
-assert.ok(diffBarRatio(20) > diffBarRatio(2));
+assert.equal(diffBarRatio(2), 0.1);
+assert.equal(diffBarRatio(8, 16), 0.5);
+assert.equal(diffBarRatio(-8, 16), 0.5);
 assert.equal(diffBarRatio(200), diffBarRatio(20));
+assert.deepEqual(diffBarGeometry(8, 16), { left: 50, width: 25 });
+assert.deepEqual(diffBarGeometry(-8, 16), { left: 25, width: 25 });
+assert.deepEqual(diffBarGeometry(-16, 16), { left: 0, width: 50 });
+assert.equal(diffBarScale([{ diffPct: 8 }, { diffPct: -16 }, { diffPct: null }]), 16);
 
 const pointA = {
   run_id: 100,
@@ -126,7 +133,7 @@ assert.equal(resolveRunSelection(runIndex, 999).status, "missing");
 const rows = buildComparisonRows(pointA, pointB);
 assert.deepEqual(
   rows.map((row) => row.name),
-  ["SPECint avg", "gcc", "mcf", "perlbench", "fp:lbm"],
+  ["SPECint avg", "perlbench", "gcc", "mcf", "fp:lbm"],
 );
 assert.equal(rows.find((row) => row.name === "SPECint avg").diffPct, 10);
 assert.equal(rows.find((row) => row.name === "perlbench").diffPct, -10);

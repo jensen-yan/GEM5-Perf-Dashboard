@@ -187,43 +187,45 @@ function displayMetricName(name) {
   return name.startsWith("fp:") ? name.slice(3) : name;
 }
 
-function metricSortKey(name) {
-  const summaryIndex = SUMMARY_METRICS.indexOf(name);
-  if (summaryIndex >= 0) return [0, summaryIndex, name];
-  return name.startsWith("fp:") ? [2, 0, name] : [1, 0, name];
+function orderedMetricNames(basePoint, targetPoint) {
+  const sourceNames = [
+    Object.keys(basePoint?.metrics || {}),
+    Object.keys(targetPoint?.metrics || {}),
+  ];
+  const available = new Set(sourceNames.flat());
+  const ordered = SUMMARY_METRICS.filter((name) => available.has(name));
+  const seen = new Set(ordered);
+
+  for (const group of ["SPECint", "SPECfp"]) {
+    for (const names of sourceNames) {
+      for (const name of names) {
+        if (!seen.has(name) && metricGroup(name) === group) {
+          ordered.push(name);
+          seen.add(name);
+        }
+      }
+    }
+  }
+  return ordered;
 }
 
 export function buildComparisonRows(basePoint, targetPoint) {
-  const names = new Set([
-    ...Object.keys(basePoint?.metrics || {}),
-    ...Object.keys(targetPoint?.metrics || {}),
-  ]);
-  return [...names]
-    .sort((a, b) => {
-      const aKey = metricSortKey(a);
-      const bKey = metricSortKey(b);
-      return (
-        aKey[0] - bKey[0] ||
-        aKey[1] - bKey[1] ||
-        String(aKey[2]).localeCompare(String(bKey[2]))
-      );
-    })
-    .map((name) => {
-      const base = numericMetric(basePoint, name);
-      const target = numericMetric(targetPoint, name);
-      const diff = base !== null && target !== null ? target - base : null;
-      return {
-        name,
-        label: displayMetricName(name),
-        group: metricGroup(name),
-        summary: SUMMARY_METRICS.includes(name),
-        base,
-        target,
-        diff,
-        diffPct: diff !== null && base !== 0 ? (diff / base) * 100 : null,
-        hasBoth: base !== null && target !== null,
-      };
-    });
+  return orderedMetricNames(basePoint, targetPoint).map((name) => {
+    const base = numericMetric(basePoint, name);
+    const target = numericMetric(targetPoint, name);
+    const diff = base !== null && target !== null ? target - base : null;
+    return {
+      name,
+      label: displayMetricName(name),
+      group: metricGroup(name),
+      summary: SUMMARY_METRICS.includes(name),
+      base,
+      target,
+      diff,
+      diffPct: diff !== null && base !== 0 ? (diff / base) * 100 : null,
+      hasBoth: base !== null && target !== null,
+    };
+  });
 }
 
 export function comparisonSummary(rows) {
@@ -240,10 +242,32 @@ export function comparisonSummary(rows) {
   };
 }
 
-export function diffBarRatio(value, cap = 20) {
+export function diffBarRatio(value, scale = 20) {
   if (typeof value !== "number" || !Number.isFinite(value) || Math.abs(value) < 0.0005) {
     return 0;
   }
-  const magnitude = Math.min(Math.abs(value), cap);
-  return Math.log1p(magnitude) / Math.log1p(cap);
+  if (typeof scale !== "number" || !Number.isFinite(scale) || scale <= 0) {
+    return 0;
+  }
+  return Math.min(Math.abs(value) / scale, 1);
+}
+
+export function diffBarScale(rows) {
+  return Math.max(
+    0,
+    ...rows.map((row) =>
+      typeof row.diffPct === "number" && Number.isFinite(row.diffPct)
+        ? Math.abs(row.diffPct)
+        : 0,
+    ),
+  );
+}
+
+export function diffBarGeometry(value, scale = 20) {
+  const origin = 50;
+  const width = origin * diffBarRatio(value, scale);
+  return {
+    left: value < 0 ? origin - width : origin,
+    width,
+  };
 }

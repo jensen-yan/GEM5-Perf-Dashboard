@@ -16,7 +16,8 @@ import {
   comparisonCompatibility,
   comparisonSummary,
   datasetEntriesWithPoints,
-  diffBarRatio,
+  diffBarGeometry,
+  diffBarScale,
   inferSpecVersion,
   parseActionsRunId,
   parsePastedScore,
@@ -344,15 +345,12 @@ function applyConditionalDiff(element, value) {
   return element;
 }
 
-function applyConditionalBar(element, value) {
+function applyConditionalBar(element, value, scale) {
   applyConditionalDiff(element, value);
   if (!diffClass(value)) {
     return element;
   }
-  const origin = 18;
-  const ratio = diffBarRatio(value);
-  const width = value > 0 ? (100 - origin) * ratio : origin * ratio;
-  const left = value > 0 ? origin : origin - width;
+  const { left, width } = diffBarGeometry(value, scale);
   element.classList.add("diff-data-bar");
   element.style.setProperty("--diff-bar-left", `${left.toFixed(2)}%`);
   element.style.setProperty("--diff-bar-width", `${width.toFixed(2)}%`);
@@ -394,6 +392,7 @@ function renderComparisonTable(rows, blocked) {
   table.appendChild(thead);
 
   const tbody = document.createElement("tbody");
+  const diffScale = diffBarScale(visibleRows);
   for (const row of visibleRows) {
     const tr = document.createElement("tr");
     if (row.summary) {
@@ -415,7 +414,11 @@ function renderComparisonTable(rows, blocked) {
     );
     tr.appendChild(applyConditionalDiff(comparisonCell(formatSigned(row.diff)), row.diffPct));
     tr.appendChild(
-      applyConditionalBar(comparisonCell(formatSigned(row.diffPct, "%")), row.diffPct),
+      applyConditionalBar(
+        comparisonCell(formatSigned(row.diffPct, "%")),
+        row.diffPct,
+        diffScale,
+      ),
     );
     tbody.appendChild(tr);
   }
