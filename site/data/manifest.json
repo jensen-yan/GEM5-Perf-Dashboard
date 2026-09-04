@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T05:15:01.152091+00:00",
+  "generated_at": "2026-09-04T08:26:36.174367+00:00",
   "datasets": [
     {
       "id": "kmhv3-spec06-rva23-novec-gcc16-0.3c",
@@ -59,7 +59,7 @@
       "id": "weekly-idealkmhv3-spec06-rva23-novec-gcc16-1.0c",
       "label": "weekly idealkmhv3 / gcc16 RVA23 no-vector / SPEC06 1.0c",
       "file": "weekly-idealkmhv3-spec06-rva23-novec-gcc16-1.0c.json",
-      "point_count": 1
+      "point_count": 2
     },
     {
       "id": "weekly-kmhv3-gcc15-spec06-1.0c",
