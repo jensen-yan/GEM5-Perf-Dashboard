@@ -16,6 +16,14 @@ const SCORE_AVERAGE_RE = new RegExp(
   `^Estimated (Int|FP|overall) score per GHz:\\s*(${SCORE_NUMBER_PATTERN})$`,
   "i",
 );
+const RTL_SECTION_AVERAGE_RE = new RegExp(
+  `^SPEC(int|fp)(?:20)?(06|17|26)/GHz\\s+nan\\s+nan\\s+(${SCORE_NUMBER_PATTERN})\\s+nan$`,
+  "i",
+);
+const RTL_OVERALL_AVERAGE_RE = new RegExp(
+  `^SPEC(?:20)?(06|17|26)\\s+nan\\s+nan\\s+(${SCORE_NUMBER_PATTERN})\\s+nan$`,
+  "i",
+);
 
 function numericMetric(point, name) {
   const value = point?.metrics?.[name];
@@ -42,6 +50,25 @@ export function parseActionsRunId(value) {
   }
 }
 
+function rtlBenchmarkSpecVersion(name) {
+  const match = /^([0-9]{3})[.]/.exec(name);
+  if (!match) return null;
+  if (match[1].startsWith("4")) return "06";
+  if (match[1].startsWith("6")) return "17";
+  if (match[1].startsWith("7")) return "26";
+  return null;
+}
+
+function normalizeRtlBenchmarkName(name, specVersion) {
+  if (specVersion === "26") {
+    return name;
+  }
+  const withoutNumber = name.replace(/^[0-9]+[.]/, "");
+  return specVersion === "17"
+    ? withoutNumber.replace(/_[rs]$/i, "")
+    : withoutNumber;
+}
+
 export function parsePastedScore(value) {
   const text = String(value || "");
   const details = {};
@@ -49,9 +76,37 @@ export function parsePastedScore(value) {
   const counts = { int: 0, fp: 0 };
   let currentSection = null;
   let specVersion = null;
+  let scoreFormat = "gem5";
 
   for (const rawLine of text.split(/\r?\n/)) {
     const line = rawLine.trim();
+    if (/^=+[ \t]*Score[ \t]*=+$/i.test(line)) {
+      currentSection = "int";
+      scoreFormat = "rtl";
+      continue;
+    }
+
+    const rtlSectionAverage = RTL_SECTION_AVERAGE_RE.exec(line);
+    if (rtlSectionAverage) {
+      const section = rtlSectionAverage[1].toLowerCase();
+      specVersion = rtlSectionAverage[2];
+      scoreFormat = "rtl";
+      averages[section === "int" ? "SPECint avg" : "SPECfp avg"] = Number(
+        rtlSectionAverage[3],
+      );
+      currentSection = section === "int" ? "fp" : null;
+      continue;
+    }
+
+    const rtlOverallAverage = RTL_OVERALL_AVERAGE_RE.exec(line);
+    if (rtlOverallAverage) {
+      specVersion = rtlOverallAverage[1];
+      scoreFormat = "rtl";
+      averages["SPEC overall avg"] = Number(rtlOverallAverage[2]);
+      currentSection = null;
+      continue;
+    }
+
     const specMatch = /^=+\s*SPEC(?:20)?(06|17|26)\s*=+$/i.exec(line);
     if (specMatch) {
       specVersion = specMatch[1];
@@ -84,7 +139,16 @@ export function parsePastedScore(value) {
     if (!rowMatch) {
       continue;
     }
-    const name = currentSection === "int" ? rowMatch[1] : `${currentSection}:${rowMatch[1]}`;
+    const rawName = rowMatch[1];
+    if (scoreFormat === "rtl") {
+      specVersion ||= rtlBenchmarkSpecVersion(rawName);
+    }
+    const benchmarkName =
+      scoreFormat === "rtl"
+        ? normalizeRtlBenchmarkName(rawName, specVersion)
+        : rawName;
+    const name =
+      currentSection === "int" ? benchmarkName : `${currentSection}:${benchmarkName}`;
     details[name] = {
       time: Number(rowMatch[2]),
       ref_time: Number(rowMatch[3]),
@@ -95,7 +159,7 @@ export function parsePastedScore(value) {
   }
 
   if (!("SPECint avg" in averages)) {
-    throw new Error("Could not find 'Estimated Int score per GHz' in pasted score data.");
+    throw new Error("Could not find a supported GEM5 or RTL SPEC score summary.");
   }
   if (!Object.keys(details).length) {
     throw new Error("Could not find benchmark rows in pasted score data.");
@@ -105,7 +169,7 @@ export function parsePastedScore(value) {
   for (const [name, detail] of Object.entries(details)) {
     metrics[name] = detail.score;
   }
-  return { specVersion, averages, metrics, details, counts };
+  return { specVersion, scoreFormat, averages, metrics, details, counts };
 }
 
 export function buildRunIndex(datasets) {
@@ -174,6 +238,18 @@ export function comparisonCompatibility(baseDataset, targetDataset) {
   }
 
   return { blocking, warnings };
+}
+
+export function comparisonSourceWarning(basePoint, targetPoint) {
+  const baseFormat = basePoint?.score_format || "gem5";
+  const targetFormat = targetPoint?.score_format || "gem5";
+  if (baseFormat === targetFormat) {
+    return null;
+  }
+  return (
+    "GEM5 vs RTL comparison: verify config, checkpoint profile, coverage, " +
+    "and score normalization match."
+  );
 }
 
 function metricGroup(name) {

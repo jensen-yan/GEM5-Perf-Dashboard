@@ -1,0 +1,15 @@
+======================== Score ========================
+                        time ref_time    score coverage
+400.perlbench        147.596     9770   22.065    0.418
+401.bzip2            322.778     9650    9.966    0.352
+SPECint2006/GHz          nan      nan   21.047      nan
+410.bwaves            96.108    13590   47.134    0.720
+416.gamess           341.929    19580   19.088    0.351
+SPECfp2006/GHz           nan      nan   23.236      nan
+SPEC2006                 nan      nan   22.304      nan
+
+SPEC2006/GHz:    22.304
+SPEC2006@3.0GHz: 66.912
+
+================ Other Information ===============
+Minimal Coverage   : 0.31/1.00

@@ -5,6 +5,7 @@ import {
   buildComparisonRows,
   buildRunIndex,
   comparisonCompatibility,
+  comparisonSourceWarning,
   comparisonSummary,
   datasetEntriesWithPoints,
   diffBarGeometry,
@@ -43,6 +44,7 @@ const pastedScore = parsePastedScore(
   await readFile(new URL("./fixtures/sample_score.txt", import.meta.url), "utf8"),
 );
 assert.equal(pastedScore.specVersion, "06");
+assert.equal(pastedScore.scoreFormat, "gem5");
 assert.equal(pastedScore.counts.int, 12);
 assert.equal(pastedScore.counts.fp, 0);
 assert.equal(pastedScore.metrics["SPECint avg"], 18.69279014105546);
@@ -66,7 +68,43 @@ assert.equal(fullSuiteScore.specVersion, "26");
 assert.deepEqual(fullSuiteScore.counts, { int: 1, fp: 1 });
 assert.equal(fullSuiteScore.metrics["SPEC overall avg"], 1.75);
 assert.equal(fullSuiteScore.metrics["fp:782.lbm"], 1.5);
-assert.throws(() => parsePastedScore("not score data"), /Estimated Int score per GHz/);
+
+const rtlScore = parsePastedScore(
+  await readFile(new URL("./fixtures/sample_rtl_score.txt", import.meta.url), "utf8"),
+);
+assert.equal(rtlScore.specVersion, "06");
+assert.equal(rtlScore.scoreFormat, "rtl");
+assert.deepEqual(rtlScore.counts, { int: 2, fp: 2 });
+assert.equal(rtlScore.metrics["SPECint avg"], 21.047);
+assert.equal(rtlScore.metrics["SPECfp avg"], 23.236);
+assert.equal(rtlScore.metrics["SPEC overall avg"], 22.304);
+assert.equal(rtlScore.metrics.perlbench, 22.065);
+assert.equal(rtlScore.metrics["fp:bwaves"], 47.134);
+assert.equal(rtlScore.details.perlbench.coverage, 0.418);
+assert.equal("400.perlbench" in rtlScore.metrics, false);
+
+const rtlSpec17 = parsePastedScore(`
+================ Score ================
+600.perlbench_s 10 20 2.0 1.0
+SPECint2017/GHz nan nan 2.0 nan
+`);
+assert.equal(rtlSpec17.specVersion, "17");
+assert.equal(rtlSpec17.metrics.perlbench, 2.0);
+
+const rtlSpec26 = parsePastedScore(`
+================ Score ================
+706.stockfish 10 20 2.0 1.0
+SPECint2026/GHz nan nan 2.0 nan
+`);
+assert.equal(rtlSpec26.specVersion, "26");
+assert.equal(rtlSpec26.metrics["706.stockfish"], 2.0);
+
+assert.throws(() => parsePastedScore("not score data"), /supported GEM5 or RTL/);
+assert.equal(comparisonSourceWarning({}, {}), null);
+assert.match(
+  comparisonSourceWarning({}, { score_format: "rtl" }),
+  /GEM5 vs RTL comparison/,
+);
 
 assert.equal(diffBarRatio(0), 0);
 assert.equal(diffBarRatio(2), 0.1);

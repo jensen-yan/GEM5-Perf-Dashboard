@@ -14,6 +14,7 @@ import {
   buildComparisonRows,
   buildRunIndex,
   comparisonCompatibility,
+  comparisonSourceWarning,
   comparisonSummary,
   datasetEntriesWithPoints,
   diffBarGeometry,
@@ -290,7 +291,9 @@ function renderComparisonSource(id) {
   if (source.customPoint) {
     const option = document.createElement("option");
     option.value = String(source.customPoint.run_id);
-    option.textContent = `Pasted raw score · ${source.customPoint.metric_count} metrics`;
+    option.textContent =
+      `Pasted ${source.customPoint.score_format.toUpperCase()} score · ` +
+      `${source.customPoint.metric_count} metrics`;
     elements.run.prepend(option);
   }
   elements.run.value = String(source.runId || "");
@@ -450,6 +453,10 @@ function renderComparison() {
   const rows = buildComparisonRows(basePoint, targetPoint);
   const summary = comparisonSummary(rows);
   const warnings = [...compatibility.warnings];
+  const sourceWarning = comparisonSourceWarning(basePoint, targetPoint);
+  if (sourceWarning) {
+    warnings.push(sourceWarning);
+  }
   const hasRawInput = Boolean(basePoint.raw_input || targetPoint.raw_input);
   comparisonCopyLinkButton.disabled = hasRawInput;
   comparisonCopyLinkButton.textContent = hasRawInput
@@ -549,6 +556,7 @@ function applyPastedScore(id, value) {
   }
 
   const metricCount = Object.keys(parsed.metrics).length;
+  const scoreFormat = parsed.scoreFormat.toUpperCase();
   const pendingRunId = source.pendingRunId;
   const rawId = pendingRunId || `raw-${id}-${Date.now()}`;
   source.runId = rawId;
@@ -557,9 +565,11 @@ function applyPastedScore(id, value) {
     run_number: null,
     created_at: new Date().toISOString(),
     commit: "",
-    short_commit: pendingRunId ? `run ${pendingRunId}` : "pasted score",
+    short_commit: pendingRunId ? `run ${pendingRunId}` : `pasted ${scoreFormat}`,
     commit_url: "",
-    title: pendingRunId ? `Pasted score for Actions Run ${pendingRunId}` : "Pasted raw score",
+    title: pendingRunId
+      ? `Pasted ${scoreFormat} score for Actions Run ${pendingRunId}`
+      : `Pasted ${scoreFormat} score`,
     workflow_url: pendingRunId
       ? `https://github.com/OpenXiangShan/GEM5/actions/runs/${pendingRunId}`
       : "",
@@ -567,11 +577,12 @@ function applyPastedScore(id, value) {
     details: parsed.details,
     metric_count: metricCount,
     raw_input: true,
+    score_format: parsed.scoreFormat,
   };
   source.pendingRunId = null;
   setSourceFeedback(
     id,
-    `Parsed ${parsed.counts.int} INT and ${parsed.counts.fp} FP benchmark rows${
+    `Parsed ${scoreFormat} score: ${parsed.counts.int} INT and ${parsed.counts.fp} FP benchmark rows${
       pendingRunId ? ` for Run ${pendingRunId}` : ""
     }.`,
   );
