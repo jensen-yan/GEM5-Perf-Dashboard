@@ -71,7 +71,8 @@ whitespace-formatted `score.csv`, or XiangShan RTL score table into either compa
 source. The browser auto-detects the RTL table format and normalizes SPEC06/17 benchmark
 names so they align with GEM5 rows. Pasted scores use the selected dataset's coverage
 and SPEC-version context, stay in the current browser tab, and are not embedded in
-shareable comparison links.
+shareable comparison links. **Copy table** copies the currently visible comparison rows
+as both an Excel-friendly HTML table and tab-separated plain text.
 
 ### 3. Refresh from GitHub Actions artifacts
 

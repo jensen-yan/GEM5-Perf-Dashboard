@@ -14,6 +14,7 @@ import {
   parseActionsRunId,
   parsePastedScore,
   resolveRunSelection,
+  tableClipboardPayload,
 } from "../site/compare-helpers.mjs";
 
 assert.equal(
@@ -105,6 +106,20 @@ assert.match(
   comparisonSourceWarning({}, { score_format: "rtl" }),
   /GEM5 vs RTL comparison/,
 );
+
+const clipboardPayload = tableClipboardPayload([
+  ["Group", "Benchmark", "Baseline A", "Target B", "Δ", "Δ %"],
+  ["SPECINT", "perl\tbench", "21.052", "21.075", "+0.023", "+0.108%"],
+  ["SPECFP", "<bwaves>", "22.707", "23.236", "+0.529", "+2.331%"],
+]);
+assert.equal(
+  clipboardPayload.text,
+  "Group\tBenchmark\tBaseline A\tTarget B\tΔ\tΔ %\n" +
+    "SPECINT\tperl bench\t21.052\t21.075\t+0.023\t+0.108%\n" +
+    "SPECFP\t<bwaves>\t22.707\t23.236\t+0.529\t+2.331%",
+);
+assert.match(clipboardPayload.html, /<thead><tr><th>Group<\/th>/);
+assert.match(clipboardPayload.html, /<td>&lt;bwaves&gt;<\/td>/);
 
 assert.equal(diffBarRatio(0), 0);
 assert.equal(diffBarRatio(2), 0.1);

@@ -23,6 +23,7 @@ import {
   parseActionsRunId,
   parsePastedScore,
   resolveRunSelection,
+  tableClipboardPayload,
 } from "./compare-helpers.mjs";
 
 const manifestPath = "./data/manifest.json";
@@ -96,6 +97,7 @@ const comparisonHeadlineDiff = document.getElementById("comparison-headline-diff
 const comparisonAlerts = document.getElementById("comparison-alerts");
 const comparisonTableFrame = document.getElementById("comparison-table-frame");
 const comparisonRegressionsButton = document.getElementById("comparison-regressions-button");
+const comparisonCopyTableButton = document.getElementById("comparison-copy-table-button");
 const comparisonCopyLinkButton = document.getElementById("comparison-copy-link-button");
 const comparisonSwapButton = document.getElementById("compare-swap-button");
 
@@ -361,6 +363,7 @@ function applyConditionalBar(element, value, scale) {
 }
 
 function renderComparisonTable(rows, blocked) {
+  comparisonCopyTableButton.disabled = true;
   if (blocked) {
     const empty = document.createElement("div");
     empty.className = "table-empty";
@@ -427,6 +430,7 @@ function renderComparisonTable(rows, blocked) {
   }
   table.appendChild(tbody);
   comparisonTableFrame.replaceChildren(table);
+  comparisonCopyTableButton.disabled = false;
 }
 
 function renderComparison() {
@@ -627,6 +631,52 @@ async function copyComparisonLink() {
   comparisonCopyLinkButton.textContent = "Copied";
   window.setTimeout(() => {
     comparisonCopyLinkButton.textContent = original;
+  }, 1400);
+}
+
+function renderedComparisonCells() {
+  const table = comparisonTableFrame.querySelector("table");
+  if (!table) {
+    return [];
+  }
+  return [...table.rows].map((row) =>
+    [...row.cells].map((cell) => cell.textContent.trim()),
+  );
+}
+
+async function copyComparisonTable() {
+  const rows = renderedComparisonCells();
+  if (!rows.length) {
+    throw new Error("No comparison table is available.");
+  }
+  const payload = tableClipboardPayload(rows);
+  let copied = false;
+
+  if (navigator.clipboard?.write && window.ClipboardItem) {
+    try {
+      await navigator.clipboard.write([
+        new window.ClipboardItem({
+          "text/plain": new Blob([payload.text], { type: "text/plain" }),
+          "text/html": new Blob([payload.html], { type: "text/html" }),
+        }),
+      ]);
+      copied = true;
+    } catch {
+      // Fall through to plain-text TSV for browsers without rich clipboard support.
+    }
+  }
+
+  if (!copied && navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(payload.text);
+    copied = true;
+  }
+  if (!copied) {
+    window.prompt("Copy comparison table", payload.text);
+  }
+
+  comparisonCopyTableButton.textContent = "Copied for Excel";
+  window.setTimeout(() => {
+    comparisonCopyTableButton.textContent = "Copy table";
   }, 1400);
 }
 
@@ -1279,6 +1329,15 @@ comparisonSwapButton.addEventListener("click", () => {
 comparisonRegressionsButton.addEventListener("click", () => {
   state.comparison.regressionsOnly = !state.comparison.regressionsOnly;
   renderComparison();
+});
+
+comparisonCopyTableButton.addEventListener("click", () => {
+  copyComparisonTable().catch(() => {
+    comparisonCopyTableButton.textContent = "Copy failed";
+    window.setTimeout(() => {
+      comparisonCopyTableButton.textContent = "Copy table";
+    }, 1400);
+  });
 });
 
 comparisonCopyLinkButton.addEventListener("click", () => {

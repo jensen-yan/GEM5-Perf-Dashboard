@@ -252,6 +252,43 @@ export function comparisonSourceWarning(basePoint, targetPoint) {
   );
 }
 
+function normalizeClipboardCell(value) {
+  return String(value ?? "")
+    .replaceAll("\t", " ")
+    .replace(/[\r\n]+/g, " ")
+    .trim();
+}
+
+function escapeClipboardHtml(value) {
+  return normalizeClipboardCell(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+export function tableClipboardPayload(rows) {
+  const normalizedRows = rows.map((row) => row.map(normalizeClipboardCell));
+  const text = normalizedRows.map((row) => row.join("\t")).join("\n");
+  if (!normalizedRows.length) {
+    return { text, html: "<table></table>" };
+  }
+
+  const [header, ...body] = normalizedRows;
+  const headerHtml = header.map((cell) => `<th>${escapeClipboardHtml(cell)}</th>`).join("");
+  const bodyHtml = body
+    .map(
+      (row) =>
+        `<tr>${row.map((cell) => `<td>${escapeClipboardHtml(cell)}</td>`).join("")}</tr>`,
+    )
+    .join("");
+  return {
+    text,
+    html: `<table><thead><tr>${headerHtml}</tr></thead><tbody>${bodyHtml}</tbody></table>`,
+  };
+}
+
 function metricGroup(name) {
   if (name === "SPECint avg") return "Summary";
   if (name === "SPECfp avg") return "Summary";
