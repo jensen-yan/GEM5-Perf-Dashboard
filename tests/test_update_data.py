@@ -8,6 +8,7 @@ import zipfile
 
 from scripts.dashboard_data import DATASET_BY_ID
 from scripts.update_data import (
+    collect_run,
     extract_score_text,
     find_dataset_artifact,
     find_dataset_job,
@@ -167,6 +168,86 @@ class FindDatasetArtifactTest(unittest.TestCase):
 
         self.assertIsNotNone(artifact)
         self.assertEqual(artifact['id'], 2)
+
+
+    def test_new_names_separate_configs_and_take_priority_over_legacy(self) -> None:
+        datasets = [DATASET_BY_ID[key] for key in (
+            'weekly-kmhv3-spec17-1.0c',
+            'weekly-idealkmhv3-spec17-1.0c',
+            'weekly-smt-idealkmhv3-gcc12-spec06-smt-1.0c',
+        )]
+        artifacts = [
+            {'id': 0, 'name': 'performance-score-spec17-1.0c'},
+            {'id': 1, 'name': 'score-spec17-1.0c'},
+            {'id': 2, 'name': 'score-ideal-spec17-1.0c'},
+            {'id': 3, 'name': 'score-smt-ideal-gcc12-spec06-smt-1.0c'},
+        ]
+        for expected, dataset in enumerate(datasets, 1):
+            with self.subTest(dataset=dataset.id):
+                self.assertEqual(find_dataset_artifact(artifacts, dataset)['id'], expected)
+
+    def test_expired_new_artifact_falls_back_to_legacy(self) -> None:
+        dataset = DATASET_BY_ID['kmhv3-spec06-rva23-novec-gcc16-0.3c']
+        artifacts = [
+            {'id': 1, 'name': dataset.artifact_name, 'expired': True},
+            {'id': 2, 'name': dataset.legacy_artifact_name},
+        ]
+        self.assertEqual(find_dataset_artifact(artifacts, dataset)['id'], 2)
+
+    def test_legacy_weekly_requires_job_and_unambiguous_timestamps(self) -> None:
+        dataset = DATASET_BY_ID['weekly-kmhv3-spec17-1.0c']
+        artifact = {'id': 1, 'name': dataset.legacy_artifact_name}
+        self.assertIsNone(find_dataset_artifact([artifact], dataset))
+        job = {'completed_at': '2026-07-02T22:25:08Z'}
+        self.assertIsNone(find_dataset_artifact([artifact], dataset, job))
+        artifact['created_at'] = job['completed_at']
+        self.assertIsNone(find_dataset_artifact([artifact, dict(artifact, id=2)], dataset, job))
+
+
+class CollectRunTest(unittest.TestCase):
+    @patch('scripts.update_data.include_run')
+    @patch('scripts.update_data.list_run_jobs')
+    @patch('scripts.update_data.list_run_artifacts')
+    def test_new_successful_weekly_needs_no_jobs(self, artifacts, jobs, include) -> None:
+        datasets = [DATASET_BY_ID[key] for key in (
+            'weekly-kmhv3-spec17-1.0c', 'weekly-idealkmhv3-spec17-1.0c',
+        )]
+        artifacts.return_value = [
+            {'id': i, 'name': dataset.artifact_name}
+            for i, dataset in enumerate(datasets)
+        ]
+        collect_run({'id': 42, 'conclusion': 'success'}, datasets, {})
+        jobs.assert_not_called()
+        artifacts.assert_called_once_with(42)
+        self.assertEqual(include.call_count, 2)
+        self.assertEqual([call.args[2]['id'] for call in include.call_args_list], [0, 1])
+
+    @patch('scripts.update_data.include_run')
+    @patch('scripts.update_data.list_run_jobs')
+    @patch('scripts.update_data.list_run_artifacts')
+    def test_partial_failure_only_includes_successful_job(self, artifacts, jobs, include) -> None:
+        datasets = [DATASET_BY_ID[key] for key in (
+            'weekly-kmhv3-spec17-1.0c', 'weekly-idealkmhv3-spec17-1.0c',
+        )]
+        for legacy in (False, True):
+            with self.subTest(legacy=legacy):
+                include.reset_mock()
+                jobs.reset_mock()
+                artifacts.return_value = [
+                    {'id': i, 'name': dataset.legacy_artifact_name if legacy else dataset.artifact_name,
+                     'created_at': f'2026-07-02T22:2{i}:00Z'}
+                    for i, dataset in enumerate(datasets)
+                ]
+                jobs.return_value = [
+                    {'name': datasets[0].job_name_prefix + 'test', 'conclusion': 'failure'},
+                    {'name': datasets[1].job_name_prefix + 'test', 'conclusion': 'success',
+                     'completed_at': '2026-07-02T22:21:08Z'},
+                ]
+                collect_run({'id': 42, 'conclusion': 'failure'}, datasets, {})
+                jobs.assert_called_once_with(42)
+                include.assert_called_once()
+                self.assertEqual(include.call_args.args[1], datasets[1])
+                self.assertEqual(include.call_args.args[2]['id'], 1)
 
 
 class FindDatasetJobTest(unittest.TestCase):

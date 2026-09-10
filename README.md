@@ -85,6 +85,18 @@ python3 scripts/update_data.py --source workflows --branch xs-dev --max-pages 1 
 The default refresh mode is workflow-driven: it walks the recent runs for each configured
 performance workflow, then downloads the exact `score.txt` artifact for each dataset.
 
+Artifact names follow [GEM5 PR #1131](https://github.com/OpenXiangShan/GEM5/pull/1131):
+`score-<benchmark_type>` for kmhv3, `score-ideal-<benchmark_type>` for idealkmhv3,
+and `score-smt-ideal-<benchmark_type>` for smt_idealkmhv3. Successful runs are
+matched by exact artifact name without querying jobs. Partially failed weekly runs
+still require the dataset's job to have succeeded.
+
+Historical `performance-score-*` artifacts remain supported. For old weekly runs,
+the collector uses the successful job's completion time to select the nearest artifact;
+missing timestamps or tied distances are skipped. This is a compatibility heuristic,
+not an artifact-to-job association supplied by GitHub. Existing stored points are
+preserved during refresh.
+
 Requirements:
 
 - `gh` CLI installed and authenticated

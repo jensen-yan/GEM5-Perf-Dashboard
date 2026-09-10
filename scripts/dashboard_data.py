@@ -30,10 +30,22 @@ class DatasetConfig:
     coverage: str
     workflow_name: str
     workflow_path: str
-    artifact_name: str
     archive_subdir: str
     workflow_event: str = "push"
     job_name_prefix: str | None = None
+
+    @property
+    def artifact_name(self) -> str:
+        prefix = {
+            "kmhv3": "score",
+            "idealkmhv3": "score-ideal",
+            "smt_idealkmhv3": "score-smt-ideal",
+        }[self.config_name]
+        return f"{prefix}-{self.archive_subdir}"
+
+    @property
+    def legacy_artifact_name(self) -> str:
+        return f"performance-score-{self.archive_subdir}"
 
 
 MAINLINE_BRANCH = "xs-dev"
@@ -48,7 +60,6 @@ DATASETS = [
         coverage="0.3c",
         workflow_name="gem5 Align BTB Performance Test(0.3c)",
         workflow_path=".github/workflows/gem5-align-btb-0.3c.yml",
-        artifact_name="performance-score-spec06-rva23-novec-gcc16-0.3c",
         archive_subdir="spec06-rva23-novec-gcc16-0.3c",
     ),
     DatasetConfig(
@@ -59,7 +70,6 @@ DATASETS = [
         coverage="0.3c",
         workflow_name="gem5 Ideal BTB Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf.yml",
-        artifact_name="performance-score-spec06-rva23-novec-gcc16-0.3c",
         archive_subdir="spec06-rva23-novec-gcc16-0.3c",
     ),
     DatasetConfig(
@@ -70,7 +80,6 @@ DATASETS = [
         coverage="0.3c",
         workflow_name="gem5 Align BTB Performance Test(0.3c)",
         workflow_path=".github/workflows/gem5-align-btb-0.3c.yml",
-        artifact_name="performance-score-gcc12-spec06-0.3c",
         archive_subdir="gcc12-spec06-0.3c",
     ),
     DatasetConfig(
@@ -81,7 +90,6 @@ DATASETS = [
         coverage="0.3c",
         workflow_name="gem5 Align BTB Performance Test(0.3c)",
         workflow_path=".github/workflows/gem5-align-btb-0.3c.yml",
-        artifact_name="performance-score-gcc15-spec06-0.3c",
         archive_subdir="gcc15-spec06-0.3c",
     ),
     DatasetConfig(
@@ -92,7 +100,6 @@ DATASETS = [
         coverage="0.3c",
         workflow_name="gem5 Ideal BTB Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf.yml",
-        artifact_name="performance-score-gcc15-spec06-0.3c",
         archive_subdir="gcc15-spec06-0.3c",
     ),
     DatasetConfig(
@@ -103,7 +110,6 @@ DATASETS = [
         coverage="0.3c",
         workflow_name="gem5 SMT SPEC2006 Performance Test(0.3c)",
         workflow_path=".github/workflows/gem5-smt-spec06-0.3c.yml",
-        artifact_name="performance-score-gcc12-spec06-smt-0.3c",
         archive_subdir="gcc12-spec06-smt-0.3c",
     ),
     DatasetConfig(
@@ -114,7 +120,6 @@ DATASETS = [
         coverage="0.8c",
         workflow_name="gem5 Ideal BTB Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf.yml",
-        artifact_name="performance-score-gcc12-spec06-0.8c",
         archive_subdir="gcc12-spec06-0.8c",
     ),
     DatasetConfig(
@@ -125,7 +130,6 @@ DATASETS = [
         coverage="0.8c",
         workflow_name="gem5 Ideal BTB Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf.yml",
-        artifact_name="performance-score-gcc15-spec06-0.8c",
         archive_subdir="gcc15-spec06-0.8c",
     ),
     DatasetConfig(
@@ -136,7 +140,6 @@ DATASETS = [
         coverage="1.0c",
         workflow_name="gem5 Ideal BTB Weekly Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf-weekly.yml",
-        artifact_name="performance-score-spec06-rva23-novec-gcc16-1.0c",
         archive_subdir="spec06-rva23-novec-gcc16-1.0c",
         workflow_event="schedule",
         job_name_prefix="align_test_spec06 / ",
@@ -149,7 +152,6 @@ DATASETS = [
         coverage="1.0c",
         workflow_name="gem5 Ideal BTB Weekly Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf-weekly.yml",
-        artifact_name="performance-score-spec06-rva23-novec-gcc16-1.0c",
         archive_subdir="spec06-rva23-novec-gcc16-1.0c",
         workflow_event="schedule",
         job_name_prefix="perf_test_spec06 / ",
@@ -162,7 +164,6 @@ DATASETS = [
         coverage="1.0c",
         workflow_name="gem5 Ideal BTB Weekly Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf-weekly.yml",
-        artifact_name="performance-score-gcc15-spec06-1.0c",
         archive_subdir="gcc15-spec06-1.0c",
         workflow_event="schedule",
         job_name_prefix="align_test_spec06 / ",
@@ -175,7 +176,6 @@ DATASETS = [
         coverage="1.0c",
         workflow_name="gem5 Ideal BTB Weekly Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf-weekly.yml",
-        artifact_name="performance-score-spec17-1.0c",
         archive_subdir="spec17-1.0c",
         workflow_event="schedule",
         job_name_prefix="align_test_spec17 / ",
@@ -188,7 +188,6 @@ DATASETS = [
         coverage="1.0c",
         workflow_name="gem5 Ideal BTB Weekly Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf-weekly.yml",
-        artifact_name="performance-score-gcc15-spec26-1.0c",
         archive_subdir="gcc15-spec26-1.0c",
         workflow_event="schedule",
         job_name_prefix="align_test_spec26 / ",
@@ -201,7 +200,6 @@ DATASETS = [
         coverage="1.0c",
         workflow_name="gem5 Ideal BTB Weekly Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf-weekly.yml",
-        artifact_name="performance-score-gcc15-spec06-1.0c",
         archive_subdir="gcc15-spec06-1.0c",
         workflow_event="schedule",
         job_name_prefix="perf_test_spec06 / ",
@@ -214,7 +212,6 @@ DATASETS = [
         coverage="1.0c",
         workflow_name="gem5 Ideal BTB Weekly Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf-weekly.yml",
-        artifact_name="performance-score-spec17-1.0c",
         archive_subdir="spec17-1.0c",
         workflow_event="schedule",
         job_name_prefix="perf_test_spec17 / ",
@@ -227,7 +224,6 @@ DATASETS = [
         coverage="1.0c",
         workflow_name="gem5 Ideal BTB Weekly Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf-weekly.yml",
-        artifact_name="performance-score-gcc15-spec26-1.0c",
         archive_subdir="gcc15-spec26-1.0c",
         workflow_event="schedule",
         job_name_prefix="perf_test_spec26 / ",
@@ -240,7 +236,6 @@ DATASETS = [
         coverage="1.0c",
         workflow_name="gem5 Ideal BTB Weekly Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf-weekly.yml",
-        artifact_name="performance-score-gcc12-spec06-1.0c",
         archive_subdir="gcc12-spec06-1.0c",
         workflow_event="schedule",
         job_name_prefix="perf_test_spec06_gcc12_dynpf / ",
@@ -253,7 +248,6 @@ DATASETS = [
         coverage="1.0c",
         workflow_name="gem5 Ideal BTB Weekly Performance Test",
         workflow_path=".github/workflows/gem5-ideal-btb-perf-weekly.yml",
-        artifact_name="performance-score-gcc12-spec06-smt-1.0c",
         archive_subdir="gcc12-spec06-smt-1.0c",
         workflow_event="schedule",
         job_name_prefix="smt_test_spec06 / ",
@@ -266,7 +260,6 @@ DATASETS = [
         coverage="0.3c",
         workflow_name="gem5 SMT SPEC2006 Performance Test(0.3c)",
         workflow_path=".github/workflows/gem5-smt-spec06-0.3c.yml",
-        artifact_name="performance-score-gcc12-spec06-smt-0.3c",
         archive_subdir="gcc12-spec06-smt-0.3c",
         workflow_event="schedule",
     ),
@@ -275,7 +268,8 @@ DATASETS = [
 DATASET_BY_ID = {dataset.id: dataset for dataset in DATASETS}
 DATASETS_BY_ARTIFACT: dict[str, list[DatasetConfig]] = {}
 for dataset in DATASETS:
-    DATASETS_BY_ARTIFACT.setdefault(dataset.artifact_name, []).append(dataset)
+    for name in (dataset.artifact_name, dataset.legacy_artifact_name):
+        DATASETS_BY_ARTIFACT.setdefault(name, []).append(dataset)
 
 _ROW_RE = re.compile(
     r"^(?P<name>[A-Za-z0-9_.-]+)\s+"

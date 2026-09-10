@@ -187,28 +187,38 @@ def find_dataset_job(
 def find_dataset_artifact(
     artifacts: list[dict[str, Any]], dataset: DatasetConfig, job: dict[str, Any] | None = None
 ) -> dict[str, Any] | None:
-    candidates = [
-        artifact
-        for artifact in artifacts
+    # PR #1131 encodes the configuration in the name; no timing inference.
+    current = [
+        artifact for artifact in artifacts
         if not artifact.get("expired") and artifact.get("name") == dataset.artifact_name
     ]
-    if not candidates:
+    if current:
+        return current[0] if len(current) == 1 else None
+
+    candidates = [
+        artifact for artifact in artifacts
+        if not artifact.get("expired")
+        and artifact.get("name") == dataset.legacy_artifact_name
+    ]
+    if not candidates or (dataset.job_name_prefix and job is None):
         return None
     if job is None:
-        return candidates[0]
+        return candidates[0] if len(candidates) == 1 else None
 
+    # Historical weekly artifacts share names between regular and ideal jobs.
     completed_at = _parse_github_time(job.get("completed_at"))
     if completed_at is None:
         return None
-
-    def distance_from_job(artifact: dict[str, Any]) -> float:
-        created_at = _parse_github_time(artifact.get("created_at"))
-        if created_at is None:
-            return float("inf")
-        return abs((created_at - completed_at).total_seconds())
-
-    return min(candidates, key=distance_from_job)
-    return None
+    distances = [
+        (abs((created_at - completed_at).total_seconds()), artifact)
+        for artifact in candidates
+        if (created_at := _parse_github_time(artifact.get("created_at"))) is not None
+    ]
+    if not distances:
+        return None
+    nearest = min(distance for distance, _ in distances)
+    matches = [artifact for distance, artifact in distances if distance == nearest]
+    return matches[0] if len(matches) == 1 else None
 
 
 def download_score_text(artifact_id: int) -> str:
@@ -356,6 +366,34 @@ def include_run(
     return True
 
 
+def collect_run(
+    run: dict[str, Any],
+    datasets: list[DatasetConfig],
+    points_by_dataset: dict[str, list[dict[str, Any]]],
+) -> None:
+    if run.get("conclusion") != "success":
+        datasets = [dataset for dataset in datasets if dataset.job_name_prefix]
+    if not datasets:
+        return
+    artifacts = list_run_artifacts(run["id"])
+    jobs: list[dict[str, Any]] | None = None
+    for dataset in datasets:
+        job = None
+        has_current = any(
+            artifact.get("name") == dataset.artifact_name and not artifact.get("expired")
+            for artifact in artifacts
+        )
+        if dataset.job_name_prefix and (not has_current or run.get("conclusion") != "success"):
+            if jobs is None:
+                jobs = list_run_jobs(run["id"])
+            job = find_dataset_job(jobs, dataset)
+            if job is None:
+                continue
+        artifact = find_dataset_artifact(artifacts, dataset, job)
+        if artifact:
+            include_run(run, dataset, artifact, points_by_dataset)
+
+
 def collect_from_commits(
     branch: str,
     max_pages: int,
@@ -364,16 +402,13 @@ def collect_from_commits(
 ) -> None:
     for sha in list_branch_commits(branch, max_pages, per_page):
         runs = list_runs_for_commit(sha, branch)
+        selected: dict[int, tuple[dict[str, Any], list[DatasetConfig]]] = {}
         for dataset in DATASETS:
             run = select_run_for_dataset(runs, dataset)
-            if not run:
-                continue
-            artifacts = list_run_artifacts(run["id"])
-            job = find_dataset_job(list_run_jobs(run["id"]), dataset)
-            artifact = find_dataset_artifact(artifacts, dataset, job)
-            if not artifact:
-                continue
-            include_run(run, dataset, artifact, points_by_dataset)
+            if run:
+                selected.setdefault(run["id"], (run, []))[1].append(dataset)
+        for run, datasets in selected.values():
+            collect_run(run, datasets, points_by_dataset)
 
 
 def collect_from_runs(
@@ -383,22 +418,7 @@ def collect_from_runs(
 ) -> None:
     for run in list_recent_runs(max_pages, per_page):
         datasets = [dataset for dataset in DATASETS if run_matches_dataset(run, dataset)]
-        if run.get("conclusion") != "success":
-            datasets = [dataset for dataset in datasets if dataset.job_name_prefix]
-        if not datasets:
-            continue
-        artifacts = list_run_artifacts(run["id"])
-        jobs: list[dict[str, Any]] | None = None
-        for dataset in datasets:
-            job = None
-            if dataset.job_name_prefix:
-                if jobs is None:
-                    jobs = list_run_jobs(run["id"])
-                job = find_dataset_job(jobs, dataset)
-            artifact = find_dataset_artifact(artifacts, dataset, job)
-            if not artifact:
-                continue
-            include_run(run, dataset, artifact, points_by_dataset)
+        collect_run(run, datasets, points_by_dataset)
 
 
 def collect_from_workflows(
@@ -414,24 +434,7 @@ def collect_from_workflows(
         # exact head-branch check in run_matches_dataset instead.
         for run in list_workflow_runs(workflow_path, max_pages, per_page):
             datasets = [dataset for dataset in DATASETS if run_matches_dataset(run, dataset)]
-            if run.get("conclusion") != "success":
-                datasets = [dataset for dataset in datasets if dataset.job_name_prefix]
-            if not datasets:
-                continue
-            artifacts = list_run_artifacts(run["id"])
-            jobs: list[dict[str, Any]] | None = None
-            for dataset in datasets:
-                job = None
-                if dataset.job_name_prefix:
-                    if jobs is None:
-                        jobs = list_run_jobs(run["id"])
-                    job = find_dataset_job(jobs, dataset)
-                    if job is None:
-                        continue
-                artifact = find_dataset_artifact(artifacts, dataset, job)
-                if not artifact:
-                    continue
-                include_run(run, dataset, artifact, points_by_dataset)
+            collect_run(run, datasets, points_by_dataset)
 
 
 def main(argv: list[str]) -> int:
