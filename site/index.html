@@ -48,8 +48,13 @@
 
         <div class="sidebar-stack" id="trend-sidebar">
           <section class="panel controls">
-            <label for="dataset-select">Dataset</label>
-            <select id="dataset-select"></select>
+            <div class="dataset-heading">
+              <label for="dataset-select">配置</label>
+              <button id="dataset-more" class="dataset-more" type="button" aria-expanded="false">更多数据</button>
+            </div>
+            <p class="dataset-scope" id="dataset-scope">当前 SPEC06 · 日常回归</p>
+            <select id="dataset-select" aria-describedby="dataset-context"></select>
+            <p class="dataset-context" id="dataset-context"></p>
 
             <label for="benchmark-select">Line</label>
             <select id="benchmark-select"></select>
@@ -67,8 +72,12 @@
                 <strong>Reference run</strong>
               </div>
             </div>
-            <label for="compare-a-dataset">Dataset</label>
-            <select id="compare-a-dataset"></select>
+            <div class="dataset-heading">
+              <label for="compare-a-dataset">配置</label>
+              <button id="compare-a-more" class="dataset-more" type="button" aria-expanded="false">更多数据</button>
+            </div>
+            <select id="compare-a-dataset" aria-describedby="compare-a-context"></select>
+            <p class="dataset-context" id="compare-a-context"></p>
             <label for="compare-a-run">Run</label>
             <select id="compare-a-run"></select>
             <label for="compare-a-url">Run URL / ID or GEM5/RTL score</label>
@@ -93,8 +102,12 @@
                 <strong>Candidate run</strong>
               </div>
             </div>
-            <label for="compare-b-dataset">Dataset</label>
-            <select id="compare-b-dataset"></select>
+            <div class="dataset-heading">
+              <label for="compare-b-dataset">配置</label>
+              <button id="compare-b-more" class="dataset-more" type="button" aria-expanded="false">更多数据</button>
+            </div>
+            <select id="compare-b-dataset" aria-describedby="compare-b-context"></select>
+            <p class="dataset-context" id="compare-b-context"></p>
             <label for="compare-b-run">Run</label>
             <select id="compare-b-run"></select>
             <label for="compare-b-url">Run URL / ID or GEM5/RTL score</label>

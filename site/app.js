@@ -1,3 +1,4 @@
+import { CURRENT_DATASETS, datasetPickerGroups } from "./dataset-picker.mjs";
 import {
   ALL_SPECINT_OPTION,
   AVG_LABEL,
@@ -47,6 +48,7 @@ const state = {
   datasets: new Map(),
   runIndex: new Map(),
   currentDatasetId: null,
+  expandedDatasets: { trend: false, a: false, b: false },
   currentBenchmark: AVG_LABEL,
   visibleSeriesNames: null,
   showAllPoints: false,
@@ -271,16 +273,7 @@ function setSourceFeedback(id, message = "", error = false) {
 function renderComparisonSource(id) {
   const source = comparisonSelection(id);
   const elements = comparisonElements[id];
-  elements.dataset.replaceChildren();
-
-  for (const entry of datasetEntriesWithPoints(state.manifest.datasets, state.datasets)) {
-    const dataset = state.datasets.get(entry.id);
-    const option = document.createElement("option");
-    option.value = entry.id;
-    option.textContent = `${entry.label} (${dataset?.points.length || 0})`;
-    elements.dataset.appendChild(option);
-  }
-  elements.dataset.value = source.datasetId;
+  renderDatasetPicker(elements.dataset, source.datasetId, id);
 
   const dataset = state.datasets.get(source.datasetId);
   elements.run.replaceChildren();
@@ -816,15 +809,46 @@ function renderBenchmarks(dataset) {
   benchmarkSelect.value = state.currentBenchmark;
 }
 
-function renderDatasetOptions() {
-  datasetSelect.innerHTML = "";
-  for (const item of datasetEntriesWithPoints(state.manifest.datasets, state.datasets)) {
-    const option = document.createElement("option");
-    option.value = item.id;
-    option.textContent = `${item.label} (${item.point_count})`;
-    datasetSelect.appendChild(option);
+function renderDatasetPicker(select, selectedId, scope) {
+  // URL lookup and shared comparisons may select a historical series.
+  if (selectedId && !CURRENT_DATASETS.has(selectedId)) {
+    state.expandedDatasets[scope] = true;
   }
-  datasetSelect.value = state.currentDatasetId;
+  const entries = datasetEntriesWithPoints(state.manifest.datasets, state.datasets);
+  const groups = datasetPickerGroups(entries, state.expandedDatasets[scope]);
+  select.replaceChildren();
+  for (const group of groups) {
+    const parent = state.expandedDatasets[scope] ? document.createElement("optgroup") : select;
+    if (parent !== select) {
+      parent.label = group.label;
+      select.appendChild(parent);
+    }
+    for (const entry of group.entries) {
+      const option = document.createElement("option");
+      option.value = entry.id;
+      option.textContent = CURRENT_DATASETS.get(entry.id) || entry.label.replace(/^weekly /, "");
+      parent.appendChild(option);
+    }
+  }
+  select.value = selectedId;
+  const prefix = scope === "trend" ? "dataset" : `compare-${scope}`;
+  const button = document.getElementById(`${prefix}-more`);
+  button.textContent = state.expandedDatasets[scope] ? "返回日常" : "更多数据";
+  button.setAttribute("aria-expanded", String(state.expandedDatasets[scope]));
+  const dataset = state.datasets.get(selectedId);
+  const description = dataset?.dataset.label.replace(/^weekly /, "").split(" / ").slice(1).join(" · ") || "";
+  document.getElementById(`${prefix}-context`).textContent = dataset
+    ? `${description} · ${dataset.points.length} 次记录`
+    : "";
+  if (scope === "trend") {
+    document.getElementById("dataset-scope").textContent = state.expandedDatasets[scope]
+      ? "日常、全量与历史数据"
+      : "当前 SPEC06 · 日常回归";
+  }
+}
+
+function renderDatasetOptions() {
+  renderDatasetPicker(datasetSelect, state.currentDatasetId, "trend");
 }
 
 function resetSeriesVisibility() {
@@ -1234,6 +1258,7 @@ function renderTrend() {
   if (!dataset) {
     return;
   }
+  renderDatasetOptions();
   renderMeta(dataset);
   renderBenchmarks(dataset);
   renderChart(dataset, state.currentBenchmark);
@@ -1255,10 +1280,8 @@ async function main() {
     const dataset = await loadJson(`./data/${entry.file}`);
     state.datasets.set(entry.id, dataset);
   }
-  const defaultDataset = datasetEntriesWithPoints(
-    state.manifest.datasets,
-    state.datasets,
-  )[0];
+  const availableDatasets = datasetEntriesWithPoints(state.manifest.datasets, state.datasets);
+  const defaultDataset = availableDatasets.find((entry) => CURRENT_DATASETS.has(entry.id)) || availableDatasets[0];
   state.currentDatasetId = defaultDataset?.id || null;
   state.runIndex = buildRunIndex(state.datasets);
   initializeComparisonState(state.currentDatasetId);
@@ -1268,6 +1291,35 @@ async function main() {
 
 trendModeButton.addEventListener("click", () => setMode("trend"));
 compareModeButton.addEventListener("click", () => setMode("compare"));
+
+for (const scope of ["trend", "a", "b"]) {
+  const prefix = scope === "trend" ? "dataset" : `compare-${scope}`;
+  document.getElementById(`${prefix}-more`).addEventListener("click", () => {
+    state.expandedDatasets[scope] = !state.expandedDatasets[scope];
+    const selectedId = scope === "trend" ? state.currentDatasetId : comparisonSelection(scope).datasetId;
+    if (!state.expandedDatasets[scope] && !CURRENT_DATASETS.has(selectedId)) {
+      const entries = datasetEntriesWithPoints(state.manifest.datasets, state.datasets);
+      const selectedConfig = state.datasets.get(selectedId)?.dataset.config;
+      const target = entries.find((entry) => CURRENT_DATASETS.has(entry.id)
+        && state.datasets.get(entry.id)?.dataset.config === selectedConfig)
+        || entries.find((entry) => CURRENT_DATASETS.has(entry.id));
+      if (!target) return;
+      if (scope === "trend") {
+        state.currentDatasetId = target.id;
+        state.showAllPoints = false;
+        resetSeriesVisibility();
+      } else {
+        const source = comparisonSelection(scope);
+        source.datasetId = target.id;
+        source.runId = defaultRunId(state.datasets.get(target.id), scope);
+        source.customPoint = null;
+        setSourceFeedback(scope);
+        updateComparisonUrl();
+      }
+    }
+    render();
+  });
+}
 
 datasetSelect.addEventListener("change", (event) => {
   state.currentDatasetId = event.target.value;

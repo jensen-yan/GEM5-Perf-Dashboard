@@ -957,3 +957,42 @@ code {
     padding: 16px;
   }
 }
+
+/* Keep the current regression profiles within a short, stable selector. */
+.dataset-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.dataset-heading label { margin: 0; }
+.dataset-more {
+  border: 0;
+  background: transparent;
+  color: var(--accent-deep);
+  padding: 4px 0 4px 8px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.dataset-more:hover { text-decoration: underline; }
+.dataset-more:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.dataset-scope {
+  margin: 0;
+  color: var(--muted);
+  font: 14px/1.5 system-ui, sans-serif;
+}
+.dataset-context {
+  margin: 0 0 6px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  color: var(--muted);
+  background: var(--accent-soft);
+  font: 14px/1.6 system-ui, sans-serif;
+  overflow-wrap: anywhere;
+}
