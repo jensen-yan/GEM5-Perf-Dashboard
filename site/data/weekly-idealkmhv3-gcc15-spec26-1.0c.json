@@ -841,7 +841,7 @@
       "commit": "f63979dc6ccc57fc214e1e380750ab29e2c73b0b",
       "short_commit": "f63979dc6c",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/f63979dc6ccc57fc214e1e380750ab29e2c73b0b",
-      "title": "gem5 Ideal BTB Weekly Performance Test",
+      "title": "gem5 Weekly Performance Test",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/33130566198",
       "metrics": {
         "SPECint avg": 0.890911245985622,
@@ -1040,7 +1040,7 @@
       "commit": "fe20fb50db47401d7e9cfdb14b3283ac985d411b",
       "short_commit": "fe20fb50db",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/fe20fb50db47401d7e9cfdb14b3283ac985d411b",
-      "title": "gem5 Ideal BTB Weekly Performance Test",
+      "title": "gem5 Weekly Performance Test",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/33793885374",
       "metrics": {
         "SPECint avg": 0.8911701265224979,
@@ -1239,7 +1239,7 @@
       "commit": "abfc67f1e670e97cb38a8ce29598bfccfac2f882",
       "short_commit": "abfc67f1e6",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/abfc67f1e670e97cb38a8ce29598bfccfac2f882",
-      "title": "gem5 Ideal BTB Weekly Performance Test",
+      "title": "gem5 Weekly Performance Test",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/34516954896",
       "metrics": {
         "SPECint avg": 0.8965912344304793,
@@ -1438,7 +1438,7 @@
       "commit": "ab72c4c807666d66c925ee9f5b3d5014fa8fa406",
       "short_commit": "ab72c4c807",
       "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/ab72c4c807666d66c925ee9f5b3d5014fa8fa406",
-      "title": "gem5 Ideal BTB Weekly Performance Test",
+      "title": "gem5 Weekly Performance Test",
       "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/35265045589",
       "metrics": {
         "SPECint avg": 0.9252256421635333,
