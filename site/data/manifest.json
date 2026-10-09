@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-10-08T06:50:19.335631+00:00",
+  "generated_at": "2026-10-09T06:58:50.033718+00:00",
   "datasets": [
     {
       "id": "kmhv3-spec06-rva23-novec-gcc16-0.3c",
       "label": "kmhv3 / gcc16 RVA23 no-vector / SPEC06 0.3c",
       "file": "kmhv3-spec06-rva23-novec-gcc16-0.3c.json",
-      "point_count": 57
+      "point_count": 58
     },
     {
       "id": "idealkmhv3-spec06-rva23-novec-gcc16-0.3c",
       "label": "idealkmhv3 / gcc16 RVA23 no-vector / SPEC06 0.3c",
       "file": "idealkmhv3-spec06-rva23-novec-gcc16-0.3c.json",
-      "point_count": 57
+      "point_count": 58
     },
     {
       "id": "kmhv3-gcc12-spec06-0.3c",
