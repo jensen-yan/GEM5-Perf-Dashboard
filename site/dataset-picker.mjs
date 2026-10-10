@@ -10,11 +10,11 @@ const FULL_DATASETS = new Set([
   "weekly-kmhv3-spec06-rva23-novec-gcc16-1.0c",
   "weekly-idealkmhv3-spec06-rva23-novec-gcc16-1.0c",
   "weekly-kmhv3-spec17-1.0c",
-  "weekly-idealkmhv3-spec17-1.0c",
   "weekly-kmhv3-gcc15-spec26-1.0c",
-  "weekly-idealkmhv3-gcc15-spec26-1.0c",
   "weekly-idealkmhv3-gcc12-spec06-dynpf-1.0c",
   "weekly-smt-idealkmhv3-gcc12-spec06-smt-1.0c",
+  "weekly-kmhv3-xscc-spec06-1.0c",
+  "weekly-smt-idealkmhv3-spec17-smt-1.0c",
 ]);
 
 export function datasetPickerGroups(entries, expanded = false) {
