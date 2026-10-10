@@ -276,6 +276,7 @@ class FindDatasetJobTest(unittest.TestCase):
     def test_weekly_dataset_jobs_cover_current_workflow(self) -> None:
         expected_prefixes = {
             'align_test_spec06 / ',
+            'align_test_spec06_xscc / ',
             'align_test_spec17 / ',
             'align_test_spec26 / ',
             'perf_test_spec06 / ',
@@ -283,6 +284,7 @@ class FindDatasetJobTest(unittest.TestCase):
             'perf_test_spec26 / ',
             'perf_test_spec06_gcc12_dynpf / ',
             'smt_test_spec06 / ',
+            'smt_test_spec17 / ',
         }
         actual_prefixes = {
             dataset.job_name_prefix
