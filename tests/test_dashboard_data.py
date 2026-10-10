@@ -94,7 +94,7 @@ class ClassifyRunTest(unittest.TestCase):
 
     def test_new_weekly_names_distinguish_regular_and_ideal(self) -> None:
         run = {
-            'name': 'gem5 Ideal BTB Weekly Performance Test',
+            'name': 'gem5 Weekly Performance Test',
             'path': '.github/workflows/gem5-ideal-btb-perf-weekly.yml',
             'event': 'schedule',
             'head_branch': 'xs-dev',
@@ -104,6 +104,9 @@ class ClassifyRunTest(unittest.TestCase):
         self.assertEqual(classify_run(run, 'score-ideal-spec17-1.0c').id,
                          'weekly-idealkmhv3-spec17-1.0c')
         self.assertIsNone(classify_run(run, 'score-unknown-spec17-1.0c'))
+        manual_rerun = {**run, 'event': 'workflow_dispatch'}
+        self.assertEqual(classify_run(manual_rerun, 'score-spec17-1.0c').id,
+                         'weekly-kmhv3-spec17-1.0c')
 
     def test_classifies_align_push_dataset(self) -> None:
         run = {
