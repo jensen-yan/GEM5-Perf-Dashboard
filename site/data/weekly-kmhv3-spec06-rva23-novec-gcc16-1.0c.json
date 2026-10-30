@@ -2240,6 +2240,226 @@
           "coverage": 1.0
         }
       }
+    },
+    {
+      "run_id": 40952029963,
+      "run_number": 119,
+      "created_at": "2026-10-29T20:46:36Z",
+      "commit": "75569f588baa5ccd9be051cfc57408482f214494",
+      "short_commit": "75569f588b",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/75569f588baa5ccd9be051cfc57408482f214494",
+      "title": "gem5 Weekly Performance Test",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/40952029963",
+      "metrics": {
+        "SPECint avg": 20.063671393149203,
+        "SPECfp avg": 22.28805017658389,
+        "SPEC overall avg": 21.33917339834967,
+        "perlbench": 19.636,
+        "bzip2": 10.605,
+        "gcc": 20.638,
+        "mcf": 23.567,
+        "gobmk": 15.859,
+        "hmmer": 18.786,
+        "sjeng": 15.402,
+        "libquantum": 57.711,
+        "h264ref": 23.894,
+        "omnetpp": 18.481,
+        "astar": 12.506,
+        "xalancbmk": 28.73,
+        "fp:bwaves": 36.823,
+        "fp:gamess": 19.95,
+        "fp:milc": 25.108,
+        "fp:zeusmp": 21.273,
+        "fp:gromacs": 14.124,
+        "fp:cactusADM": 27.952,
+        "fp:leslie3d": 21.709,
+        "fp:namd": 15.242,
+        "fp:dealII": 27.399,
+        "fp:soplex": 21.85,
+        "fp:povray": 26.597,
+        "fp:calculix": 14.726,
+        "fp:GemsFDTD": 23.192,
+        "fp:tonto": 18.481,
+        "fp:lbm": 39.243,
+        "fp:wrf": 19.38,
+        "fp:sphinx3": 21.096
+      },
+      "details": {
+        "perlbench": {
+          "time": 165.855,
+          "ref_time": 9770.0,
+          "score": 19.636,
+          "coverage": 1.0
+        },
+        "bzip2": {
+          "time": 303.306,
+          "ref_time": 9650.0,
+          "score": 10.605,
+          "coverage": 1.0
+        },
+        "gcc": {
+          "time": 130.021,
+          "ref_time": 8050.0,
+          "score": 20.638,
+          "coverage": 1.0
+        },
+        "mcf": {
+          "time": 128.993,
+          "ref_time": 9120.0,
+          "score": 23.567,
+          "coverage": 1.0
+        },
+        "gobmk": {
+          "time": 220.491,
+          "ref_time": 10490.0,
+          "score": 15.859,
+          "coverage": 1.0
+        },
+        "hmmer": {
+          "time": 165.552,
+          "ref_time": 9330.0,
+          "score": 18.786,
+          "coverage": 1.0
+        },
+        "sjeng": {
+          "time": 261.865,
+          "ref_time": 12100.0,
+          "score": 15.402,
+          "coverage": 1.0
+        },
+        "libquantum": {
+          "time": 119.678,
+          "ref_time": 20720.0,
+          "score": 57.711,
+          "coverage": 1.0
+        },
+        "h264ref": {
+          "time": 308.729,
+          "ref_time": 22130.0,
+          "score": 23.894,
+          "coverage": 1.0
+        },
+        "omnetpp": {
+          "time": 112.727,
+          "ref_time": 6250.0,
+          "score": 18.481,
+          "coverage": 1.0
+        },
+        "astar": {
+          "time": 187.115,
+          "ref_time": 7020.0,
+          "score": 12.506,
+          "coverage": 1.0
+        },
+        "xalancbmk": {
+          "time": 80.056,
+          "ref_time": 6900.0,
+          "score": 28.73,
+          "coverage": 1.0
+        },
+        "fp:bwaves": {
+          "time": 123.02,
+          "ref_time": 13590.0,
+          "score": 36.823,
+          "coverage": 1.0
+        },
+        "fp:gamess": {
+          "time": 327.157,
+          "ref_time": 19580.0,
+          "score": 19.95,
+          "coverage": 1.0
+        },
+        "fp:milc": {
+          "time": 121.876,
+          "ref_time": 9180.0,
+          "score": 25.108,
+          "coverage": 1.0
+        },
+        "fp:zeusmp": {
+          "time": 142.592,
+          "ref_time": 9100.0,
+          "score": 21.273,
+          "coverage": 1.0
+        },
+        "fp:gromacs": {
+          "time": 168.508,
+          "ref_time": 7140.0,
+          "score": 14.124,
+          "coverage": 1.0
+        },
+        "fp:cactusADM": {
+          "time": 142.505,
+          "ref_time": 11950.0,
+          "score": 27.952,
+          "coverage": 1.0
+        },
+        "fp:leslie3d": {
+          "time": 144.332,
+          "ref_time": 9400.0,
+          "score": 21.709,
+          "coverage": 1.0
+        },
+        "fp:namd": {
+          "time": 175.392,
+          "ref_time": 8020.0,
+          "score": 15.242,
+          "coverage": 1.0
+        },
+        "fp:dealII": {
+          "time": 139.18,
+          "ref_time": 11440.0,
+          "score": 27.399,
+          "coverage": 1.0
+        },
+        "fp:soplex": {
+          "time": 127.229,
+          "ref_time": 8340.0,
+          "score": 21.85,
+          "coverage": 1.0
+        },
+        "fp:povray": {
+          "time": 66.673,
+          "ref_time": 5320.0,
+          "score": 26.597,
+          "coverage": 1.0
+        },
+        "fp:calculix": {
+          "time": 186.742,
+          "ref_time": 8250.0,
+          "score": 14.726,
+          "coverage": 1.0
+        },
+        "fp:GemsFDTD": {
+          "time": 152.497,
+          "ref_time": 10610.0,
+          "score": 23.192,
+          "coverage": 1.0
+        },
+        "fp:tonto": {
+          "time": 177.483,
+          "ref_time": 9840.0,
+          "score": 18.481,
+          "coverage": 1.0
+        },
+        "fp:lbm": {
+          "time": 116.708,
+          "ref_time": 13740.0,
+          "score": 39.243,
+          "coverage": 1.0
+        },
+        "fp:wrf": {
+          "time": 192.123,
+          "ref_time": 11170.0,
+          "score": 19.38,
+          "coverage": 1.0
+        },
+        "fp:sphinx3": {
+          "time": 307.96,
+          "ref_time": 19490.0,
+          "score": 21.096,
+          "coverage": 1.0
+        }
+      }
     }
   ]
 }

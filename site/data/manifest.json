@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-29T06:39:02.390910+00:00",
+  "generated_at": "2026-10-30T06:39:05.669630+00:00",
   "datasets": [
     {
       "id": "kmhv3-spec06-rva23-novec-gcc16-0.3c",
@@ -41,13 +41,13 @@
       "id": "weekly-kmhv3-spec06-rva23-novec-gcc16-1.0c",
       "label": "weekly kmhv3 / gcc16 RVA23 no-vector / SPEC06 1.0c",
       "file": "weekly-kmhv3-spec06-rva23-novec-gcc16-1.0c.json",
-      "point_count": 10
+      "point_count": 11
     },
     {
       "id": "weekly-idealkmhv3-spec06-rva23-novec-gcc16-1.0c",
       "label": "weekly idealkmhv3 / gcc16 RVA23 no-vector / SPEC06 1.0c",
       "file": "weekly-idealkmhv3-spec06-rva23-novec-gcc16-1.0c.json",
-      "point_count": 10
+      "point_count": 11
     },
     {
       "id": "weekly-kmhv3-gcc15-spec06-1.0c",
@@ -59,13 +59,13 @@
       "id": "weekly-kmhv3-spec17-1.0c",
       "label": "weekly kmhv3 / SPEC17 1.0c",
       "file": "weekly-kmhv3-spec17-1.0c.json",
-      "point_count": 23
+      "point_count": 24
     },
     {
       "id": "weekly-kmhv3-gcc15-spec26-1.0c",
       "label": "weekly kmhv3 / gcc15 / SPEC26 1.0c",
       "file": "weekly-kmhv3-gcc15-spec26-1.0c.json",
-      "point_count": 14
+      "point_count": 15
     },
     {
       "id": "weekly-idealkmhv3-gcc15-spec06-1.0c",
@@ -83,19 +83,19 @@
       "id": "weekly-idealkmhv3-gcc15-spec26-1.0c",
       "label": "weekly idealkmhv3 / gcc15 / SPEC26 1.0c",
       "file": "weekly-idealkmhv3-gcc15-spec26-1.0c.json",
-      "point_count": 11
+      "point_count": 12
     },
     {
       "id": "weekly-idealkmhv3-gcc12-spec06-dynpf-1.0c",
       "label": "weekly idealkmhv3 / gcc12 / SPEC06 1.0c / dynamic PF (SMT baseline)",
       "file": "weekly-idealkmhv3-gcc12-spec06-dynpf-1.0c.json",
-      "point_count": 14
+      "point_count": 15
     },
     {
       "id": "weekly-smt-idealkmhv3-gcc12-spec06-smt-1.0c",
       "label": "weekly smt_idealkmhv3 / gcc12 / SPEC06 SMT 1.0c",
       "file": "weekly-smt-idealkmhv3-gcc12-spec06-smt-1.0c.json",
-      "point_count": 17
+      "point_count": 18
     },
     {
       "id": "weekly-kmhv3-xscc-spec06-1.0c",
