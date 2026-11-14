@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-13T07:29:31.910646+00:00",
+  "generated_at": "2026-11-14T07:12:49.157902+00:00",
   "datasets": [
     {
       "id": "kmhv3-spec06-rva23-novec-gcc16-0.3c",
@@ -59,7 +59,7 @@
       "id": "weekly-kmhv3-spec17-1.0c",
       "label": "weekly kmhv3 / SPEC17 1.0c",
       "file": "weekly-kmhv3-spec17-1.0c.json",
-      "point_count": 25
+      "point_count": 26
     },
     {
       "id": "weekly-kmhv3-gcc15-spec26-1.0c",
