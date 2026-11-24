@@ -2823,6 +2823,205 @@
           "coverage": 1.0
         }
       }
+    },
+    {
+      "run_id": 45123051515,
+      "run_number": 126,
+      "created_at": "2026-11-23T06:16:58Z",
+      "commit": "8143d7bc795f91b332beee85a3ff3ae5d2d26fe1",
+      "short_commit": "8143d7bc79",
+      "commit_url": "https://github.com/OpenXiangShan/GEM5/commit/8143d7bc795f91b332beee85a3ff3ae5d2d26fe1",
+      "title": "gem5 Weekly Performance Test",
+      "workflow_url": "https://github.com/OpenXiangShan/GEM5/actions/runs/45123051515",
+      "metrics": {
+        "SPECint avg": 1.065122016457241,
+        "SPECfp avg": 1.2448326131562608,
+        "SPEC overall avg": 1.1445924256848397,
+        "stockfish": 0.638,
+        "ntest": 0.974,
+        "sqlite": 1.041,
+        "omnetpp": 1.345,
+        "cpython": 1.677,
+        "gcc": 1.434,
+        "llvm": 1.073,
+        "cppcheck": 1.227,
+        "abc": 1.176,
+        "vpr": 1.235,
+        "gem5": 1.379,
+        "sealcrypto": 0.802,
+        "ns3": 1.216,
+        "zstd": 0.45,
+        "fp:cactus": 0.854,
+        "fp:palm": 1.432,
+        "fp:astcenc": 1.004,
+        "fp:ocio": 1.348,
+        "fp:gmsh": 1.117,
+        "fp:flightdm": 1.308,
+        "fp:fotonik3d": 2.638,
+        "fp:roms": 1.503,
+        "fp:femflow": 1.386,
+        "fp:nest": 1.774,
+        "fp:marian": 0.538,
+        "fp:lbm": 1.092
+      },
+      "details": {
+        "stockfish": {
+          "time": 658.645,
+          "ref_time": 1260.0,
+          "score": 0.638,
+          "coverage": 1.0
+        },
+        "ntest": {
+          "time": 202.69,
+          "ref_time": 592.0,
+          "score": 0.974,
+          "coverage": 1.0
+        },
+        "sqlite": {
+          "time": 169.135,
+          "ref_time": 528.0,
+          "score": 1.041,
+          "coverage": 1.0
+        },
+        "omnetpp": {
+          "time": 120.465,
+          "ref_time": 486.0,
+          "score": 1.345,
+          "coverage": 1.0
+        },
+        "cpython": {
+          "time": 95.21,
+          "ref_time": 479.0,
+          "score": 1.677,
+          "coverage": 1.0
+        },
+        "gcc": {
+          "time": 159.436,
+          "ref_time": 686.0,
+          "score": 1.434,
+          "coverage": 1.0
+        },
+        "llvm": {
+          "time": 157.463,
+          "ref_time": 507.0,
+          "score": 1.073,
+          "coverage": 1.0
+        },
+        "cppcheck": {
+          "time": 97.511,
+          "ref_time": 359.0,
+          "score": 1.227,
+          "coverage": 1.0
+        },
+        "abc": {
+          "time": 130.122,
+          "ref_time": 459.0,
+          "score": 1.176,
+          "coverage": 1.0
+        },
+        "vpr": {
+          "time": 124.457,
+          "ref_time": 461.0,
+          "score": 1.235,
+          "coverage": 1.0
+        },
+        "gem5": {
+          "time": 117.761,
+          "ref_time": 487.0,
+          "score": 1.379,
+          "coverage": 1.0
+        },
+        "sealcrypto": {
+          "time": 222.869,
+          "ref_time": 536.0,
+          "score": 0.802,
+          "coverage": 1.0
+        },
+        "ns3": {
+          "time": 168.003,
+          "ref_time": 613.0,
+          "score": 1.216,
+          "coverage": 1.0
+        },
+        "zstd": {
+          "time": 476.621,
+          "ref_time": 644.0,
+          "score": 0.45,
+          "coverage": 1.0
+        },
+        "fp:cactus": {
+          "time": 334.974,
+          "ref_time": 858.0,
+          "score": 0.854,
+          "coverage": 1.0
+        },
+        "fp:palm": {
+          "time": 307.165,
+          "ref_time": 1320.0,
+          "score": 1.432,
+          "coverage": 1.0
+        },
+        "fp:astcenc": {
+          "time": 278.993,
+          "ref_time": 840.0,
+          "score": 1.004,
+          "coverage": 1.0
+        },
+        "fp:ocio": {
+          "time": 216.295,
+          "ref_time": 875.0,
+          "score": 1.348,
+          "coverage": 1.0
+        },
+        "fp:gmsh": {
+          "time": 136.952,
+          "ref_time": 459.0,
+          "score": 1.117,
+          "coverage": 1.0
+        },
+        "fp:flightdm": {
+          "time": 182.502,
+          "ref_time": 716.0,
+          "score": 1.308,
+          "coverage": 1.0
+        },
+        "fp:fotonik3d": {
+          "time": 146.06,
+          "ref_time": 1156.0,
+          "score": 2.638,
+          "coverage": 1.0
+        },
+        "fp:roms": {
+          "time": 349.324,
+          "ref_time": 1575.0,
+          "score": 1.503,
+          "coverage": 1.0
+        },
+        "fp:femflow": {
+          "time": 352.925,
+          "ref_time": 1467.0,
+          "score": 1.386,
+          "coverage": 1.0
+        },
+        "fp:nest": {
+          "time": 148.969,
+          "ref_time": 793.0,
+          "score": 1.774,
+          "coverage": 1.0
+        },
+        "fp:marian": {
+          "time": 978.789,
+          "ref_time": 1579.0,
+          "score": 0.538,
+          "coverage": 1.0
+        },
+        "fp:lbm": {
+          "time": 174.857,
+          "ref_time": 573.0,
+          "score": 1.092,
+          "coverage": 1.0
+        }
+      }
     }
   ]
 }
